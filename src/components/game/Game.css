@@ -1,0 +1,14 @@
+.level {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.title {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-bottom: 3px solid #999;
+    border-top: 3px solid #999;
+}

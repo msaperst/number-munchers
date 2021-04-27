@@ -1,11 +1,8 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
+import Game from "./components/game/Game";
 import './index.css';
-import Board from "./components/board/Board";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Board />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Game/>,
+    document.getElementById('root')
 );
