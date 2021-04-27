@@ -1,0 +1,12 @@
+.board-row:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.board {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

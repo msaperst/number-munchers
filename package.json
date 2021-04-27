@@ -1,6 +1,27 @@
 {
   "name": "number-munchers",
   "version": "0.1.0",
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 95,
+        "lines": 95
+      }
+    },
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "cobertura"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!**/index.js"
+    ]
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "output": "/coverage/junit.xml"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.12.0",
@@ -14,7 +35,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
+    "test:ci": "react-scripts test --coverage --watchAll=false",
+    "lint": "eslint ./src/",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
