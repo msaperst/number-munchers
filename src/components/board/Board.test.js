@@ -1,18 +1,16 @@
-import Board, {getRow,getRows} from './Board.js'
+import Board, {getRow, getRows} from './Board.js'
 import '@testing-library/jest-dom';
-import {render,screen} from "@testing-library/react";
-import Square from "../square/Square";
-import {GAME_TYPES} from "../../objects/games";
+import {render} from "@testing-library/react";
 
 test('Get Small Row', () => {
-    const row = getRow(1,0);
+    const row = getRow(1, 0);
     expect(row.length).toEqual(1);
     const square = render(row[0]);
     expect(square.container.querySelector('#c0')).toBeInTheDocument();
 });
 
 test('Get First Row', () => {
-    const row = getRow(3,0);
+    const row = getRow(3, 0);
     expect(row.length).toEqual(3);
     let square = render(row[0]);
     expect(square.container.querySelector('#c0')).toBeInTheDocument();
@@ -23,7 +21,7 @@ test('Get First Row', () => {
 });
 
 test('Get Second Row', () => {
-    const row = getRow(3,1);
+    const row = getRow(3, 1);
     expect(row.length).toEqual(3);
     let square = render(row[0]);
     expect(square.container.querySelector('#c3')).toBeInTheDocument();
@@ -34,7 +32,7 @@ test('Get Second Row', () => {
 });
 
 test('Get Small Board', () => {
-    const row = getRows(1,1);
+    const row = getRows(1, 1);
     expect(row.length).toEqual(1);
     let square = render(row[0]);
     expect(square.container.querySelector('#c0')).toBeInTheDocument();
@@ -42,7 +40,7 @@ test('Get Small Board', () => {
 });
 
 test('Get Medium Board', () => {
-    const row = getRows(3,3);
+    const row = getRows(3, 3);
     expect(row.length).toEqual(3);
     let square = render(row[0]);
     expect(square.container.querySelector('#c0')).toBeInTheDocument();
@@ -62,8 +60,11 @@ test('Get Medium Board', () => {
 });
 
 test('Full Board', () => {
-    let square = render(<Board/>);
-    for(let x = 0; x < 30; x++) {
+    let square = render(<Board muncher={{x: 0, y: 0}} height="5" width="6"/>);
+    expect(square.container.querySelector('.muncher')).toBeInTheDocument();
+    expect(square.container.querySelector('.muncher').getBoundingClientRect().left).toEqual(0);
+    expect(square.container.querySelector('.muncher').getBoundingClientRect().top).toEqual(0);
+    for (let x = 0; x < 30; x++) {
         expect(square.container.querySelector('#c' + x)).toBeInTheDocument();
     }
     expect(square.container.querySelector('#c30')).not.toBeInTheDocument();
