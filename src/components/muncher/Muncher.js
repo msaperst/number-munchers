@@ -1,8 +1,8 @@
 import './Muncher.css'
 
 function Muncher(props) {
-    let initLeft = 2;
-    let initTop = 2;
+    // let initLeft = 2;
+    // let initTop = 2;
 
     return (
         <div ref={el => {

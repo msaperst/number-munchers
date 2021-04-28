@@ -21,6 +21,7 @@ class Game extends React.Component {
             number: 5,
             muncher: {x: 2, y: 2}
         };
+        // eslint-disable-next-line no-func-assign
         handleDown = handleDown.bind(this);
     }
 
