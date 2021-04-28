@@ -12,7 +12,7 @@ function Square(props) {
 }
 
 function getValue(type, number) {
-    switch( type ) {
+    switch (type) {
         case GAME_TYPES.MULTIPLES:
             return Multiples(number);
         default:

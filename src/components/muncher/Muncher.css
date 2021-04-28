@@ -1,0 +1,14 @@
+.muncher {
+    position: absolute;
+    background-image: url("./muncher.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    line-height: 14vh;
+    top: 0px;
+    height: 14vh;
+    padding: 0;
+    text-align: center;
+    width: calc(19vh);
+}
