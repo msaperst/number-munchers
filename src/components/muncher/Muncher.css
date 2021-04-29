@@ -5,10 +5,9 @@
     background-repeat: no-repeat;
     background-position: center;
     z-index: -1;
-    line-height: 14vh;
     top: 0px;
-    height: 14vh;
+    height: 20%;
     padding: 0;
     text-align: center;
-    width: calc(19vh);
+    width: 16.666%;
 }

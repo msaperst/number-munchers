@@ -14,5 +14,11 @@ describe('<Game/>', () => {
         let wrapper = Enzyme.shallow(<Game/>);
         events.keydown({keyCode: 39});
         expect(wrapper.state().muncher).toEqual({x: 3, y: 2});
+        events.keydown({keyCode: 39});
+        expect(wrapper.state().muncher).toEqual({x: 4, y: 2});
+        events.keydown({keyCode: 39});
+        expect(wrapper.state().muncher).toEqual({x: 5, y: 2});
+        events.keydown({keyCode: 39});
+        expect(wrapper.state().muncher).toEqual({x: 5, y: 2});
     });
 });

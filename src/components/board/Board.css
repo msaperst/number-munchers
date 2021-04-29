@@ -1,13 +1,20 @@
+.board {
+    border: 4px double #999;
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.board-row {
+    height: 20%;
+    width: 100%;
+}
+
 .board-row:after {
     clear: both;
     content: "";
     display: table;
-}
-
-.board {
-    border: 4px double #999;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
