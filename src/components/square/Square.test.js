@@ -1,6 +1,6 @@
 import Square from "./Square";
 import '@testing-library/jest-dom';
-import {queryByAttribute, render, screen} from "@testing-library/react";
+import {render} from "@testing-library/react";
 import {GAME_TYPES} from "../../objects/games";
 
 test('Empty Square', () => {
