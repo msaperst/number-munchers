@@ -31,10 +31,11 @@ class Game extends React.Component {
         numberFill = numberFill.bind(this);
         // eslint-disable-next-line no-func-assign
         munch = munch.bind(this);
+
         //setup our initial square values
         let squares = this.state.squares;
         squares.map((value, index) => (
-            squares[index] = numberFill(this.state.type, this.state.number)
+            squares[index] = numberFill()
         ));
         this.state.squares = squares;
     }
