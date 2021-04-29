@@ -68,4 +68,4 @@ function handleDown(event) {
 }
 
 export default Game;
-export { handleDown };
+export {handleDown};
