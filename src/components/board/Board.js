@@ -4,7 +4,7 @@ import React from "react";
 import Muncher from "../muncher/Muncher";
 
 function Board(props) {
-    const rows = getRows(props.height, props.width, props.type, props.number);
+    const rows = getRows(props.height, props.width, props.squares);
     return (
         <div className="board">
             <Muncher position={props.muncher}/>
@@ -13,10 +13,10 @@ function Board(props) {
     )
 }
 
-function getRows(height, width, type, number) {
+function getRows(height, width, squares) {
     const rows = [];
     for (let r = 0; r < height; r++) {
-        const row = getRow(width, r, type, number);
+        const row = getRow(width, r, squares);
         rows.push(<div key={'row' + r} className="board-row">
             {row}
         </div>);
@@ -24,10 +24,11 @@ function getRows(height, width, type, number) {
     return rows;
 }
 
-function getRow(width, r, type, number) {
+function getRow(width, r, squares) {
     const row = [];
     for (let cell = 0; cell < width; cell++) {
-        row.push(<Square key={'c' + (r * width + cell)} type={type} number={number} cell={r * width + cell}/>);
+        let int = (r * width + cell);
+        row.push(<Square key={'c' + int} cell={int} value={squares[int]}/>);
     }
     return row;
 }
