@@ -1,17 +1,17 @@
 import React from 'react';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Game, {munch, numberFill} from "./Game";
+import Game, { munch, numberFill } from './Game';
 
-Enzyme.configure({adapter: new Adapter()});
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('<Game/>', () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = Enzyme.shallow(<Game/>);
-        wrapper.setState({type: ''});
-        wrapper.setState({number: 5});
+        wrapper = Enzyme.shallow(<Game />);
+        wrapper.setState({ type: '' });
+        wrapper.setState({ number: 5 });
     });
 
     it('return empty', () => {

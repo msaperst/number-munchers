@@ -4,15 +4,14 @@ function GetMultiple(multipleOf) {
     const rand = Math.floor(min + Math.random() * (max - min));
 
     // 2/5 of our numbers should match
-    if (Math.random() > .4) {
+    if (Math.random() > 0.4) {
         return Math.floor(Math.random() * (max * multipleOf));
-    } else {
-        return multipleOf * rand;
     }
+    return multipleOf * rand;
 }
 
 function IsMultiple(multipleOf, number) {
-    return (number % multipleOf) === 0;
+    return number % multipleOf === 0;
 }
 
-export {IsMultiple, GetMultiple}
+export { IsMultiple, GetMultiple };
