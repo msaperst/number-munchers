@@ -1,0 +1,12 @@
+.notification {
+    position: absolute;
+    background: white;
+    width: calc(100% - 1px);
+    height: calc(20% - 2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index:1;
+    left:1px;
+    top: 40%;
+}

@@ -2,13 +2,19 @@ import React from 'react';
 import Square from '../square/Square';
 import './Board.css';
 import Muncher from '../muncher/Muncher';
+import Notification from '../notification/Notification';
 
 function Board(props) {
-    const { height, width, squares, muncher } = props;
+    const { height, width, squares, muncher, notification } = props;
+    let alert;
+    if (notification != null && notification.trim() !== '') {
+        alert = <Notification message={notification} />;
+    }
     const rows = getRows(height, width, squares);
     return (
         <div className="board">
             <Muncher position={muncher} />
+            {alert}
             {rows}
         </div>
     );

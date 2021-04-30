@@ -11,38 +11,7 @@ describe('<Game/>', () => {
 
     beforeEach(() => {
         wrapper = Enzyme.shallow(<Game />);
-        wrapper.state().squares = [
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-            5,
-        ];
+        wrapper.state().squares = Array(30).fill(5);
         wrapper.state().type = GAME_TYPES.MULTIPLES;
         wrapper.state().number = 5;
     });
@@ -53,6 +22,6 @@ describe('<Game/>', () => {
     });
 
     it('is valid', () => {
-        expect(munch()).toEqual(true);
+        expect(munch().isValid).toEqual(true);
     });
 });

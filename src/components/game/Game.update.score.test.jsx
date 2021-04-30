@@ -12,9 +12,15 @@ describe('<Game/>', () => {
         wrapper = Enzyme.shallow(<Game />);
     });
 
-    it('updates score', () => {
+    it('updates pass', () => {
         expect(wrapper.state().score).toEqual(0);
-        update(true);
+        update({ isValid: true, value: 5 });
         expect(wrapper.state().score).toEqual(5);
+    });
+
+    it('updates nothing', () => {
+        expect(wrapper.state().score).toEqual(0);
+        update({ isValid: true, value: '' });
+        expect(wrapper.state().score).toEqual(0);
     });
 });

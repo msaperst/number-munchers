@@ -12,9 +12,13 @@ describe('<Game/>', () => {
         wrapper = Enzyme.shallow(<Game />);
     });
 
-    it('updates lives', () => {
+    it('updates fail', () => {
         expect(wrapper.state().lives).toEqual(3);
-        update(false);
+        expect(wrapper.state().notification).toEqual('');
+        update({ isValid: false, value: 4 });
         expect(wrapper.state().lives).toEqual(2);
+        expect(wrapper.state().notification).toEqual(
+            '"4" is not a multiple of "5".'
+        );
     });
 });
