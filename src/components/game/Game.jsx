@@ -23,6 +23,7 @@ class Game extends React.Component {
             number: 5,
             score: 0,
             lives: 3,
+            notification: '',
             muncher: { x: 2, y: 2 },
             squares: Array(WIDTH * HEIGHT).fill(null),
         };
@@ -60,6 +61,7 @@ class Game extends React.Component {
             squares,
             score,
             lives,
+            notification,
         } = this.state;
 
         const munchers = [];
@@ -82,6 +84,7 @@ class Game extends React.Component {
                     width={WIDTH}
                     muncher={muncher}
                     squares={squares}
+                    notification={notification}
                 />
                 <div className="info">
                     <div className="score">
@@ -96,44 +99,48 @@ class Game extends React.Component {
 }
 
 function handleDown(event) {
-    switch (event.keyCode) {
-        case SPACE:
-            update(munch());
-            break;
-        case LEFT:
-            this.setState({
-                muncher: {
-                    x: Math.max(0, this.state.muncher.x - 1),
-                    y: this.state.muncher.y,
-                },
-            });
-            break;
-        case RIGHT:
-            this.setState({
-                muncher: {
-                    x: Math.min(WIDTH - 1, this.state.muncher.x + 1),
-                    y: this.state.muncher.y,
-                },
-            });
-            break;
-        case UP:
-            this.setState({
-                muncher: {
-                    x: this.state.muncher.x,
-                    y: Math.max(0, this.state.muncher.y - 1),
-                },
-            });
-            break;
-        case DOWN:
-            this.setState({
-                muncher: {
-                    x: this.state.muncher.x,
-                    y: Math.min(HEIGHT - 1, this.state.muncher.y + 1),
-                },
-            });
-            break;
-        default:
-        // do nothing
+    if (this.state.notification === '') {
+        switch (event.keyCode) {
+            case SPACE:
+                update(munch());
+                break;
+            case LEFT:
+                this.setState({
+                    muncher: {
+                        x: Math.max(0, this.state.muncher.x - 1),
+                        y: this.state.muncher.y,
+                    },
+                });
+                break;
+            case RIGHT:
+                this.setState({
+                    muncher: {
+                        x: Math.min(WIDTH - 1, this.state.muncher.x + 1),
+                        y: this.state.muncher.y,
+                    },
+                });
+                break;
+            case UP:
+                this.setState({
+                    muncher: {
+                        x: this.state.muncher.x,
+                        y: Math.max(0, this.state.muncher.y - 1),
+                    },
+                });
+                break;
+            case DOWN:
+                this.setState({
+                    muncher: {
+                        x: this.state.muncher.x,
+                        y: Math.min(HEIGHT - 1, this.state.muncher.y + 1),
+                    },
+                });
+                break;
+            default:
+            // do nothing
+        }
+    } else if (event.keyCode === SPACE) {
+        this.setState({ notification: '' });
     }
 }
 
@@ -162,16 +169,21 @@ function munch() {
         default:
             isValid = false;
     }
-    return isValid;
+    return { isValid, value };
 }
 
-function update(isValid) {
-    let { score, lives } = this.state;
+function update(inputs) {
+    const { isValid, value } = inputs;
+    let { score, lives, notification } = this.state;
 
-    if (isValid) {
+    if (isValid && value !== '') {
         score += 5;
         this.setState({ score });
-    } else {
+    } else if (!isValid) {
+        let compare = this.state.type.toLowerCase();
+        compare = compare.slice(0, compare.length - 1);
+        notification = `"${value}" is not a ${compare} of "${this.state.number}".`;
+        this.setState({ notification });
         lives--;
         this.setState({ lives });
     }

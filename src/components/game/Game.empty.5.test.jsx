@@ -19,6 +19,6 @@ describe('<Game/>', () => {
     });
 
     it('not valid', () => {
-        expect(munch()).toEqual(false);
+        expect(munch().isValid).toEqual(false);
     });
 });
