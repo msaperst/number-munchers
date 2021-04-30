@@ -6,13 +6,20 @@ function Muncher(props) {
     // let initTop = 2;
 
     return (
-        <div ref={el => {
-            if (!el) return;
-            el.style.left = el.getBoundingClientRect().width * props.position.x + "px";
-            el.style.top = el.getBoundingClientRect().height * props.position.y + "px";
-        }}
-             className="muncher"/>
-    )
+        <div
+            ref={(el) => {
+                const muncher = el;
+                if (!muncher) return;
+                muncher.style.left = `${
+                    muncher.getBoundingClientRect().width * props.position.x
+                }px`;
+                muncher.style.top = `${
+                    muncher.getBoundingClientRect().height * props.position.y
+                }px`;
+            }}
+            className="muncher"
+        />
+    );
 }
 
 export default Muncher;

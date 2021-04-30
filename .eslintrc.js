@@ -8,17 +8,8 @@ module.exports = {
         jsx: true,
         useJSXTextNode: true,
     },
-    plugins: [
-        'react-hooks',
-        'jest',
-        'prettier',
-        'jsx-a11y',
-    ],
-    extends: [
-        'airbnb',
-        'prettier',
-    ],
-    ignorePatterns: ['src/setupTests.ts'],
+    plugins: ['react-hooks', 'jest', 'prettier', 'jsx-a11y'],
+    extends: ['airbnb', 'prettier'],
     rules: {
         'no-shadow': 'off',
         'no-underscore-dangle': 'off',
@@ -48,8 +39,8 @@ module.exports = {
             'warn',
             {
                 allowShortCircuit: true,
-                allowTernary: true
-            }
+                allowTernary: true,
+            },
         ], // https://eslint.org/docs/rules/no-unused-expressions
         'no-plusplus': 'off',
         /**
@@ -58,8 +49,8 @@ module.exports = {
         'react/jsx-filename-extension': [
             'warn',
             {
-                extensions: ['.jsx', '.tsx']
-            }
+                extensions: ['.jsx', '.tsx'],
+            },
         ],
 
         'react/jsx-indent': 'off', // conflicting with prettier styles
@@ -97,10 +88,10 @@ module.exports = {
         'jsx-a11y/label-has-associated-control': [
             2,
             {
-                controlComponents: ['PaginationInput']
-            }
+                controlComponents: ['PaginationInput'],
+            },
         ],
         // note you must disable the base rule as it can report incorrect errors
-        'no-use-before-define': 'off'
-    }
+        'no-use-before-define': 'off',
+    },
 };

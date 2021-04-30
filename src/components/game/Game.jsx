@@ -18,13 +18,9 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // eslint-disable-next-line react/no-unused-state
             level: 1,
-            // eslint-disable-next-line react/no-unused-state
             type: GAME_TYPES.MULTIPLES,
-            // eslint-disable-next-line react/no-unused-state
             number: 5,
-            // eslint-disable-next-line react/no-unused-state
             muncher: { x: 2, y: 2 },
             squares: Array(WIDTH * HEIGHT).fill(null),
         };
@@ -36,8 +32,7 @@ class Game extends React.Component {
         munch = munch.bind(this);
 
         // setup our initial square values
-        const { game } = this.state;
-        const { squares } = game.squares;
+        const { squares } = this.state;
         for (let i = 0; i < squares.length; i++) {
             squares[i] = numberFill();
         }
@@ -53,19 +48,17 @@ class Game extends React.Component {
     }
 
     render() {
-        const { group } = this.state;
-        const level = `Level: ${group.level}`;
-        const title = `${group.type} of ${group.number}`;
+        const { level, type, number, muncher, squares } = this.state;
 
         return (
             <div>
-                <div className="level">{level}</div>
-                <div className="title">{title}</div>
+                <div className="level">{`Level: ${level}`}</div>
+                <div className="title">{`${type} of ${number}`}</div>
                 <Board
                     height={HEIGHT}
                     width={WIDTH}
-                    muncher={group.muncher}
-                    squares={group.squares}
+                    muncher={muncher}
+                    squares={squares}
                 />
             </div>
         );

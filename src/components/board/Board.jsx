@@ -4,11 +4,11 @@ import './Board.css';
 import Muncher from '../muncher/Muncher';
 
 function Board(props) {
-    const { board } = props;
-    const rows = getRows(board.height, board.width, board.squares);
+    const { height, width, squares, muncher } = props;
+    const rows = getRows(height, width, squares);
     return (
         <div className="board">
-            <Muncher position={board.muncher} />
+            <Muncher position={muncher} />
             {rows}
         </div>
     );
