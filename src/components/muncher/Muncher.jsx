@@ -1,4 +1,5 @@
-import './Muncher.css'
+import React from 'react';
+import './Muncher.css';
 
 function Muncher(props) {
     // let initLeft = 2;

@@ -27,6 +27,7 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "owasp-dependency-check": "^0.0.17",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-scripts": "4.0.3",
@@ -35,6 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "owasp": "owasp-dependency-check --scan package-lock.json --project 'number-muncher' -f HTML JSON",
     "test": "react-scripts test --coverage",
     "test:ci": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint ./src/",
@@ -60,6 +62,16 @@
   },
   "devDependencies": {
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6"
+    "enzyme-adapter-react-16": "^1.15.6",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest-junit": "^12.0.0",
+    "prettier": "^2.2.1"
   }
 }

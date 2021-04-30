@@ -4,5 +4,5 @@ export const GAME_TYPES = {
     PRIMES: 'Primes',
     EQUALITY: 'Equality',
     INEQUALITY: 'Inequality',
-    CHALLENGE: 'Challenge'
-}
+    CHALLENGE: 'Challenge',
+};
