@@ -21,6 +21,8 @@ class Game extends React.Component {
             level: 1,
             type: GAME_TYPES.MULTIPLES,
             number: 5,
+            score: 0,
+            lives: 3,
             muncher: { x: 2, y: 2 },
             squares: Array(WIDTH * HEIGHT).fill(null),
         };
@@ -30,6 +32,8 @@ class Game extends React.Component {
         numberFill = numberFill.bind(this);
         // eslint-disable-next-line no-func-assign
         munch = munch.bind(this);
+        // eslint-disable-next-line no-func-assign
+        update = update.bind(this);
 
         // setup our initial square values
         const { squares } = this.state;
@@ -48,18 +52,44 @@ class Game extends React.Component {
     }
 
     render() {
-        const { level, type, number, muncher, squares } = this.state;
+        const {
+            level,
+            type,
+            number,
+            muncher,
+            squares,
+            score,
+            lives,
+        } = this.state;
+
+        const munchers = [];
+        for (let i = 0; i < lives; i++) {
+            munchers.push(
+                <span key={i} className="life">
+                    Mun
+                </span>
+            );
+        }
 
         return (
-            <div>
-                <div className="level">{`Level: ${level}`}</div>
-                <div className="title">{`${type} of ${number}`}</div>
+            <div className="full">
+                <div className="info">
+                    <div className="level">{`Level: ${level}`}</div>
+                    <div className="title">{`${type} of ${number}`}</div>
+                </div>
                 <Board
                     height={HEIGHT}
                     width={WIDTH}
                     muncher={muncher}
                     squares={squares}
                 />
+                <div className="info">
+                    <div className="score">
+                        <span>Score:</span>{' '}
+                        <span className="points">{score}</span>
+                    </div>
+                    <div className="lives">{munchers}</div>
+                </div>
             </div>
         );
     }
@@ -68,7 +98,7 @@ class Game extends React.Component {
 function handleDown(event) {
     switch (event.keyCode) {
         case SPACE:
-            munch();
+            update(munch());
             break;
         case LEFT:
             this.setState({
@@ -135,5 +165,17 @@ function munch() {
     return isValid;
 }
 
+function update(isValid) {
+    let { score, lives } = this.state;
+
+    if (isValid) {
+        score += 5;
+        this.setState({ score });
+    } else {
+        lives--;
+        this.setState({ lives });
+    }
+}
+
 export default Game;
-export { handleDown, numberFill, munch };
+export { handleDown, numberFill, munch, update };
