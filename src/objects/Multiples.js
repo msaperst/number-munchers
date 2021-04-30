@@ -1,4 +1,4 @@
-function Multiples(multipleOf) {
+function GetMultiple(multipleOf) {
     const min = 1;
     const max = 10;
     const rand = Math.floor(min + Math.random() * (max - min));
@@ -11,4 +11,8 @@ function Multiples(multipleOf) {
     }
 }
 
-export default Multiples;
+function IsMultiple(multipleOf, number) {
+    return (number % multipleOf) === 0;
+}
+
+export {IsMultiple, GetMultiple}
