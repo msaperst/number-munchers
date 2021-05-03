@@ -15,7 +15,7 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "!**/index.js"
+      "!**/index.jsx"
     ]
   },
   "jest-junit": {

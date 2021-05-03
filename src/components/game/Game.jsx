@@ -4,13 +4,6 @@ import Board from '../board/Board';
 import { GAME_TYPES } from '../../objects/games';
 import { GetMultiple, IsMultiple } from '../../objects/Multiples';
 
-// const ENTER = 13
-const SPACE = 32;
-const LEFT = 37;
-const RIGHT = 39;
-const UP = 38;
-const DOWN = 40;
-
 const WIDTH = 6;
 const HEIGHT = 5;
 
@@ -31,24 +24,49 @@ class Game extends React.Component {
         handleDown = handleDown.bind(this);
         // eslint-disable-next-line no-func-assign
         munch = munch.bind(this);
+        // TODO - ^^ MOVE OUT ABOVE ^^
         // eslint-disable-next-line no-func-assign
         update = update.bind(this);
+        // TODO - ^^ MOVE OUT ABOVE ^^
 
         const { type } = this.state;
-        setupBoard(this.setBoard, type);
+        setupBoard(this.updateBoard, type);
     }
 
     componentDidMount() {
-        document.addEventListener('keydown', handleDown);
+        const parent = this;
+        document.addEventListener('keydown', function (event) {
+            handleDown(
+                event.code,
+                parent.state,
+                parent.updateBoard,
+                parent.updateNotification,
+                parent.moveMuncher
+            );
+        });
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', handleDown);
     }
 
-    setBoard = (number, squares) => {
+    moveMuncher = (xc, yc) => {
+        const { muncher } = this.state;
+        this.setState({
+            muncher: {
+                x: Math.min(Math.max(0, muncher.x + xc), WIDTH - 1),
+                y: Math.min(Math.max(0, muncher.y + yc), HEIGHT - 1),
+            },
+        });
+    };
+
+    updateBoard = (number, squares) => {
         this.state.number = number;
         this.state.squares = squares;
+    };
+
+    updateNotification = (notification) => {
+        this.setState({ notification });
     };
 
     render() {
@@ -106,51 +124,40 @@ function setupBoard(setBoard, type) {
     setBoard(number, squares);
 }
 
-function handleDown(event) {
-    const { squares, type, number, notification } = this.state;
+function handleDown(
+    code,
+    state,
+    setupBoardCallBack,
+    updateNotification,
+    moveMuncher
+) {
+    const { squares, number, notification, type } = state;
     if (notification === '') {
-        switch (event.keyCode) {
-            case SPACE:
+        switch (code) {
+            case 'Space':
                 update(munch());
-                checkLevel(squares, type, number);
+                if (checkLevel(squares, type, number)) {
+                    updateNotification('You beat the level!');
+                    setupBoard(setupBoardCallBack, type);
+                }
                 break;
-            case LEFT:
-                this.setState({
-                    muncher: {
-                        x: Math.max(0, this.state.muncher.x - 1),
-                        y: this.state.muncher.y,
-                    },
-                });
+            case 'ArrowLeft':
+                moveMuncher(-1, 0);
                 break;
-            case RIGHT:
-                this.setState({
-                    muncher: {
-                        x: Math.min(WIDTH - 1, this.state.muncher.x + 1),
-                        y: this.state.muncher.y,
-                    },
-                });
+            case 'ArrowRight':
+                moveMuncher(1, 0);
                 break;
-            case UP:
-                this.setState({
-                    muncher: {
-                        x: this.state.muncher.x,
-                        y: Math.max(0, this.state.muncher.y - 1),
-                    },
-                });
+            case 'ArrowUp':
+                moveMuncher(0, -1);
                 break;
-            case DOWN:
-                this.setState({
-                    muncher: {
-                        x: this.state.muncher.x,
-                        y: Math.min(HEIGHT - 1, this.state.muncher.y + 1),
-                    },
-                });
+            case 'ArrowDown':
+                moveMuncher(0, 1);
                 break;
             default:
             // do nothing
         }
-    } else if (event.keyCode === SPACE) {
-        this.setState({ notification: '' });
+    } else if (code === 'Space') {
+        updateNotification('');
     }
 }
 
