@@ -3,7 +3,8 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import Game from './Game';
+import Game, { checkLevel, numberFill } from './Game';
+import { GAME_TYPES } from "../../objects/games";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -17,6 +18,7 @@ describe('<Game/>', () => {
             events[event] = cb;
         });
         wrapper = Enzyme.shallow(<Game />);
+        wrapper.setState({ number: 5 });
     });
 
     it('level 1 Displayed', () => {
@@ -24,6 +26,7 @@ describe('<Game/>', () => {
     });
 
     it('activity Displayed', () => {
+        expect(wrapper.state().number).toEqual(5);
         expect(wrapper.find('.title').text()).toEqual('Multiples of 5');
     });
 
@@ -45,5 +48,36 @@ describe('<Game/>', () => {
             ).toBeInTheDocument();
         }
         expect(square.container.querySelector('#c30')).not.toBeInTheDocument();
+    });
+
+    it('is all empty needs new board', () => {
+        const squares = Array(2).fill('');
+        expect(checkLevel(squares)).toEqual(true);
+    });
+
+    it('bad type returns false', () => {
+        const squares = Array(2).fill('');
+        squares[1] = 6;
+        expect(checkLevel(squares, '', 5)).toEqual(false);
+    });
+
+    it('has one good value does not need new board', () => {
+        const squares = Array(2).fill('');
+        squares[1] = 5;
+        expect(checkLevel(squares, GAME_TYPES.MULTIPLES, 5)).toEqual(false);
+    });
+
+    it('has one bad value does need new board', () => {
+        const squares = Array(2).fill('');
+        squares[1] = 6;
+        expect(checkLevel(squares, GAME_TYPES.MULTIPLES, 5)).toEqual(true);
+    });
+
+    it('full board does not need new board', () => {
+        const squares = Array(30);
+        for (let i = 0; i < squares.length; i++) {
+            squares[i] = numberFill(GAME_TYPES.MULTIPLES, 5);
+        }
+        expect(checkLevel(squares, GAME_TYPES.MULTIPLES, 5)).toEqual(false);
     });
 });

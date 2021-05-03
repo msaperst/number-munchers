@@ -20,28 +20,22 @@ class Game extends React.Component {
         this.state = {
             level: 1,
             type: GAME_TYPES.MULTIPLES,
-            number: 5,
+            number: 0,
             score: 0,
             lives: 3,
             notification: '',
             muncher: { x: 2, y: 2 },
-            squares: Array(WIDTH * HEIGHT).fill(null),
+            squares: Array(WIDTH * HEIGHT),
         };
         // eslint-disable-next-line no-func-assign
         handleDown = handleDown.bind(this);
-        // eslint-disable-next-line no-func-assign
-        numberFill = numberFill.bind(this);
         // eslint-disable-next-line no-func-assign
         munch = munch.bind(this);
         // eslint-disable-next-line no-func-assign
         update = update.bind(this);
 
-        // setup our initial square values
-        const { squares } = this.state;
-        for (let i = 0; i < squares.length; i++) {
-            squares[i] = numberFill();
-        }
-        this.state.squares = squares;
+        const { type } = this.state;
+        setupBoard(this.setBoard, type);
     }
 
     componentDidMount() {
@@ -51,6 +45,11 @@ class Game extends React.Component {
     componentWillUnmount() {
         document.removeEventListener('keydown', handleDown);
     }
+
+    setBoard = (number, squares) => {
+        this.state.number = number;
+        this.state.squares = squares;
+    };
 
     render() {
         const {
@@ -98,11 +97,22 @@ class Game extends React.Component {
     }
 }
 
+function setupBoard(setBoard, type) {
+    const squares = Array(WIDTH * HEIGHT);
+    const number = 1 + Math.ceil(Math.random() * 9);
+    for (let i = 0; i < squares.length; i++) {
+        squares[i] = numberFill(type, number);
+    }
+    setBoard(number, squares);
+}
+
 function handleDown(event) {
-    if (this.state.notification === '') {
+    const { squares, type, number, notification } = this.state;
+    if (notification === '') {
         switch (event.keyCode) {
             case SPACE:
                 update(munch());
+                checkLevel(squares, type, number);
                 break;
             case LEFT:
                 this.setState({
@@ -144,10 +154,10 @@ function handleDown(event) {
     }
 }
 
-function numberFill() {
-    switch (this.state.type) {
+function numberFill(type, number) {
+    switch (type) {
         case GAME_TYPES.MULTIPLES:
-            return GetMultiple(this.state.number);
+            return GetMultiple(number);
         default:
             return '';
     }
@@ -189,5 +199,22 @@ function update(inputs) {
     }
 }
 
+function checkLevel(squares, type, number) {
+    for (let i = 0; i < squares.length; i++) {
+        if (squares[i] !== '') {
+            switch (type) {
+                case GAME_TYPES.MULTIPLES:
+                    if (IsMultiple(number, squares[i])) {
+                        return false;
+                    }
+                    break;
+                default:
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
 export default Game;
-export { handleDown, numberFill, munch, update };
+export { handleDown, numberFill, munch, update, checkLevel };

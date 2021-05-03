@@ -15,6 +15,7 @@ describe('<Game/>', () => {
         const squares = Array(30).fill(5);
         squares[13] = 4;
         wrapper.state().squares = squares;
+        wrapper.state().number = 5;
 
         // good munch
         expect(wrapper.state().squares[14]).toEqual(5);

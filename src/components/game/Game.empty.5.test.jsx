@@ -15,7 +15,7 @@ describe('<Game/>', () => {
     });
 
     it('return empty', () => {
-        expect(numberFill()).toEqual('');
+        expect(numberFill('', 5)).toEqual('');
     });
 
     it('not valid', () => {

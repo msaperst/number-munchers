@@ -13,6 +13,7 @@ describe('<Game/>', () => {
     });
 
     it('updates fail', () => {
+        wrapper.state().number = 5;
         expect(wrapper.state().lives).toEqual(3);
         expect(wrapper.state().notification).toEqual('');
         update({ isValid: false, value: 4 });

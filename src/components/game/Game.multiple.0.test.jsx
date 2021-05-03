@@ -16,7 +16,7 @@ describe('<Game/>', () => {
     });
 
     it('multiplier for Number Filler', () => {
-        expect(numberFill()).toEqual(0);
+        expect(numberFill(GAME_TYPES.MULTIPLES, 0)).toEqual(0);
     });
 
     it('not valid', () => {
