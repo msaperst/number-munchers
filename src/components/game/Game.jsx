@@ -217,4 +217,4 @@ function checkLevel(squares, type, number) {
 }
 
 export default Game;
-export { handleDown, numberFill, munch, update, checkLevel };
+export { handleDown, numberFill, munch, update, checkLevel, setupBoard };

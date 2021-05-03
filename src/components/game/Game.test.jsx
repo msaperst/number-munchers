@@ -3,7 +3,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import Game, { checkLevel, numberFill } from './Game';
+import Game, { checkLevel, numberFill, setupBoard } from './Game';
 import { GAME_TYPES } from "../../objects/games";
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -79,5 +79,18 @@ describe('<Game/>', () => {
             squares[i] = numberFill(GAME_TYPES.MULTIPLES, 5);
         }
         expect(checkLevel(squares, GAME_TYPES.MULTIPLES, 5)).toEqual(false);
+    });
+
+    it('able to setup a new board', () => {
+        const setBoard = (number, squares) => {
+            expect(number).toBeGreaterThanOrEqual(1);
+            expect(number).toBeLessThanOrEqual(10);
+            expect(squares.length).toEqual(30);
+            for (let i = 0; i < squares.length; i++) {
+                expect(squares[i]).toBeGreaterThanOrEqual(0);
+                expect(squares[i]).toBeLessThanOrEqual(number*10);
+            }
+        };
+        setupBoard(setBoard, GAME_TYPES.MULTIPLES);
     });
 });
