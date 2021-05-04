@@ -27,7 +27,7 @@ class Game extends React.Component {
 
     componentDidMount() {
         const parent = this;
-        document.addEventListener('keydown', function (event) {
+        document.addEventListener('keydown', function keyed(event) {
             handleDown(
                 event.code,
                 parent.state,
