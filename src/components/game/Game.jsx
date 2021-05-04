@@ -20,14 +20,6 @@ class Game extends React.Component {
             muncher: { x: 2, y: 2 },
             squares: Array(WIDTH * HEIGHT),
         };
-        // eslint-disable-next-line no-func-assign
-        handleDown = handleDown.bind(this);
-        // eslint-disable-next-line no-func-assign
-        munch = munch.bind(this);
-        // TODO - ^^ MOVE OUT ABOVE ^^
-        // eslint-disable-next-line no-func-assign
-        update = update.bind(this);
-        // TODO - ^^ MOVE OUT ABOVE ^^
 
         const { type } = this.state;
         setupBoard(this.updateBoard, type);
@@ -41,7 +33,8 @@ class Game extends React.Component {
                 parent.state,
                 parent.updateBoard,
                 parent.updateNotification,
-                parent.moveMuncher
+                parent.moveMuncher,
+                parent.updateGame
             );
         });
     }
@@ -67,6 +60,10 @@ class Game extends React.Component {
 
     updateNotification = (notification) => {
         this.setState({ notification });
+    };
+
+    updateGame = (score, lives) => {
+        this.setState({ score, lives });
     };
 
     render() {
@@ -129,13 +126,19 @@ function handleDown(
     state,
     setupBoardCallBack,
     updateNotification,
-    moveMuncher
+    moveMuncher,
+    updateGame
 ) {
     const { squares, number, notification, type } = state;
     if (notification === '') {
         switch (code) {
             case 'Space':
-                update(munch());
+                update(
+                    munch(state, setupBoardCallBack),
+                    state,
+                    updateGame,
+                    updateNotification
+                );
                 if (checkLevel(squares, type, number)) {
                     updateNotification('You beat the level!');
                     setupBoard(setupBoardCallBack, type);
@@ -170,18 +173,18 @@ function numberFill(type, number) {
     }
 }
 
-function munch() {
+function munch(state, setBoard) {
     // get and setup our square
-    const { squares } = this.state;
-    const value = squares[this.state.muncher.y * WIDTH + this.state.muncher.x];
-    squares[this.state.muncher.y * WIDTH + this.state.muncher.x] = '';
-    this.setState({ squares });
+    const { squares, muncher, number, type } = state;
+    const value = squares[muncher.y * WIDTH + muncher.x];
+    squares[muncher.y * WIDTH + muncher.x] = '';
+    setBoard(number, squares);
 
-    // determine if we nommed something good
+    // determine if we ate something good
     let isValid;
-    switch (this.state.type) {
+    switch (type) {
         case GAME_TYPES.MULTIPLES:
-            isValid = IsMultiple(this.state.number, value);
+            isValid = IsMultiple(number, value);
             break;
         default:
             isValid = false;
@@ -189,21 +192,21 @@ function munch() {
     return { isValid, value };
 }
 
-function update(inputs) {
+function update(inputs, state, updateGame, updateNotification) {
     const { isValid, value } = inputs;
-    let { score, lives, notification } = this.state;
+    let { score, lives } = state;
+    const { type, number } = state;
 
     if (isValid && value !== '') {
         score += 5;
-        this.setState({ score });
     } else if (!isValid) {
-        let compare = this.state.type.toLowerCase();
-        compare = compare.slice(0, compare.length - 1);
-        notification = `"${value}" is not a ${compare} of "${this.state.number}".`;
-        this.setState({ notification });
+        const compare = type.slice(0, type.length - 1);
+        updateNotification(
+            `"${value}" is not a ${compare.toLowerCase()} of "${number}".`
+        );
         lives--;
-        this.setState({ lives });
     }
+    updateGame(score, lives);
 }
 
 function checkLevel(squares, type, number) {

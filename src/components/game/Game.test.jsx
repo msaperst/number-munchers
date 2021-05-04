@@ -3,7 +3,14 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import Game, { checkLevel, handleDown, numberFill, setupBoard } from './Game';
+import Game, {
+    checkLevel,
+    handleDown,
+    munch,
+    numberFill,
+    setupBoard,
+    update,
+} from './Game';
 import { GAME_TYPES } from '../../objects/games';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -15,6 +22,18 @@ describe('<Game/>', () => {
         wrapper = Enzyme.shallow(<Game />);
         wrapper.setState({ number: 5 });
     });
+
+    const doNothing = () => {};
+
+    const setBoard = (number, squares) => {
+        expect(number).toBeGreaterThanOrEqual(1);
+        expect(number).toBeLessThanOrEqual(10);
+        expect(squares).toHaveLength(30);
+        for (let i = 0; i < squares.length; i++) {
+            expect(squares[i]).toBeGreaterThanOrEqual(0);
+            expect(squares[i]).toBeLessThanOrEqual(number * 10);
+        }
+    };
 
     it('level 1 Displayed', () => {
         expect(wrapper.find('.level').text()).toEqual('Level: 1');
@@ -207,14 +226,16 @@ describe('<Game/>', () => {
         handleDown(
             'Space',
             {
-                squares: Array(30),
+                squares: Array(30).fill(''),
                 number: 5,
+                muncher: { x: 2, y: 2 },
                 notification: '',
                 type: GAME_TYPES.MULTIPLES,
             },
-            setBoard,
+            doNothing,
             updateNotification,
-            null
+            null,
+            doNothing
         );
     });
 
@@ -227,12 +248,14 @@ describe('<Game/>', () => {
             {
                 squares: Array(30).fill(5),
                 number: 5,
+                muncher: { x: 2, y: 2 },
                 notification: '',
                 type: GAME_TYPES.MULTIPLES,
             },
-            null,
+            doNothing,
             updateNotification,
-            null
+            null,
+            doNothing
         );
         expect(true).toEqual(true);
     });
@@ -279,13 +302,112 @@ describe('<Game/>', () => {
         expect(wrapper.state().muncher).toEqual({ x: 2, y: 4 });
     });
 
-    const setBoard = (number, squares) => {
-        expect(number).toBeGreaterThanOrEqual(1);
-        expect(number).toBeLessThanOrEqual(10);
-        expect(squares).toHaveLength(30);
-        for (let i = 0; i < squares.length; i++) {
-            expect(squares[i]).toBeGreaterThanOrEqual(0);
-            expect(squares[i]).toBeLessThanOrEqual(number * 10);
-        }
-    };
+    it('multiplier for Number Filler', () => {
+        expect(numberFill(GAME_TYPES.MULTIPLES, 0)).toEqual(0);
+    });
+
+    it('returns empty', () => {
+        expect(numberFill('', 5)).toEqual('');
+    });
+
+    it('not valid', () => {
+        const setBoard = (number, squares) => {
+            for (let i = 0; i < squares.length; i++) {
+                if (i !== 14) {
+                    expect(squares[i]).toEqual(5);
+                }
+            }
+            expect(number).toEqual(0);
+            expect(squares[14]).toEqual('');
+        };
+        const state = {
+            squares: Array(30).fill(5),
+            muncher: { x: 2, y: 2 },
+            number: 0,
+            type: GAME_TYPES.MULTIPLES,
+        };
+        const result = munch(state, setBoard);
+        expect(result.isValid).toEqual(false);
+        expect(result.value).toEqual(5);
+    });
+
+    it('is valid', () => {
+        const setBoard = (number, squares) => {
+            for (let i = 0; i < squares.length; i++) {
+                if (i !== 14) {
+                    expect(squares[i]).toEqual(5);
+                }
+            }
+            expect(number).toEqual(5);
+            expect(squares[14]).toEqual('');
+        };
+        const state = {
+            squares: Array(30).fill(5),
+            muncher: { x: 2, y: 2 },
+            number: 5,
+            type: GAME_TYPES.MULTIPLES,
+        };
+        const result = munch(state, setBoard);
+        expect(result.isValid).toEqual(true);
+        expect(result.value).toEqual(5);
+    });
+
+    it('is not valid for bad type', () => {
+        const setBoard = (number, squares) => {
+            for (let i = 0; i < squares.length; i++) {
+                if (i !== 14) {
+                    expect(squares[i]).toEqual(5);
+                }
+            }
+            expect(number).toEqual(5);
+            expect(squares[14]).toEqual('');
+        };
+        const state = {
+            squares: Array(30).fill(5),
+            muncher: { x: 2, y: 2 },
+            number: 5,
+            type: '',
+        };
+        const result = munch(state, setBoard);
+        expect(result.isValid).toEqual(false);
+        expect(result.value).toEqual(5);
+    });
+
+    it('adds score if valid and not empty', () => {
+        const updateGame = (score, lives) => {
+            expect(score).toEqual(5);
+            expect(lives).toEqual(3);
+        };
+        const inputs = { isValid: true, value: 5 };
+        const state = { score: 0, lives: 3, type: '', number: 5 };
+        update(inputs, state, updateGame, null);
+    });
+
+    it('does nothing if valid and empty', () => {
+        const updateGame = (score, lives) => {
+            expect(score).toEqual(0);
+            expect(lives).toEqual(3);
+        };
+        const inputs = { isValid: true, value: '' };
+        const state = { score: 0, lives: 3, type: '', number: 5 };
+        update(inputs, state, updateGame, null);
+    });
+
+    it('loses life and add notification if not valid', () => {
+        const updateGame = (score, lives) => {
+            expect(score).toEqual(0);
+            expect(lives).toEqual(2);
+        };
+        const updateNotification = (notification) => {
+            expect(notification).toEqual('"4" is not a multiple of "5".');
+        };
+        const inputs = { isValid: false, value: '4' };
+        const state = {
+            score: 0,
+            lives: 3,
+            type: GAME_TYPES.MULTIPLES,
+            number: 5,
+        };
+        update(inputs, state, updateGame, updateNotification);
+    });
 });
