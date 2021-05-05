@@ -82,7 +82,7 @@ class Game extends React.Component {
     updateGame = (score, lives) => {
         this.setState({ score, lives });
         if (lives === 0) {
-            const { number, type } = this.state;
+            const { type, number } = this.state;
             this.updateNotification('You lost the game!');
             const x = setupBoard(number, type, { x: 2, y: 2 });
             this.initializeGame(x.number, x.squares);
