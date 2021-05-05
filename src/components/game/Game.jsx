@@ -27,7 +27,7 @@ class Game extends React.Component {
 
     componentDidMount() {
         const parent = this;
-        document.addEventListener('keydown', function keyed(event) {
+        document.addEventListener('keydown', (event) => {
             handleDown(
                 event.code,
                 parent.state,
@@ -84,11 +84,8 @@ class Game extends React.Component {
         if (lives === 0) {
             const { type, number } = this.state;
             this.updateNotification('You lost the game!');
-            const { newNumber, squares } = setupBoard(number, type, {
-                x: 2,
-                y: 2,
-            });
-            this.initializeGame(newNumber, squares);
+            const x = setupBoard(number, type, { x: 2, y: 2 });
+            this.initializeGame(x.number, x.squares);
         }
     };
 
