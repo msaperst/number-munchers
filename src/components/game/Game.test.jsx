@@ -171,7 +171,7 @@ describe('<Game/>', () => {
     });
 
     it('able to setup a new board', () => {
-        setupBoard(setBoard, GAME_TYPES.MULTIPLES);
+        setupBoard(0, setBoard, GAME_TYPES.MULTIPLES);
         // assertions in setBoard, this assertion just to please editor
         expect(true).toEqual(true);
     });

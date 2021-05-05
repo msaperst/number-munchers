@@ -12,7 +12,7 @@ class Game extends React.Component {
         super(props);
         const type = GAME_TYPES.MULTIPLES;
         const muncher = { x: 2, y: 2 };
-        const { number, squares } = setupBoard(type, muncher);
+        const { number, squares } = setupBoard(0, type, muncher);
         this.state = {
             level: 1,
             type,
@@ -82,10 +82,13 @@ class Game extends React.Component {
     updateGame = (score, lives) => {
         this.setState({ score, lives });
         if (lives === 0) {
-            const { type } = this.state;
+            const { type, number } = this.state;
             this.updateNotification('You lost the game!');
-            const { number, squares } = setupBoard(type, { x: 2, y: 2 });
-            this.initializeGame(number, squares);
+            const { newNumber, squares } = setupBoard(number, type, {
+                x: 2,
+                y: 2,
+            });
+            this.initializeGame(newNumber, squares);
         }
     };
 
@@ -135,9 +138,12 @@ class Game extends React.Component {
     }
 }
 
-function setupBoard(type, muncher) {
+function setupBoard(oldNumber, type, muncher) {
     const squares = Array(WIDTH * HEIGHT);
-    const number = 1 + Math.ceil(Math.random() * 9);
+    let number = oldNumber;
+    while (number === oldNumber) {
+        number = 1 + Math.ceil(Math.random() * 9);
+    }
     squares[muncher.y * WIDTH + muncher.x] = '';
     for (let i = 0; i < squares.length; i++) {
         if (squares[i] !== '') {
@@ -169,7 +175,7 @@ function handleDown(
                 if (checkLevel(squares, type, number)) {
                     updateNotification('You beat the level!');
                     moveMuncher(2 - muncher.x, 2 - muncher.y);
-                    const { squares, number } = setupBoard(type, {
+                    const { squares, number } = setupBoard(state.number, type, {
                         x: 2,
                         y: 2,
                     });
