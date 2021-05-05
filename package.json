@@ -1,5 +1,6 @@
 {
   "name": "number-munchers",
+  "homepage": "http://msaperst.github.io/number-munchers",
   "version": "0.1.0",
   "jest": {
     "coverageThreshold": {
@@ -40,7 +41,9 @@
     "test": "react-scripts test --coverage",
     "test:ci": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint ./src/",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -71,6 +74,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.1.0",
     "jest-junit": "^12.0.0",
     "prettier": "^2.2.1"
   }
