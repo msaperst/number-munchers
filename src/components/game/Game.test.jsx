@@ -44,6 +44,14 @@ describe('<Game/>', () => {
         expect(wrapper.find('.title').text()).toEqual('Multiples of 5');
     });
 
+    it('score Displayed', () => {
+        expect(wrapper.find('.score').text()).toEqual('Score: 0');
+    });
+
+    it('lives Displayed', () => {
+        expect(wrapper.find('.lives').text()).toEqual('MunMunMun');
+    });
+
     it('basic Muncher Position', () => {
         expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
     });
@@ -57,6 +65,67 @@ describe('<Game/>', () => {
         const event = new KeyboardEvent('keydown', { code: 'L' });
         document.dispatchEvent(event);
         expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
+    });
+
+    it('moves the muncher', () => {
+        wrapper.instance().moveMuncher(-1, 1);
+        expect(wrapper.state().muncher).toEqual({ x: 1, y: 3 });
+    });
+
+    it('maxes out the muncher', () => {
+        wrapper.instance().moveMuncher(99, 99);
+        expect(wrapper.state().muncher).toEqual({ x: 5, y: 4 });
+    });
+
+    it('mins out the muncher', () => {
+        wrapper.instance().moveMuncher(-99, -99);
+        expect(wrapper.state().muncher).toEqual({ x: 0, y: 0 });
+    });
+
+    it('initializes a board', () => {
+        const squares = Array(30).fill(3);
+        wrapper.instance().initializeGame(5, squares);
+        expect(wrapper.state().number).toEqual(5);
+        expect(wrapper.state().squares).toEqual(squares);
+        expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
+        expect(wrapper.state().score).toEqual(0);
+        expect(wrapper.state().lives).toEqual(3);
+        expect(wrapper.state().level).toEqual(1);
+    });
+
+    it('ups the level', () => {
+        wrapper.instance().nextLevel(-1);
+        expect(wrapper.state().level).toEqual(2);
+        expect(wrapper.state().number).toEqual(-1);
+    });
+
+    it('updates the squares', () => {
+        const squares = Array(30).fill(3);
+        wrapper.instance().updateBoard(squares);
+        expect(wrapper.state().squares).toEqual(squares);
+    });
+
+    it('updates the notification', () => {
+        wrapper.instance().updateNotification('hello world');
+        expect(wrapper.state().notification).toEqual('hello world');
+    });
+
+    it('updates the basic game details', () => {
+        wrapper.instance().updateGame(10, 4);
+        expect(wrapper.state().score).toEqual(10);
+        expect(wrapper.state().lives).toEqual(4);
+    });
+
+    it('resets the game', () => {
+        const { squares, number } = wrapper.state();
+        wrapper.instance().updateGame(10, 0);
+        expect(wrapper.state().notification).toEqual('You lost the game!');
+        expect(wrapper.state().number).not.toEqual(number);
+        expect(wrapper.state().squares).not.toEqual(squares);
+        expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
+        expect(wrapper.state().score).toEqual(0);
+        expect(wrapper.state().lives).toEqual(3);
+        expect(wrapper.state().level).toEqual(1);
     });
 
     it('full Board', () => {
@@ -102,7 +171,7 @@ describe('<Game/>', () => {
     });
 
     it('able to setup a new board', () => {
-        setupBoard(setBoard, GAME_TYPES.MULTIPLES);
+        setupBoard(0, setBoard, GAME_TYPES.MULTIPLES);
         // assertions in setBoard, this assertion just to please editor
         expect(true).toEqual(true);
     });
@@ -234,8 +303,52 @@ describe('<Game/>', () => {
             },
             doNothing,
             updateNotification,
-            null,
+            doNothing,
+            doNothing,
             doNothing
+        );
+    });
+
+    it('properly calculates new muncher position', () => {
+        const moveMuncher = (x, y) => {
+            expect(x).toEqual(1);
+            expect(y).toEqual(-3);
+        };
+        handleDown(
+            'Space',
+            {
+                squares: Array(30).fill(''),
+                number: 5,
+                muncher: { x: 1, y: 5 },
+                notification: '',
+                type: GAME_TYPES.MULTIPLES,
+            },
+            doNothing,
+            doNothing,
+            moveMuncher,
+            doNothing,
+            doNothing
+        );
+    });
+
+    it('properly sets up the next level', () => {
+        const nextLevel = (number) => {
+            expect(number).not.toEqual(5);
+        };
+        handleDown(
+            'Space',
+            {
+                squares: Array(30).fill(''),
+                number: 5,
+                muncher: { x: 1, y: 5 },
+                notification: '',
+                type: GAME_TYPES.MULTIPLES,
+            },
+            doNothing,
+            doNothing,
+            doNothing,
+            doNothing,
+            nextLevel
         );
     });
 
@@ -311,13 +424,12 @@ describe('<Game/>', () => {
     });
 
     it('not valid', () => {
-        const setBoard = (number, squares) => {
+        const setBoard = (squares) => {
             for (let i = 0; i < squares.length; i++) {
                 if (i !== 14) {
                     expect(squares[i]).toEqual(5);
                 }
             }
-            expect(number).toEqual(0);
             expect(squares[14]).toEqual('');
         };
         const state = {
@@ -332,13 +444,12 @@ describe('<Game/>', () => {
     });
 
     it('is valid', () => {
-        const setBoard = (number, squares) => {
+        const setBoard = (squares) => {
             for (let i = 0; i < squares.length; i++) {
                 if (i !== 14) {
                     expect(squares[i]).toEqual(5);
                 }
             }
-            expect(number).toEqual(5);
             expect(squares[14]).toEqual('');
         };
         const state = {
@@ -353,13 +464,12 @@ describe('<Game/>', () => {
     });
 
     it('is not valid for bad type', () => {
-        const setBoard = (number, squares) => {
+        const setBoard = (squares) => {
             for (let i = 0; i < squares.length; i++) {
                 if (i !== 14) {
                     expect(squares[i]).toEqual(5);
                 }
             }
-            expect(number).toEqual(5);
             expect(squares[14]).toEqual('');
         };
         const state = {
