@@ -66,9 +66,9 @@ class Game extends React.Component {
         });
     };
 
-    nextLevel = () => {
+    nextLevel = (number) => {
         const { level } = this.state;
-        this.setState({ level: level + 1 });
+        this.setState({ level: level + 1, number });
     };
 
     updateBoard = (squares) => {
@@ -169,12 +169,12 @@ function handleDown(
                 if (checkLevel(squares, type, number)) {
                     updateNotification('You beat the level!');
                     moveMuncher(2 - muncher.x, 2 - muncher.y);
-                    const { squares } = setupBoard(type, {
+                    const { squares, number } = setupBoard(type, {
                         x: 2,
                         y: 2,
                     });
                     updateBoard(squares);
-                    nextLevel();
+                    nextLevel(number);
                 }
                 break;
             case 'ArrowLeft':

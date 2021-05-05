@@ -94,8 +94,9 @@ describe('<Game/>', () => {
     });
 
     it('ups the level', () => {
-        wrapper.instance().nextLevel();
+        wrapper.instance().nextLevel(-1);
         expect(wrapper.state().level).toEqual(2);
+        expect(wrapper.state().number).toEqual(-1);
     });
 
     it('updates the squares', () => {
@@ -331,8 +332,8 @@ describe('<Game/>', () => {
     });
 
     it('properly sets up the next level', () => {
-        const nextLevel = () => {
-            expect(true).toEqual(true);
+        const nextLevel = (number) => {
+            expect(number).not.toEqual(5);
         };
         handleDown(
             'Space',
