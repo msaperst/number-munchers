@@ -10,19 +10,19 @@ const HEIGHT = 5;
 class Game extends React.Component {
     constructor(props) {
         super(props);
+        const type = GAME_TYPES.MULTIPLES;
+        const muncher = { x: 2, y: 2 };
+        const { number, squares } = setupBoard(type, muncher);
         this.state = {
             level: 1,
-            type: GAME_TYPES.MULTIPLES,
-            number: 0,
+            type,
+            number,
             score: 0,
             lives: 3,
             notification: '',
-            muncher: { x: 2, y: 2 },
-            squares: Array(WIDTH * HEIGHT),
+            muncher,
+            squares,
         };
-
-        const { type } = this.state;
-        setupBoard(this.updateBoard, type);
     }
 
     componentDidMount() {
@@ -34,7 +34,8 @@ class Game extends React.Component {
                 parent.updateBoard,
                 parent.updateNotification,
                 parent.moveMuncher,
-                parent.updateGame
+                parent.updateGame,
+                parent.nextLevel
             );
         });
     }
@@ -53,9 +54,25 @@ class Game extends React.Component {
         });
     };
 
-    updateBoard = (number, squares) => {
-        this.state.number = number;
-        this.state.squares = squares;
+    initializeGame = (number, squares) => {
+        const muncher = { x: 2, y: 2 };
+        this.setState({
+            number,
+            squares,
+            muncher,
+            score: 0,
+            lives: 3,
+            level: 1,
+        });
+    };
+
+    nextLevel = () => {
+        const { level } = this.state;
+        this.setState({ level: level + 1 });
+    };
+
+    updateBoard = (squares) => {
+        this.setState({ squares });
     };
 
     updateNotification = (notification) => {
@@ -64,6 +81,12 @@ class Game extends React.Component {
 
     updateGame = (score, lives) => {
         this.setState({ score, lives });
+        if (lives === 0) {
+            const { type } = this.state;
+            this.updateNotification('You lost the game!');
+            const { number, squares } = setupBoard(type, { x: 2, y: 2 });
+            this.initializeGame(number, squares);
+        }
     };
 
     render() {
@@ -112,36 +135,46 @@ class Game extends React.Component {
     }
 }
 
-function setupBoard(setBoard, type) {
+function setupBoard(type, muncher) {
     const squares = Array(WIDTH * HEIGHT);
     const number = 1 + Math.ceil(Math.random() * 9);
+    squares[muncher.y * WIDTH + muncher.x] = '';
     for (let i = 0; i < squares.length; i++) {
-        squares[i] = numberFill(type, number);
+        if (squares[i] !== '') {
+            squares[i] = numberFill(type, number);
+        }
     }
-    setBoard(number, squares);
+    return { number, squares };
 }
 
 function handleDown(
     code,
     state,
-    setupBoardCallBack,
+    updateBoard,
     updateNotification,
     moveMuncher,
-    updateGame
+    updateGame,
+    nextLevel
 ) {
-    const { squares, number, notification, type } = state;
+    const { squares, number, notification, type, muncher } = state;
     if (notification === '') {
         switch (code) {
             case 'Space':
                 update(
-                    munch(state, setupBoardCallBack),
+                    munch(state, updateBoard),
                     state,
                     updateGame,
                     updateNotification
                 );
                 if (checkLevel(squares, type, number)) {
                     updateNotification('You beat the level!');
-                    setupBoard(setupBoardCallBack, type);
+                    moveMuncher(2 - muncher.x, 2 - muncher.y);
+                    const { squares } = setupBoard(type, {
+                        x: 2,
+                        y: 2,
+                    });
+                    updateBoard(squares);
+                    nextLevel();
                 }
                 break;
             case 'ArrowLeft':
@@ -173,12 +206,12 @@ function numberFill(type, number) {
     }
 }
 
-function munch(state, setBoard) {
+function munch(state, updateBoard) {
     // get and setup our square
     const { squares, muncher, number, type } = state;
     const value = squares[muncher.y * WIDTH + muncher.x];
     squares[muncher.y * WIDTH + muncher.x] = '';
-    setBoard(number, squares);
+    updateBoard(squares);
 
     // determine if we ate something good
     let isValid;
