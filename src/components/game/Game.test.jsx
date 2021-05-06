@@ -49,7 +49,8 @@ describe('<Game/>', () => {
     });
 
     it('lives Displayed', () => {
-        expect(wrapper.find('.lives').text()).toEqual('MunMunMun');
+        expect(wrapper.find('.lives').text()).toEqual('');
+        expect(wrapper.find('.lives').find('.life')).toHaveLength(3);
     });
 
     it('basic Muncher Position', () => {
