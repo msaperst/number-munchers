@@ -1,6 +1,6 @@
 .notification {
     position: absolute;
-    background: white;
+    background: #000574;
     width: calc(100% - 1px);
     height: calc(20% - 2px);
     display: flex;
