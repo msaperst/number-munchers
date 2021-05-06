@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Pull Request CI
+name: Main CI
 
 on:
   push:
@@ -29,4 +29,4 @@ jobs:
     - run: npm run lint
     - run: npm run test:ci
     - run: npm run owasp
-    - run: npm run deploy
+    - run: git config user.email 'msaperst@gmail.com'; git config user.name 'Max Saperstone'; npm run deploy
