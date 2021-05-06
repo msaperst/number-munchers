@@ -103,11 +103,7 @@ class Game extends React.Component {
 
         const munchers = [];
         for (let i = 0; i < lives; i++) {
-            munchers.push(
-                <span key={i} className="life">
-                    Mun
-                </span>
-            );
+            munchers.push(<span key={i} className="life" />);
         }
 
         return (
