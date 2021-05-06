@@ -1,11 +1,11 @@
 .info {
-    width:100%;
-    height:75px;
+    width: 100%;
+    height: 75px;
     position: relative;
 }
 
 .board {
-    border: 4px double #999;
+    border: 4px double #ff4cf7;
     position: relative;
     width: 95%;
     height: calc(100% - 160px);
