@@ -19,14 +19,22 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout 🛎️
+      uses: actions/checkout@v2
+
+    - name: Build 🔧 and Test ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm run lint
-    - run: npm run test:ci
-    - run: npm run owasp
-    - run: git config user.email 'msaperst@gmail.com'; git config user.name 'Max Saperstone'; npm run deploy
+    - run: |
+        npm ci
+        npm run build --if-present
+        npm run lint
+        npm run test:ci
+        npm run owasp
+
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@4.1.1
+      with:
+        branch: gh-pages
+        folder: build
