@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/number-munchers/static/css/main.1bb4de39.chunk.css",
+    "main.css": "/number-munchers/static/css/main.e18914d0.chunk.css",
     "main.js": "/number-munchers/static/js/main.b943359c.chunk.js",
     "main.js.map": "/number-munchers/static/js/main.b943359c.chunk.js.map",
     "runtime-main.js": "/number-munchers/static/js/runtime-main.3ea222d5.js",
@@ -8,14 +8,14 @@
     "static/js/2.2f8e2f6e.chunk.js": "/number-munchers/static/js/2.2f8e2f6e.chunk.js",
     "static/js/2.2f8e2f6e.chunk.js.map": "/number-munchers/static/js/2.2f8e2f6e.chunk.js.map",
     "index.html": "/number-munchers/index.html",
-    "static/css/main.1bb4de39.chunk.css.map": "/number-munchers/static/css/main.1bb4de39.chunk.css.map",
+    "static/css/main.e18914d0.chunk.css.map": "/number-munchers/static/css/main.e18914d0.chunk.css.map",
     "static/js/2.2f8e2f6e.chunk.js.LICENSE.txt": "/number-munchers/static/js/2.2f8e2f6e.chunk.js.LICENSE.txt",
     "static/media/Muncher.css": "/number-munchers/static/media/muncher.f6020cca.png"
   },
   "entrypoints": [
     "static/js/runtime-main.3ea222d5.js",
     "static/js/2.2f8e2f6e.chunk.js",
-    "static/css/main.1bb4de39.chunk.css",
+    "static/css/main.e18914d0.chunk.css",
     "static/js/main.b943359c.chunk.js"
   ]
 }
