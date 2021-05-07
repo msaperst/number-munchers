@@ -10,9 +10,8 @@ describe('movement', () => {
 
     beforeEach(() => {
         wrapper = Enzyme.shallow(<Game />);
-        wrapper.setState({ number: 5 });
-        const squares = Array(30).fill(5);
-        squares[13] = 4;
+        const squares = Array(30).fill(wrapper.state().game.getNumber());
+        squares[13] = 97;
         wrapper.setState({ squares });
     });
 
@@ -31,7 +30,9 @@ describe('movement', () => {
         expect(wrapper.state().score).toEqual(5);
         expect(wrapper.state().lives).toEqual(2);
         expect(wrapper.render().find('.notification').text()).toEqual(
-            '"4" is not a multiple of "5".Press Space Bar to continue.'
+            `"97" is not a multiple of "${wrapper
+                .state()
+                .game.getNumber()}".Press Space Bar to continue.`
         );
         // dismissing bad munch
         expect(wrapper.state().muncher).toEqual({ x: 1, y: 2 });

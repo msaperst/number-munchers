@@ -3,15 +3,8 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import Game, {
-    checkLevel,
-    handleDown,
-    munch,
-    numberFill,
-    setupBoard,
-    update,
-} from './Game';
-import { GAME_TYPES } from '../../objects/games';
+import Game from './Game';
+import Multiples from '../../objects/Multiples';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -20,28 +13,16 @@ describe('<Game/>', () => {
 
     beforeEach(() => {
         wrapper = Enzyme.shallow(<Game />);
-        wrapper.setState({ number: 5 });
     });
-
-    const doNothing = () => {};
-
-    const setBoard = (number, squares) => {
-        expect(number).toBeGreaterThanOrEqual(1);
-        expect(number).toBeLessThanOrEqual(10);
-        expect(squares).toHaveLength(30);
-        for (let i = 0; i < squares.length; i++) {
-            expect(squares[i]).toBeGreaterThanOrEqual(0);
-            expect(squares[i]).toBeLessThanOrEqual(number * 10);
-        }
-    };
 
     it('level 1 Displayed', () => {
         expect(wrapper.find('.level').text()).toEqual('Level: 1');
     });
 
     it('activity Displayed', () => {
-        expect(wrapper.state().number).toEqual(5);
-        expect(wrapper.find('.title').text()).toEqual('Multiples of 5');
+        expect(wrapper.find('.title').text()).toEqual(
+            `Multiples of ${wrapper.state().game.getNumber()}`
+        );
     });
 
     it('score Displayed', () => {
@@ -83,52 +64,6 @@ describe('<Game/>', () => {
         expect(wrapper.state().muncher).toEqual({ x: 0, y: 0 });
     });
 
-    it('initializes a board', () => {
-        const squares = Array(30).fill(3);
-        wrapper.instance().initializeGame(5, squares);
-        expect(wrapper.state().number).toEqual(5);
-        expect(wrapper.state().squares).toEqual(squares);
-        expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
-        expect(wrapper.state().score).toEqual(0);
-        expect(wrapper.state().lives).toEqual(3);
-        expect(wrapper.state().level).toEqual(1);
-    });
-
-    it('ups the level', () => {
-        wrapper.instance().nextLevel(-1);
-        expect(wrapper.state().level).toEqual(2);
-        expect(wrapper.state().number).toEqual(-1);
-    });
-
-    it('updates the squares', () => {
-        const squares = Array(30).fill(3);
-        wrapper.instance().updateBoard(squares);
-        expect(wrapper.state().squares).toEqual(squares);
-    });
-
-    it('updates the notification', () => {
-        wrapper.instance().updateNotification('hello world');
-        expect(wrapper.state().notification).toEqual('hello world');
-    });
-
-    it('updates the basic game details', () => {
-        wrapper.instance().updateGame(10, 4);
-        expect(wrapper.state().score).toEqual(10);
-        expect(wrapper.state().lives).toEqual(4);
-    });
-
-    it('resets the game', () => {
-        const { squares, number } = wrapper.state();
-        wrapper.instance().updateGame(10, 0);
-        expect(wrapper.state().notification).toEqual('You lost the game!');
-        expect(wrapper.state().number).not.toEqual(number);
-        expect(wrapper.state().squares).not.toEqual(squares);
-        expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
-        expect(wrapper.state().score).toEqual(0);
-        expect(wrapper.state().lives).toEqual(3);
-        expect(wrapper.state().level).toEqual(1);
-    });
-
     it('full Board', () => {
         const square = render(<Game />);
         expect(square.container.querySelector('.muncher')).toBeInTheDocument();
@@ -141,237 +76,114 @@ describe('<Game/>', () => {
     });
 
     it('is all empty needs new board', () => {
-        const squares = Array(2).fill('');
-        expect(checkLevel(squares)).toEqual(true);
+        wrapper.state().squares = Array(2).fill('');
+        expect(wrapper.instance().checkLevel()).toEqual(true);
     });
 
     it('bad type returns false', () => {
-        const squares = Array(2).fill('');
-        squares[1] = 6;
-        expect(checkLevel(squares, '', 5)).toEqual(false);
+        const multiples = new Multiples();
+        jest.spyOn(multiples, 'getGame').mockImplementation(() => 'Foo');
+        wrapper.state().game = multiples;
+        wrapper.state().squares = Array(2).fill(5);
+        expect(wrapper.instance().checkLevel()).toEqual(false);
     });
 
     it('has one good value does not need new board', () => {
+        const game = new Multiples();
         const squares = Array(2).fill('');
-        squares[1] = 5;
-        expect(checkLevel(squares, GAME_TYPES.MULTIPLES, 5)).toEqual(false);
+        squares[1] = game.getNumber();
+        wrapper.state().game = game;
+        wrapper.state().squares = squares;
+        expect(wrapper.instance().checkLevel()).toEqual(false);
     });
 
     it('has one bad value does need new board', () => {
+        const game = new Multiples();
         const squares = Array(2).fill('');
-        squares[1] = 6;
-        expect(checkLevel(squares, GAME_TYPES.MULTIPLES, 5)).toEqual(true);
+        squares[1] = 97;
+        wrapper.state().game = game;
+        wrapper.state().squares = squares;
+        expect(wrapper.instance().checkLevel()).toEqual(true);
     });
 
     it('full board does not need new board', () => {
-        const squares = Array(30);
-        for (let i = 0; i < squares.length; i++) {
-            squares[i] = numberFill(GAME_TYPES.MULTIPLES, 5);
-        }
-        expect(checkLevel(squares, GAME_TYPES.MULTIPLES, 5)).toEqual(false);
+        expect(wrapper.instance().checkLevel()).toEqual(false);
     });
 
     it('able to setup a new board', () => {
-        setupBoard(0, setBoard, GAME_TYPES.MULTIPLES);
-        // assertions in setBoard, this assertion just to please editor
-        expect(true).toEqual(true);
+        const oldSquares = wrapper.instance().squares;
+        const squares = wrapper
+            .instance()
+            .setupBoard(new Multiples(), { x: 2, y: 2 });
+        expect(squares).toHaveLength(30);
+        expect(squares).not.toEqual(oldSquares);
+    });
+
+    it('new board resets the number', () => {
+        const oldNumber = wrapper.state().game.getNumber();
+        wrapper.instance().setupBoard(wrapper.state().game, { x: 2, y: 2 });
+        expect(wrapper.state().game.getNumber()).not.toEqual(oldNumber);
     });
 
     it('moves Muncher to the right', () => {
-        const moveMuncher = (xc, yc) => {
-            expect(xc).toEqual(1);
-            expect(yc).toBeLessThanOrEqual(0);
-        };
-        handleDown(
-            'ArrowRight',
-            {
-                squares: Array(30),
-                number: 5,
-                notification: '',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            null,
-            null,
-            moveMuncher
-        );
+        wrapper.instance().keyDown('ArrowRight');
+        expect(wrapper.state().muncher.x).toEqual(3);
+        expect(wrapper.state().muncher.y).toEqual(2);
     });
 
     it('moves Muncher to the left', () => {
-        const moveMuncher = (xc, yc) => {
-            expect(xc).toEqual(-1);
-            expect(yc).toBeLessThanOrEqual(0);
-        };
-        handleDown(
-            'ArrowLeft',
-            {
-                squares: Array(30),
-                number: 5,
-                notification: '',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            null,
-            null,
-            moveMuncher
-        );
+        wrapper.instance().keyDown('ArrowLeft');
+        expect(wrapper.state().muncher.x).toEqual(1);
+        expect(wrapper.state().muncher.y).toEqual(2);
     });
 
     it('moves Muncher to the top', () => {
-        const moveMuncher = (xc, yc) => {
-            expect(xc).toEqual(0);
-            expect(yc).toBeLessThanOrEqual(-1);
-        };
-        handleDown(
-            'ArrowUp',
-            {
-                squares: Array(30),
-                number: 5,
-                notification: '',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            null,
-            null,
-            moveMuncher
-        );
+        wrapper.instance().keyDown('ArrowUp');
+        expect(wrapper.state().muncher.x).toEqual(2);
+        expect(wrapper.state().muncher.y).toEqual(1);
     });
 
     it('moves Muncher to the bottom', () => {
-        const moveMuncher = (xc, yc) => {
-            expect(xc).toEqual(0);
-            expect(yc).toBeLessThanOrEqual(1);
-        };
-        handleDown(
-            'ArrowDown',
-            {
-                squares: Array(30),
-                number: 5,
-                notification: '',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            null,
-            null,
-            moveMuncher
-        );
+        wrapper.instance().keyDown('ArrowDown');
+        expect(wrapper.state().muncher.x).toEqual(2);
+        expect(wrapper.state().muncher.y).toEqual(3);
     });
 
     it('does nothing', () => {
-        const moveMuncher = () => {
-            expect(true).toEqual(false);
-        };
-        handleDown(
-            'ArrowLeft',
-            {
-                squares: Array(30),
-                number: 5,
-                notification: '123',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            null,
-            null,
-            moveMuncher
-        );
+        wrapper.state().notification = '123';
+        wrapper.instance().keyDown('ArrowRight');
+        expect(wrapper.state().muncher.x).toEqual(2);
+        expect(wrapper.state().muncher.y).toEqual(2);
     });
 
     it('removes the notification', () => {
-        const updateNotification = (notification) => {
-            expect(notification).toEqual('');
-        };
-        handleDown(
-            'Space',
-            {
-                squares: Array(30),
-                number: 5,
-                notification: '123',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            null,
-            updateNotification,
-            null
-        );
+        wrapper.state().notification = '123';
+        wrapper.instance().keyDown('Space');
+        expect(wrapper.state().muncher.x).toEqual(2);
+        expect(wrapper.state().muncher.y).toEqual(2);
+        expect(wrapper.state().notification).toEqual('');
     });
 
     it('adds the level win notification', () => {
-        const updateNotification = (notification) => {
-            expect(notification).toEqual('You beat the level!');
-        };
-        handleDown(
-            'Space',
-            {
-                squares: Array(30).fill(''),
-                number: 5,
-                muncher: { x: 2, y: 2 },
-                notification: '',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            doNothing,
-            updateNotification,
-            doNothing,
-            doNothing,
-            doNothing
-        );
+        wrapper.state().squares = Array(30).fill('');
+        wrapper.instance().keyDown('Space');
+        expect(wrapper.state().notification).toEqual('You beat the level!');
     });
 
     it('properly calculates new muncher position', () => {
-        const moveMuncher = (x, y) => {
-            expect(x).toEqual(1);
-            expect(y).toEqual(-3);
-        };
-        handleDown(
-            'Space',
-            {
-                squares: Array(30).fill(''),
-                number: 5,
-                muncher: { x: 1, y: 5 },
-                notification: '',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            doNothing,
-            doNothing,
-            moveMuncher,
-            doNothing,
-            doNothing
-        );
+        wrapper.state().muncher.x = 0;
+        wrapper.state().muncher.y = 0;
+        wrapper.state().squares = Array(30).fill('');
+        wrapper.instance().keyDown('Space');
+        expect(wrapper.state().muncher.x).toEqual(2);
+        expect(wrapper.state().muncher.y).toEqual(2);
     });
 
     it('properly sets up the next level', () => {
-        const nextLevel = (number) => {
-            expect(number).not.toEqual(5);
-        };
-        handleDown(
-            'Space',
-            {
-                squares: Array(30).fill(''),
-                number: 5,
-                muncher: { x: 1, y: 5 },
-                notification: '',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            doNothing,
-            doNothing,
-            doNothing,
-            doNothing,
-            nextLevel
-        );
-    });
-
-    it('does not present a new notification', () => {
-        const updateNotification = () => {
-            expect(true).toEqual(false);
-        };
-        handleDown(
-            'Space',
-            {
-                squares: Array(30).fill(5),
-                number: 5,
-                muncher: { x: 2, y: 2 },
-                notification: '',
-                type: GAME_TYPES.MULTIPLES,
-            },
-            doNothing,
-            updateNotification,
-            null,
-            doNothing
-        );
-        expect(true).toEqual(true);
+        const originalNumber = wrapper.state().game.getNumber();
+        wrapper.state().squares = Array(30).fill('');
+        wrapper.instance().keyDown('Space');
+        expect(wrapper.state().game.getNumber()).not.toEqual(originalNumber);
     });
 
     it('moves Muncher Right', () => {
@@ -416,109 +228,103 @@ describe('<Game/>', () => {
         expect(wrapper.state().muncher).toEqual({ x: 2, y: 4 });
     });
 
-    it('multiplier for Number Filler', () => {
-        expect(numberFill(GAME_TYPES.MULTIPLES, 0)).toEqual(0);
+    it('returns a valid number', () => {
+        expect(
+            wrapper.instance().numberFill(new Multiples())
+        ).toBeLessThanOrEqual(25);
     });
 
     it('returns empty', () => {
-        expect(numberFill('', 5)).toEqual('');
+        const multiples = new Multiples();
+        jest.spyOn(multiples, 'getGame').mockImplementation(() => 'Foo');
+        expect(wrapper.instance().numberFill(multiples)).toEqual('');
     });
 
     it('not valid', () => {
-        const setBoard = (squares) => {
-            for (let i = 0; i < squares.length; i++) {
-                if (i !== 14) {
-                    expect(squares[i]).toEqual(5);
-                }
-            }
-            expect(squares[14]).toEqual('');
-        };
-        const state = {
-            squares: Array(30).fill(5),
-            muncher: { x: 2, y: 2 },
-            number: 0,
-            type: GAME_TYPES.MULTIPLES,
-        };
-        const result = munch(state, setBoard);
+        const squares = Array(30).fill(5);
+        squares[14] = 97;
+        wrapper.state().squares = squares;
+        const result = wrapper.instance().munch();
         expect(result.isValid).toEqual(false);
-        expect(result.value).toEqual(5);
+        expect(result.value).toEqual(97);
+        for (let i = 0; i < squares.length; i++) {
+            if (i !== 14) {
+                expect(squares[i]).toEqual(5);
+            }
+        }
+        expect(squares[14]).toEqual('');
     });
 
     it('is valid', () => {
-        const setBoard = (squares) => {
-            for (let i = 0; i < squares.length; i++) {
-                if (i !== 14) {
-                    expect(squares[i]).toEqual(5);
-                }
-            }
-            expect(squares[14]).toEqual('');
-        };
-        const state = {
-            squares: Array(30).fill(5),
-            muncher: { x: 2, y: 2 },
-            number: 5,
-            type: GAME_TYPES.MULTIPLES,
-        };
-        const result = munch(state, setBoard);
+        const squares = Array(30).fill(5);
+        squares[14] = 0;
+        wrapper.state().squares = squares;
+        const result = wrapper.instance().munch();
         expect(result.isValid).toEqual(true);
-        expect(result.value).toEqual(5);
+        expect(result.value).toEqual(0);
+        for (let i = 0; i < squares.length; i++) {
+            if (i !== 14) {
+                expect(squares[i]).toEqual(5);
+            }
+        }
+        expect(squares[14]).toEqual('');
     });
 
     it('is not valid for bad type', () => {
-        const setBoard = (squares) => {
-            for (let i = 0; i < squares.length; i++) {
-                if (i !== 14) {
-                    expect(squares[i]).toEqual(5);
-                }
-            }
-            expect(squares[14]).toEqual('');
-        };
-        const state = {
-            squares: Array(30).fill(5),
-            muncher: { x: 2, y: 2 },
-            number: 5,
-            type: '',
-        };
-        const result = munch(state, setBoard);
+        const multiples = new Multiples();
+        jest.spyOn(multiples, 'getGame').mockImplementation(() => 'Foo');
+        wrapper.state().game = multiples;
+        const squares = Array(30).fill(5);
+        wrapper.state().squares = squares;
+        const result = wrapper.instance().munch();
         expect(result.isValid).toEqual(false);
         expect(result.value).toEqual(5);
+        for (let i = 0; i < squares.length; i++) {
+            if (i !== 14) {
+                expect(squares[i]).toEqual(5);
+            }
+        }
+        expect(squares[14]).toEqual('');
     });
 
     it('adds score if valid and not empty', () => {
-        const updateGame = (score, lives) => {
-            expect(score).toEqual(5);
-            expect(lives).toEqual(3);
-        };
-        const inputs = { isValid: true, value: 5 };
-        const state = { score: 0, lives: 3, type: '', number: 5 };
-        update(inputs, state, updateGame, null);
+        const inputs = { isValid: true, value: 0 };
+        wrapper.instance().update(inputs);
+        expect(wrapper.state().score).toEqual(5);
+        expect(wrapper.state().lives).toEqual(3);
     });
 
     it('does nothing if valid and empty', () => {
-        const updateGame = (score, lives) => {
-            expect(score).toEqual(0);
-            expect(lives).toEqual(3);
-        };
         const inputs = { isValid: true, value: '' };
-        const state = { score: 0, lives: 3, type: '', number: 5 };
-        update(inputs, state, updateGame, null);
+        wrapper.instance().update(inputs);
+        expect(wrapper.state().score).toEqual(0);
+        expect(wrapper.state().lives).toEqual(3);
     });
 
     it('loses life and add notification if not valid', () => {
-        const updateGame = (score, lives) => {
-            expect(score).toEqual(0);
-            expect(lives).toEqual(2);
-        };
-        const updateNotification = (notification) => {
-            expect(notification).toEqual('"4" is not a multiple of "5".');
-        };
         const inputs = { isValid: false, value: '4' };
-        const state = {
-            score: 0,
-            lives: 3,
-            type: GAME_TYPES.MULTIPLES,
-            number: 5,
-        };
-        update(inputs, state, updateGame, updateNotification);
+        wrapper.instance().update(inputs);
+        expect(wrapper.state().notification).toEqual(
+            `"4" is not a multiple of "${wrapper.state().game.getNumber()}".`
+        );
+        expect(wrapper.state().score).toEqual(0);
+        expect(wrapper.state().lives).toEqual(2);
+    });
+
+    it('resets the game if lives drop to 0', () => {
+        const oldSquares = wrapper.state().squares;
+        const inputs = { isValid: false, value: '4' };
+        wrapper.state().lives = 1;
+        wrapper.state().level = 3;
+        wrapper.state().score = 10;
+        wrapper.state().muncher = 10;
+        wrapper.instance().update(inputs);
+        expect(wrapper.state().squares).toHaveLength(30);
+        expect(wrapper.state().squares).not.toEqual(oldSquares);
+        expect(wrapper.state().score).toEqual(0);
+        expect(wrapper.state().lives).toEqual(3);
+        expect(wrapper.state().level).toEqual(1);
+        expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
+        expect(wrapper.state().notification).toEqual('You lost the game!');
     });
 });

@@ -1,26 +1,72 @@
-import { GetMultiple, IsMultiple } from './Multiples';
+import Multiples from './Multiples';
 
 describe('multiples', () => {
-    it('force 0', () => {
-        expect(GetMultiple(0)).toEqual(0);
-    });
-
-    it('ensure nothing lower than 0', () => {
+    it('ensures resetting the number always gives a new one', () => {
+        const multiples = new Multiples();
+        let oldNumber = multiples.getNumber();
         for (let x = 0; x < 100; x++) {
-            expect(GetMultiple(5)).toBeGreaterThanOrEqual(0);
+            multiples.resetNumber();
+            expect(multiples.getNumber()).not.toEqual(oldNumber);
+            oldNumber = multiples.getNumber();
         }
     });
 
-    it('ensure nothing greater than 10x', () => {
+    it('defaults to return base not lower than 2', () => {
+        const multiples = new Multiples();
         for (let x = 0; x < 100; x++) {
-            expect(GetMultiple(5)).toBeLessThanOrEqual(50);
+            expect(multiples.getNumber()).toBeGreaterThanOrEqual(2);
         }
     });
 
-    it('verify some simple factors', () => {
-        expect(IsMultiple(5, 100)).toEqual(true);
-        expect(IsMultiple(5, 0)).toEqual(true);
-        expect(IsMultiple(7, 93)).toEqual(false);
-        expect(IsMultiple(1, 93)).toEqual(true);
+    it('default to return base not higher than 5', () => {
+        const multiples = new Multiples();
+        for (let x = 0; x < 100; x++) {
+            expect(multiples.getNumber()).toBeLessThanOrEqual(5);
+        }
+    });
+
+    it('defaults to return multiple nothing lower than 0', () => {
+        const multiples = new Multiples();
+        for (let x = 0; x < 100; x++) {
+            expect(multiples.getMultiple()).toBeGreaterThanOrEqual(0);
+        }
+    });
+
+    it('defaults to return multiple nothing greater than 5x', () => {
+        const multiples = new Multiples();
+        for (let x = 0; x < 100; x++) {
+            expect(multiples.getMultiple()).toBeLessThanOrEqual(25);
+        }
+    });
+
+    it('verifies some simple factors', () => {
+        const multiples = new Multiples();
+        const number = multiples.getNumber();
+        expect(multiples.isMultiple(number * 5)).toEqual(true);
+        expect(multiples.isMultiple(number * 3)).toEqual(true);
+        expect(multiples.isMultiple(0)).toEqual(true);
+        expect(multiples.isMultiple(83)).toEqual(false);
+        expect(multiples.isMultiple(97)).toEqual(false);
+    });
+
+    it('defaults to return base not lower than 10', () => {
+        const multiples = new Multiples(10, 20);
+        for (let x = 0; x < 100; x++) {
+            expect(multiples.getNumber()).toBeGreaterThanOrEqual(10);
+        }
+    });
+
+    it('default to return base not higher than 20', () => {
+        const multiples = new Multiples(10, 20);
+        for (let x = 0; x < 100; x++) {
+            expect(multiples.getNumber()).toBeLessThanOrEqual(20);
+        }
+    });
+
+    it('defaults to return multiple nothing greater than 20x', () => {
+        const multiples = new Multiples(10, 20, 20);
+        for (let x = 0; x < 100; x++) {
+            expect(multiples.getMultiple()).toBeLessThanOrEqual(400);
+        }
     });
 });
