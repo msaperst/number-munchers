@@ -29,9 +29,9 @@ class Game extends React.Component {
         });
     }
 
-    // componentWillUnmount() {
-    //     document.removeEventListener('keydown', handleDown);
-    // }
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.keyDown);
+    }
 
     setupBoard(game, muncher) {
         game.resetNumber();
