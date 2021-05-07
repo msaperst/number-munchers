@@ -2,6 +2,7 @@ import React from 'react';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Game from './Game';
+import Multiples from '../../objects/Multiples';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -9,7 +10,7 @@ describe('movement', () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = Enzyme.shallow(<Game />);
+        wrapper = Enzyme.shallow(<Game game={new Multiples()} />);
         const squares = Array(30).fill(wrapper.state().game.getNumber());
         squares[13] = 97;
         wrapper.setState({ squares });
