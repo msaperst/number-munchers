@@ -2,6 +2,7 @@ import React from 'react';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Game from './Game';
+import Multiples from '../../objects/Multiples';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -9,7 +10,7 @@ describe('movement', () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = Enzyme.shallow(<Game />);
+        wrapper = Enzyme.mount(<Game game={new Multiples()} />);
         const squares = Array(30).fill(wrapper.state().game.getNumber());
         squares[13] = 97;
         wrapper.setState({ squares });
@@ -43,5 +44,18 @@ describe('movement', () => {
         expect(wrapper.state().score).toEqual(5);
         expect(wrapper.state().lives).toEqual(2);
         expect(wrapper.render().find('.notification')).toHaveLength(0);
+
+        // able to move with keys
+        wrapper.find('.right').simulate('click');
+        expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
+        wrapper.find('.down').simulate('click');
+        expect(wrapper.state().muncher).toEqual({ x: 2, y: 3 });
+        wrapper.find('.left').simulate('click');
+        expect(wrapper.state().muncher).toEqual({ x: 1, y: 3 });
+        wrapper.find('.up').simulate('click');
+        expect(wrapper.state().muncher).toEqual({ x: 1, y: 2 });
+        wrapper.find('.left').simulate('click');
+        wrapper.find('.space').simulate('click');
+        expect(wrapper.state().squares[12]).toEqual('');
     });
 });
