@@ -9,6 +9,7 @@
     position: relative;
     width: 95%;
     height: calc(100% - 160px);
+    max-height: calc(100vw * .95);
     left: 50%;
     transform: translate(-50%, 0);
 }
