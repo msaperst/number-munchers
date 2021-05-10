@@ -172,15 +172,8 @@ class Game extends React.Component {
     }
 
     render() {
-        const {
-            level,
-            game,
-            muncher,
-            squares,
-            score,
-            lives,
-            notification,
-        } = this.state;
+        const { level, game, muncher, squares, score, lives, notification } =
+            this.state;
 
         const munchers = [];
         for (let i = 0; i < lives; i++) {
