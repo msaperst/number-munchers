@@ -2,9 +2,12 @@ import React from 'react';
 import './Keyboard.css';
 
 function Keyboard(props) {
-    const { up, down, left, right, space } = props;
+    const { up, down, left, right, space, enter } = props;
     return (
         <div className="keyboard">
+            <button type="button" className="enter" onClick={enter}>
+                Enter
+            </button>
             <button type="button" className="up" onClick={up}>
                 Up
             </button>

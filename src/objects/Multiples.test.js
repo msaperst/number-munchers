@@ -11,6 +11,10 @@ describe('multiples', () => {
         }
     });
 
+    it('returns multiples', () => {
+        expect(new Multiples().getGame()).toEqual('Multiples');
+    });
+
     it('defaults to return base not lower than 2', () => {
         const multiples = new Multiples();
         for (let x = 0; x < 100; x++) {

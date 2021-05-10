@@ -2,7 +2,6 @@ import React from 'react';
 import './Game.css';
 import Board from '../board/Board';
 import { GAME_TYPES } from '../../objects/games';
-import Multiples from '../../objects/Multiples';
 import Keyboard from '../keyboard/Keyboard';
 
 const WIDTH = 6;
@@ -11,7 +10,7 @@ const HEIGHT = 5;
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        const game = new Multiples();
+        const { game } = props;
         const muncher = { x: 2, y: 2 };
         this.state = {
             game,
@@ -102,6 +101,8 @@ class Game extends React.Component {
         switch (game.getGame()) {
             case GAME_TYPES.MULTIPLES:
                 return game.getMultiple();
+            case GAME_TYPES.FACTORS:
+                return game.getFactor();
             default:
                 return '';
         }
@@ -119,6 +120,9 @@ class Game extends React.Component {
         switch (game.getGame()) {
             case GAME_TYPES.MULTIPLES:
                 isValid = game.isMultiple(value);
+                break;
+            case GAME_TYPES.FACTORS:
+                isValid = game.isFactor(value);
                 break;
             default:
                 isValid = false;
@@ -160,6 +164,11 @@ class Game extends React.Component {
                 switch (game.getGame()) {
                     case GAME_TYPES.MULTIPLES:
                         if (game.isMultiple(squares[i])) {
+                            return false;
+                        }
+                        break;
+                    case GAME_TYPES.FACTORS:
+                        if (game.isFactor(squares[i])) {
                             return false;
                         }
                         break;

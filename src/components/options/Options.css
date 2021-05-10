@@ -1,0 +1,26 @@
+ol {
+    width: 300px;
+    margin: auto;
+    list-style: none;
+    counter-reset: li;
+}
+
+li::before {
+    content: counter(li);
+    color: white;
+    display: inline-block;
+    width: 1em;
+    margin-left: -2em;
+    margin-right: 1em;
+}
+
+li {
+    padding: 10px;
+    counter-increment: li;
+    color: white;
+}
+
+.selected {
+    background: white;
+    color: black;
+}
