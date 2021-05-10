@@ -66,7 +66,7 @@ class Menu extends React.Component {
         const { question, options, instructions } = this.props;
         const { selected } = this.state;
         return (
-            <div>
+            <div className="all">
                 <div className="menu">
                     <div className="text">{question}</div>
                     <Options options={options} selected={selected} />

@@ -1,3 +1,10 @@
+.all {
+    margin: 0;
+    height: 100%;
+    background: black;
+    color: white;
+}
+
 .menu {
     margin: 0;
     height: calc(100% - 16px);
