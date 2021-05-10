@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-html, body, #root, .full {
+html, body, #root {
     margin: 0;
     height: 100%;
-    background: #000574;
     color: white;
 }
 
