@@ -66,10 +66,12 @@ class Menu extends React.Component {
         const { question, options, instructions } = this.props;
         const { selected } = this.state;
         return (
-            <div className="menu">
-                <div className="text">{question}</div>
-                <Options options={options} selected={selected} />
-                <div className="text">{instructions}</div>
+            <div>
+                <div className="menu">
+                    <div className="text">{question}</div>
+                    <Options options={options} selected={selected} />
+                    <div className="text">{instructions}</div>
+                </div>
                 <Keyboard
                     up={() => this.keyDown('ArrowUp')}
                     down={() => this.keyDown('ArrowDown')}

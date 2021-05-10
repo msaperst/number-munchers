@@ -1,9 +1,10 @@
 .menu {
     margin: 0;
-    height: calc(100% - 8px);
+    height: calc(100% - 16px);
+    max-height: calc(100vw * .95);
     background: black;
     color: white;
-    border: 4px solid #ff4cf7;
+    border: 8px solid #ff4cf7;
 }
 
 .options {
