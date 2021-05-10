@@ -2,6 +2,7 @@ import React from 'react';
 import './Game.css';
 import Board from '../board/Board';
 import { GAME_TYPES } from '../../objects/games';
+import Keyboard from '../keyboard/Keyboard';
 
 const WIDTH = 6;
 const HEIGHT = 5;
@@ -20,6 +21,8 @@ class Game extends React.Component {
             muncher,
             squares: this.setupBoard(game, muncher),
         };
+
+        this.keyDown = this.keyDown.bind(this);
     }
 
     componentDidMount() {
@@ -178,15 +181,8 @@ class Game extends React.Component {
     }
 
     render() {
-        const {
-            level,
-            game,
-            muncher,
-            squares,
-            score,
-            lives,
-            notification,
-        } = this.state;
+        const { level, game, muncher, squares, score, lives, notification } =
+            this.state;
 
         const munchers = [];
         for (let i = 0; i < lives; i++) {
@@ -213,6 +209,13 @@ class Game extends React.Component {
                     </div>
                     <div className="lives">{munchers}</div>
                 </div>
+                <Keyboard
+                    up={() => this.keyDown('ArrowUp')}
+                    down={() => this.keyDown('ArrowDown')}
+                    left={() => this.keyDown('ArrowLeft')}
+                    right={() => this.keyDown('ArrowRight')}
+                    space={() => this.keyDown('Space')}
+                />
             </div>
         );
     }
