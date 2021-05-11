@@ -5,6 +5,7 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import Game from './Game';
 import Multiples from '../../objects/Multiples';
+import Factors from '../../objects/Factors';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -12,7 +13,7 @@ describe('<Game/>', () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = Enzyme.shallow(<Game />);
+        wrapper = Enzyme.shallow(<Game game={new Multiples()} />);
     });
 
     it('level 1 Displayed', () => {
@@ -65,7 +66,7 @@ describe('<Game/>', () => {
     });
 
     it('full Board', () => {
-        const square = render(<Game />);
+        const square = render(<Game game={new Multiples()} />);
         expect(square.container.querySelector('.muncher')).toBeInTheDocument();
         for (let x = 0; x < 30; x++) {
             expect(
@@ -88,22 +89,44 @@ describe('<Game/>', () => {
         expect(wrapper.instance().checkLevel()).toEqual(false);
     });
 
-    it('has one good value does not need new board', () => {
-        const game = new Multiples();
+    function assertCheckLevelMatches(game) {
         const squares = Array(2).fill('');
         squares[1] = game.getNumber();
         wrapper.state().game = game;
         wrapper.state().squares = squares;
         expect(wrapper.instance().checkLevel()).toEqual(false);
+    }
+
+    // eslint-disable-next-line jest/expect-expect
+    it('multiples has one good value does not need new board', () => {
+        const game = new Multiples();
+        assertCheckLevelMatches(game);
     });
 
-    it('has one bad value does need new board', () => {
-        const game = new Multiples();
+    // eslint-disable-next-line jest/expect-expect
+    it('factors has one good value does not need new board', () => {
+        const game = new Factors();
+        assertCheckLevelMatches(game);
+    });
+
+    function assertCheckLevelNotMatches(game) {
         const squares = Array(2).fill('');
         squares[1] = 97;
         wrapper.state().game = game;
         wrapper.state().squares = squares;
         expect(wrapper.instance().checkLevel()).toEqual(true);
+    }
+
+    // eslint-disable-next-line jest/expect-expect
+    it('multiples has one bad value does need new board', () => {
+        const game = new Multiples();
+        assertCheckLevelNotMatches(game);
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('factors has one bad value does need new board', () => {
+        const game = new Factors();
+        assertCheckLevelNotMatches(game);
     });
 
     it('full board does not need new board', () => {
@@ -228,9 +251,15 @@ describe('<Game/>', () => {
         expect(wrapper.state().muncher).toEqual({ x: 2, y: 4 });
     });
 
-    it('returns a valid number', () => {
+    it('returns a valid multiple', () => {
         expect(
             wrapper.instance().numberFill(new Multiples())
+        ).toBeLessThanOrEqual(25);
+    });
+
+    it('returns a valid factor', () => {
+        expect(
+            wrapper.instance().numberFill(new Factors())
         ).toBeLessThanOrEqual(25);
     });
 
@@ -240,9 +269,10 @@ describe('<Game/>', () => {
         expect(wrapper.instance().numberFill(multiples)).toEqual('');
     });
 
-    it('not valid', () => {
+    function assertMunchNotValid(wrapper) {
         const squares = Array(30).fill(5);
         squares[14] = 97;
+        // eslint-disable-next-line no-param-reassign
         wrapper.state().squares = squares;
         const result = wrapper.instance().munch();
         expect(result.isValid).toEqual(false);
@@ -253,6 +283,18 @@ describe('<Game/>', () => {
             }
         }
         expect(squares[14]).toEqual('');
+    }
+
+    // eslint-disable-next-line jest/expect-expect
+    it('multiples not valid', () => {
+        const wrapper = Enzyme.shallow(<Game game={new Multiples()} />);
+        assertMunchNotValid(wrapper);
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('factors not valid', () => {
+        const wrapper = Enzyme.shallow(<Game game={new Factors()} />);
+        assertMunchNotValid(wrapper);
     });
 
     it('is valid', () => {

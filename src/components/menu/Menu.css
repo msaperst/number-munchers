@@ -1,0 +1,30 @@
+.all {
+    margin: 0;
+    height: 100%;
+    background: black;
+    color: white;
+}
+
+.menu {
+    margin: 0;
+    height: calc(100% - 16px);
+    max-height: calc(100vw * .95);
+    background: black;
+    color: white;
+    border: 8px solid #ff4cf7;
+}
+
+.options {
+    height: calc(100% - 270px);
+}
+
+.text {
+    height: 75px;
+    position: relative;
+    padding: 30px;
+    display: flex;
+}
+
+.text:nth-child(3) {
+    align-items: flex-end;
+}
