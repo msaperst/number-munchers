@@ -9,17 +9,25 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    width: 20%;
+    min-width: 20%;
 }
 
 .title, .lives {
     position: absolute;
-    width: 20%;
+    min-width: 20%;
     text-align: center;
-    top: 20px;
+    top: 12px;
     left: 50%;
     transform: translate(-50%, 0);
     padding: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .title, .lives {
+        right: 20px;
+        left: unset;
+        transform: unset;
+    }
 }
 
 .title {
@@ -52,6 +60,5 @@
 .points {
     border: 3px solid white;
     padding: 5px;
-    width: 50%;
     float: right;
 }
