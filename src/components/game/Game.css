@@ -52,13 +52,7 @@
     width: 50px;
 }
 
-.score > span:nth-child(1) {
-    top: 8px;
-    position: relative;
-}
-
 .points {
     border: 3px solid white;
     padding: 5px;
-    float: right;
 }
