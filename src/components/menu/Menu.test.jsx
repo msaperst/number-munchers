@@ -5,6 +5,7 @@ import { render } from '@testing-library/react';
 import Menu from './Menu';
 import Multiples from '../../objects/Multiples';
 import Factors from '../../objects/Factors';
+import Primes from '../../objects/Primes';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -15,20 +16,14 @@ describe('<Menu/>', () => {
         wrapper = Enzyme.mount(
             <Menu
                 question="foo"
-                options={[new Multiples(), new Factors(), new Multiples()]} // TODO - replace with a third one once written
+                options={[new Multiples(), new Factors(), new Primes()]}
                 instructions="bar"
             />
         );
     });
 
     it('basic load', () => {
-        render(
-            <Menu
-                question="foo"
-                options={[]} // TODO - replace with a third one once written
-                instructions="bar"
-            />
-        );
+        render(<Menu question="foo" options={[]} instructions="bar" />);
         expect(wrapper.find('.text').at(0).text()).toEqual('foo');
     });
 
@@ -47,7 +42,7 @@ describe('<Menu/>', () => {
     it('options displayed', () => {
         expect(wrapper.find('.options').find('li')).toHaveLength(3);
         expect(wrapper.find('.options').text()).toEqual(
-            'MultiplesFactorsMultiples'
+            'MultiplesFactorsPrimes'
         );
     });
 

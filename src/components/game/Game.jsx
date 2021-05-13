@@ -103,6 +103,8 @@ class Game extends React.Component {
                 return game.getMultiple();
             case GAME_TYPES.FACTORS:
                 return game.getFactor();
+            case GAME_TYPES.PRIMES:
+                return game.getPrime();
             default:
                 return '';
         }
@@ -116,16 +118,21 @@ class Game extends React.Component {
         this.setState({ squares });
 
         // determine if we ate something good
-        let isValid;
-        switch (game.getGame()) {
-            case GAME_TYPES.MULTIPLES:
-                isValid = game.isMultiple(value);
-                break;
-            case GAME_TYPES.FACTORS:
-                isValid = game.isFactor(value);
-                break;
-            default:
-                isValid = false;
+        let isValid = true;
+        if (value !== '') {
+            switch (game.getGame()) {
+                case GAME_TYPES.MULTIPLES:
+                    isValid = game.isMultiple(value);
+                    break;
+                case GAME_TYPES.FACTORS:
+                    isValid = game.isFactor(value);
+                    break;
+                case GAME_TYPES.PRIMES:
+                    isValid = game.isPrime(value);
+                    break;
+                default:
+                    isValid = false;
+            }
         }
         return { isValid, value };
     }
@@ -138,9 +145,8 @@ class Game extends React.Component {
         if (isValid && value !== '') {
             score += 5;
         } else if (!isValid) {
-            const compare = game.getGame().slice(0, game.getGame().length - 1);
             this.setState({
-                notification: `"${value}" is not a ${compare.toLowerCase()} of "${game.getNumber()}".`,
+                notification: game.getError(value),
             });
             lives--;
         }
@@ -172,6 +178,11 @@ class Game extends React.Component {
                             return false;
                         }
                         break;
+                    case GAME_TYPES.PRIMES:
+                        if (game.isPrime(squares[i])) {
+                            return false;
+                        }
+                        break;
                     default:
                         return false;
                 }
@@ -193,7 +204,7 @@ class Game extends React.Component {
             <div className="full">
                 <div className="info">
                     <div className="level">{`Level: ${level}`}</div>
-                    <div className="title">{`${game.getGame()} of ${game.getNumber()}`}</div>
+                    <div className="title">{game.getTitle()}</div>
                 </div>
                 <Board
                     height={HEIGHT}

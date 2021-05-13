@@ -29,6 +29,10 @@ class Factors {
         return this.number;
     }
 
+    getTitle() {
+        return `${this.getGame()} of ${this.number}`;
+    }
+
     getFactor() {
         // 2/5 of our numbers should match
         if (Math.random() < 0.4) {
@@ -42,6 +46,10 @@ class Factors {
 
     isFactor(factor) {
         return this.factors.includes(factor);
+    }
+
+    getError(factor) {
+        return `"${factor}" is not a factor of "${this.getNumber()}".`;
     }
 }
 

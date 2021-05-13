@@ -6,6 +6,7 @@ import { render } from '@testing-library/react';
 import Game from './Game';
 import Multiples from '../../objects/Multiples';
 import Factors from '../../objects/Factors';
+import Primes from '../../objects/Primes';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -89,9 +90,9 @@ describe('<Game/>', () => {
         expect(wrapper.instance().checkLevel()).toEqual(false);
     });
 
-    function assertCheckLevelMatches(game) {
+    function assertCheckLevelMatches(game, value) {
         const squares = Array(2).fill('');
-        squares[1] = game.getNumber();
+        squares[1] = value;
         wrapper.state().game = game;
         wrapper.state().squares = squares;
         expect(wrapper.instance().checkLevel()).toEqual(false);
@@ -100,13 +101,19 @@ describe('<Game/>', () => {
     // eslint-disable-next-line jest/expect-expect
     it('multiples has one good value does not need new board', () => {
         const game = new Multiples();
-        assertCheckLevelMatches(game);
+        assertCheckLevelMatches(game, game.getNumber());
     });
 
     // eslint-disable-next-line jest/expect-expect
     it('factors has one good value does not need new board', () => {
         const game = new Factors();
-        assertCheckLevelMatches(game);
+        assertCheckLevelMatches(game, game.getNumber());
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('primes has one good value does not need new board', () => {
+        const game = new Primes();
+        assertCheckLevelMatches(game, 2);
     });
 
     function assertCheckLevelNotMatches(game) {
@@ -126,6 +133,12 @@ describe('<Game/>', () => {
     // eslint-disable-next-line jest/expect-expect
     it('factors has one bad value does need new board', () => {
         const game = new Factors();
+        assertCheckLevelNotMatches(game);
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('primes has one bad value does need new board', () => {
+        const game = new Primes();
         assertCheckLevelNotMatches(game);
     });
 
@@ -263,6 +276,12 @@ describe('<Game/>', () => {
         ).toBeLessThanOrEqual(25);
     });
 
+    it('returns a valid prime', () => {
+        expect(wrapper.instance().numberFill(new Primes())).toBeLessThanOrEqual(
+            7
+        );
+    });
+
     it('returns empty', () => {
         const multiples = new Multiples();
         jest.spyOn(multiples, 'getGame').mockImplementation(() => 'Foo');
@@ -295,6 +314,28 @@ describe('<Game/>', () => {
     it('factors not valid', () => {
         const wrapper = Enzyme.shallow(<Game game={new Factors()} />);
         assertMunchNotValid(wrapper);
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('primes not valid', () => {
+        const wrapper = Enzyme.shallow(<Game game={new Primes()} />);
+        assertMunchNotValid(wrapper);
+    });
+
+    it('is valid for empty', () => {
+        const wrapper = Enzyme.shallow(<Game game={new Factors()} />);
+        const squares = Array(30).fill(5);
+        squares[14] = '';
+        wrapper.state().squares = squares;
+        const result = wrapper.instance().munch();
+        expect(result.isValid).toEqual(true);
+        expect(result.value).toEqual('');
+        for (let i = 0; i < squares.length; i++) {
+            if (i !== 14) {
+                expect(squares[i]).toEqual(5);
+            }
+        }
+        expect(squares[14]).toEqual('');
     });
 
     it('is valid', () => {

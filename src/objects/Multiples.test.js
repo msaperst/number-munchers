@@ -15,31 +15,41 @@ describe('multiples', () => {
         expect(new Multiples().getGame()).toEqual('Multiples');
     });
 
-    it('defaults to return base not lower than 2', () => {
+    it('returns proper title', () => {
         const multiples = new Multiples();
+        expect(multiples.getTitle()).toEqual(
+            `Multiples of ${multiples.getNumber()}`
+        );
+    });
+
+    it('returns proper error', () => {
+        const multiples = new Multiples();
+        expect(multiples.getError(5)).toEqual(
+            `"5" is not a multiple of "${multiples.getNumber()}".`
+        );
+    });
+
+    it('defaults to return base not lower than 2', () => {
         for (let x = 0; x < 100; x++) {
-            expect(multiples.getNumber()).toBeGreaterThanOrEqual(2);
+            expect(new Multiples().getNumber()).toBeGreaterThanOrEqual(2);
         }
     });
 
     it('default to return base not higher than 5', () => {
-        const multiples = new Multiples();
         for (let x = 0; x < 100; x++) {
-            expect(multiples.getNumber()).toBeLessThanOrEqual(5);
+            expect(new Multiples().getNumber()).toBeLessThanOrEqual(5);
         }
     });
 
     it('defaults to return multiple nothing lower than 0', () => {
-        const multiples = new Multiples();
         for (let x = 0; x < 100; x++) {
-            expect(multiples.getMultiple()).toBeGreaterThanOrEqual(0);
+            expect(new Multiples().getMultiple()).toBeGreaterThanOrEqual(0);
         }
     });
 
     it('defaults to return multiple nothing greater than 5x', () => {
-        const multiples = new Multiples();
         for (let x = 0; x < 100; x++) {
-            expect(multiples.getMultiple()).toBeLessThanOrEqual(25);
+            expect(new Multiples().getMultiple()).toBeLessThanOrEqual(25);
         }
     });
 
@@ -54,23 +64,24 @@ describe('multiples', () => {
     });
 
     it('defaults to return base not lower than 10', () => {
-        const multiples = new Multiples(10, 20);
         for (let x = 0; x < 100; x++) {
-            expect(multiples.getNumber()).toBeGreaterThanOrEqual(10);
+            expect(new Multiples(10, 20).getNumber()).toBeGreaterThanOrEqual(
+                10
+            );
         }
     });
 
     it('default to return base not higher than 20', () => {
-        const multiples = new Multiples(10, 20);
         for (let x = 0; x < 100; x++) {
-            expect(multiples.getNumber()).toBeLessThanOrEqual(20);
+            expect(new Multiples(10, 20).getNumber()).toBeLessThanOrEqual(20);
         }
     });
 
     it('defaults to return multiple nothing greater than 20x', () => {
-        const multiples = new Multiples(10, 20, 20);
         for (let x = 0; x < 100; x++) {
-            expect(multiples.getMultiple()).toBeLessThanOrEqual(400);
+            expect(new Multiples(10, 20, 20).getMultiple()).toBeLessThanOrEqual(
+                400
+            );
         }
     });
 });
