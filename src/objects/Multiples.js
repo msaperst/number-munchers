@@ -28,6 +28,10 @@ class Multiples {
         return this.number;
     }
 
+    getTitle() {
+        return `${this.getGame()} of ${this.number}`;
+    }
+
     getMultiple() {
         // 2/5 of our numbers should match
         if (Math.random() > 0.4) {
@@ -43,6 +47,10 @@ class Multiples {
 
     isMultiple(factor) {
         return factor % this.number === 0;
+    }
+
+    getError(factor) {
+        return `"${factor}" is not a multiple of "${this.getNumber()}".`;
     }
 }
 

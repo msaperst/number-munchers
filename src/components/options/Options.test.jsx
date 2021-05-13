@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Options from './Options';
 import Multiples from '../../objects/Multiples';
 import Factors from '../../objects/Factors';
+import Primes from '../../objects/Primes';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -13,7 +14,7 @@ describe('<Options/>', () => {
     beforeEach(() => {
         wrapper = Enzyme.mount(
             <Options
-                options={[new Multiples(), new Factors(), new Multiples()]} // TODO - replace with a third one once written
+                options={[new Multiples(), new Factors(), new Primes()]}
                 selected={1}
             />
         );
@@ -22,7 +23,7 @@ describe('<Options/>', () => {
     it('options displayed', () => {
         expect(wrapper.find('.options').find('li')).toHaveLength(3);
         expect(wrapper.find('.options').text()).toEqual(
-            'MultiplesFactorsMultiples'
+            'MultiplesFactorsPrimes'
         );
     });
 

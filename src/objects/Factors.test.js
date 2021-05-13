@@ -15,30 +15,39 @@ describe('factors', () => {
         expect(new Factors().getGame()).toEqual('Factors');
     });
 
-    it('defaults to return base not lower than 3', () => {
+    it('returns proper title', () => {
         const factors = new Factors();
+        expect(factors.getTitle()).toEqual(`Factors of ${factors.getNumber()}`);
+    });
+
+    it('returns proper error', () => {
+        const factors = new Factors();
+        expect(factors.getError(5)).toEqual(
+            `"5" is not a factor of "${factors.getNumber()}".`
+        );
+    });
+
+    it('defaults to return base not lower than 3', () => {
         for (let x = 0; x < 100; x++) {
-            expect(factors.getNumber()).toBeGreaterThanOrEqual(3);
+            expect(new Factors().getNumber()).toBeGreaterThanOrEqual(3);
         }
     });
 
     it('default to return base not higher than 25', () => {
-        const factors = new Factors();
         for (let x = 0; x < 100; x++) {
-            expect(factors.getNumber()).toBeLessThanOrEqual(25);
+            expect(new Factors().getNumber()).toBeLessThanOrEqual(25);
         }
     });
 
     it('defaults to return factor nothing lower than 0', () => {
-        const factors = new Factors();
         for (let x = 0; x < 100; x++) {
-            expect(factors.getFactor()).toBeGreaterThanOrEqual(0);
+            expect(new Factors().getFactor()).toBeGreaterThanOrEqual(0);
         }
     });
 
     it('defaults to return factor nothing greater than number', () => {
-        const factors = new Factors();
         for (let x = 0; x < 100; x++) {
+            const factors = new Factors();
             expect(factors.getFactor()).toBeLessThanOrEqual(
                 factors.getNumber()
             );
