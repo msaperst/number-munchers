@@ -82,14 +82,6 @@ describe('<Game/>', () => {
         expect(wrapper.instance().checkLevel()).toEqual(true);
     });
 
-    it('bad type returns false', () => {
-        const multiples = new Multiples();
-        jest.spyOn(multiples, 'getGame').mockImplementation(() => 'Foo');
-        wrapper.state().game = multiples;
-        wrapper.state().squares = Array(2).fill(5);
-        expect(wrapper.instance().checkLevel()).toEqual(false);
-    });
-
     function assertCheckLevelMatches(game, value) {
         const squares = Array(2).fill('');
         squares[1] = value;
@@ -264,30 +256,6 @@ describe('<Game/>', () => {
         expect(wrapper.state().muncher).toEqual({ x: 2, y: 4 });
     });
 
-    it('returns a valid multiple', () => {
-        expect(
-            wrapper.instance().numberFill(new Multiples())
-        ).toBeLessThanOrEqual(25);
-    });
-
-    it('returns a valid factor', () => {
-        expect(
-            wrapper.instance().numberFill(new Factors())
-        ).toBeLessThanOrEqual(25);
-    });
-
-    it('returns a valid prime', () => {
-        expect(wrapper.instance().numberFill(new Primes())).toBeLessThanOrEqual(
-            7
-        );
-    });
-
-    it('returns empty', () => {
-        const multiples = new Multiples();
-        jest.spyOn(multiples, 'getGame').mockImplementation(() => 'Foo');
-        expect(wrapper.instance().numberFill(multiples)).toEqual('');
-    });
-
     function assertMunchNotValid(wrapper) {
         const squares = Array(30).fill(5);
         squares[14] = 97;
@@ -345,23 +313,6 @@ describe('<Game/>', () => {
         const result = wrapper.instance().munch();
         expect(result.isValid).toEqual(true);
         expect(result.value).toEqual(0);
-        for (let i = 0; i < squares.length; i++) {
-            if (i !== 14) {
-                expect(squares[i]).toEqual(5);
-            }
-        }
-        expect(squares[14]).toEqual('');
-    });
-
-    it('is not valid for bad type', () => {
-        const multiples = new Multiples();
-        jest.spyOn(multiples, 'getGame').mockImplementation(() => 'Foo');
-        wrapper.state().game = multiples;
-        const squares = Array(30).fill(5);
-        wrapper.state().squares = squares;
-        const result = wrapper.instance().munch();
-        expect(result.isValid).toEqual(false);
-        expect(result.value).toEqual(5);
         for (let i = 0; i < squares.length; i++) {
             if (i !== 14) {
                 expect(squares[i]).toEqual(5);
