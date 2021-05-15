@@ -1,0 +1,32 @@
+.troggle {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+    top: 0;
+    height: 20%;
+    padding: 0;
+    text-align: center;
+    width: 16.666%;
+}
+
+.bashful {
+    background-image: url("./Bashful.png");
+}
+
+.helper {
+    background-image: url("./Helper.png");
+}
+
+.reggie {
+    background-image: url("./Reggie.png");
+}
+
+.smarty {
+    background-image: url("Smarty.png");
+}
+
+.worker {
+    background-image: url("./Worker.png");
+}

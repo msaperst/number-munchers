@@ -41,15 +41,18 @@ describe('multiples', () => {
         }
     });
 
-    it('defaults to return multiple nothing lower than 0', () => {
+    it('defaults to return multiple nothing lower than 1', () => {
         for (let x = 0; x < 100; x++) {
-            expect(new Multiples().getMultiple()).toBeGreaterThanOrEqual(0);
+            expect(new Multiples().getMultiple()).toBeGreaterThanOrEqual(1);
         }
     });
 
     it('defaults to return multiple nothing greater than 5x', () => {
         for (let x = 0; x < 100; x++) {
-            expect(new Multiples().getMultiple()).toBeLessThanOrEqual(25);
+            const multiples = new Multiples();
+            expect(multiples.getMultiple()).toBeLessThanOrEqual(
+                multiples.getNumber() * 5
+            );
         }
     });
 

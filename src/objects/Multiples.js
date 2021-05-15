@@ -34,8 +34,11 @@ class Multiples {
 
     getMultiple() {
         // 2/5 of our numbers should match
-        if (Math.random() > 0.4) {
-            return Math.floor(Math.random() * (this.maxMult * this.number));
+        if (Math.random() < 0.4) {
+            return (
+                Math.floor(Math.random() * (this.maxMult * this.number)) +
+                this.number
+            );
         }
 
         // the others will just be random
