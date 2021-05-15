@@ -1,7 +1,6 @@
 import React from 'react';
 import './Game.css';
 import Board from '../board/Board';
-import { GAME_TYPES } from '../../objects/games';
 import Keyboard from '../keyboard/Keyboard';
 
 const WIDTH = 6;
@@ -40,13 +39,14 @@ class Game extends React.Component {
         clearInterval(this.timer);
     }
 
+    // eslint-disable-next-line class-methods-use-this
     setupBoard(game, muncher) {
         game.resetNumber();
         const squares = Array(WIDTH * HEIGHT);
         squares[muncher.y * WIDTH + muncher.x] = '';
         for (let i = 0; i < squares.length; i++) {
             if (squares[i] !== '') {
-                squares[i] = this.numberFill(game);
+                squares[i] = game.getFiller();
             }
         }
         return squares;
@@ -195,20 +195,6 @@ class Game extends React.Component {
         }
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    numberFill(game) {
-        switch (game.getGame()) {
-            case GAME_TYPES.MULTIPLES:
-                return game.getMultiple();
-            case GAME_TYPES.FACTORS:
-                return game.getFactor();
-            case GAME_TYPES.PRIMES:
-                return game.getPrime();
-            default:
-                return '';
-        }
-    }
-
     munch() {
         // get and setup our square
         const { squares, muncher, game } = this.state;
@@ -219,19 +205,7 @@ class Game extends React.Component {
         // determine if we ate something good
         let isValid = true;
         if (value !== '') {
-            switch (game.getGame()) {
-                case GAME_TYPES.MULTIPLES:
-                    isValid = game.isMultiple(value);
-                    break;
-                case GAME_TYPES.FACTORS:
-                    isValid = game.isFactor(value);
-                    break;
-                case GAME_TYPES.PRIMES:
-                    isValid = game.isPrime(value);
-                    break;
-                default:
-                    isValid = false;
-            }
+            isValid = game.isCorrect(value);
         }
         return { isValid, value };
     }
@@ -266,24 +240,8 @@ class Game extends React.Component {
         const { squares, game } = this.state;
         for (let i = 0; i < squares.length; i++) {
             if (squares[i] !== '') {
-                switch (game.getGame()) {
-                    case GAME_TYPES.MULTIPLES:
-                        if (game.isMultiple(squares[i])) {
-                            return false;
-                        }
-                        break;
-                    case GAME_TYPES.FACTORS:
-                        if (game.isFactor(squares[i])) {
-                            return false;
-                        }
-                        break;
-                    case GAME_TYPES.PRIMES:
-                        if (game.isPrime(squares[i])) {
-                            return false;
-                        }
-                        break;
-                    default:
-                        return false;
+                if (game.isCorrect(squares[i])) {
+                    return false;
                 }
             }
         }

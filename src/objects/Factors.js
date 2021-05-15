@@ -34,17 +34,27 @@ class Factors {
     }
 
     getFactor() {
-        // 2/5 of our numbers should match
-        if (Math.random() < 0.4) {
-            return this.factors[
-                Math.floor(Math.random() * this.factors.length)
-            ];
-        }
-        // the others will just be random
-        return Math.floor(Math.random() * this.number);
+        return this.factors[Math.floor(Math.random() * this.factors.length)];
     }
 
-    isFactor(factor) {
+    getNonFactor() {
+        let nonFactor = 1;
+        while (this.isCorrect(nonFactor)) {
+            nonFactor = 1 + Math.floor(Math.random() * this.number);
+        }
+        return nonFactor;
+    }
+
+    getFiller() {
+        // 2/5 of our numbers should match
+        if (Math.random() < 0.4) {
+            return this.getFactor();
+        }
+        // the others will just be random
+        return this.getNonFactor();
+    }
+
+    isCorrect(factor) {
         return this.factors.includes(factor);
     }
 
