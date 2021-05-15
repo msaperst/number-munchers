@@ -33,15 +33,29 @@ describe('factors', () => {
         }
     });
 
+    it('returns base not lower than provided', () => {
+        for (let x = 0; x < 100; x++) {
+            expect(new Factors(10).getNumber()).toBeGreaterThanOrEqual(10);
+            expect(new Factors(25).getNumber()).toEqual(25);
+        }
+    });
+
     it('default to return base not higher than 25', () => {
         for (let x = 0; x < 100; x++) {
             expect(new Factors().getNumber()).toBeLessThanOrEqual(25);
         }
     });
 
-    it('defaults to return factor nothing lower than 0', () => {
+    it('returns base not higher than provided', () => {
         for (let x = 0; x < 100; x++) {
-            expect(new Factors().getFactor()).toBeGreaterThanOrEqual(0);
+            expect(new Factors(3, 10).getNumber()).toBeLessThanOrEqual(10);
+            expect(new Factors(3, 3).getNumber()).toEqual(3);
+        }
+    });
+
+    it('defaults to return factor nothing lower than 1', () => {
+        for (let x = 0; x < 100; x++) {
+            expect(new Factors().getFactor()).toBeGreaterThanOrEqual(1);
         }
     });
 
@@ -54,6 +68,50 @@ describe('factors', () => {
         }
     });
 
+    it('returns a valid factor', () => {
+        for (let x = 0; x < 100; x++) {
+            const factors = new Factors();
+            expect(factors.getNumber() % factors.getFactor()).toEqual(0);
+        }
+    });
+
+    it('defaults to return non factor nothing lower than 1', () => {
+        for (let x = 0; x < 100; x++) {
+            expect(new Factors().getNonFactor()).toBeGreaterThanOrEqual(1);
+        }
+    });
+
+    it('defaults to return non factor nothing greater than number', () => {
+        for (let x = 0; x < 100; x++) {
+            const factors = new Factors();
+            expect(factors.getNonFactor()).toBeLessThanOrEqual(
+                factors.getNumber()
+            );
+        }
+    });
+
+    it('returns an invalid factor', () => {
+        for (let x = 0; x < 100; x++) {
+            const factors = new Factors();
+            expect(factors.getNumber() % factors.getNonFactor()).not.toEqual(0);
+        }
+    });
+
+    it('defaults to return filler nothing lower than 1', () => {
+        for (let x = 0; x < 100; x++) {
+            expect(new Factors().getFiller()).toBeGreaterThanOrEqual(1);
+        }
+    });
+
+    it('defaults to return filler nothing greater than number', () => {
+        for (let x = 0; x < 100; x++) {
+            const factors = new Factors();
+            expect(factors.getFiller()).toBeLessThanOrEqual(
+                factors.getNumber()
+            );
+        }
+    });
+
     it('verifies some simple factors', () => {
         const factors = new Factors();
         const number = factors.getNumber();
@@ -61,12 +119,12 @@ describe('factors', () => {
             (i) => number % i === 0
         );
         factorNumbers.forEach((value) => {
-            expect(factors.isFactor(value)).toEqual(true);
+            expect(factors.isCorrect(value)).toEqual(true);
         });
-        expect(factors.isFactor(1)).toEqual(true);
-        expect(factors.isFactor(number)).toEqual(true);
-        expect(factors.isFactor(0)).toEqual(false);
-        expect(factors.isFactor(83)).toEqual(false);
-        expect(factors.isFactor(97)).toEqual(false);
+        expect(factors.isCorrect(1)).toEqual(true);
+        expect(factors.isCorrect(number)).toEqual(true);
+        expect(factors.isCorrect(0)).toEqual(false);
+        expect(factors.isCorrect(83)).toEqual(false);
+        expect(factors.isCorrect(97)).toEqual(false);
     });
 });

@@ -41,47 +41,134 @@ describe('multiples', () => {
         }
     });
 
-    it('defaults to return multiple nothing lower than 0', () => {
+    it('returns base not lower than provided', () => {
         for (let x = 0; x < 100; x++) {
-            expect(new Multiples().getMultiple()).toBeGreaterThanOrEqual(0);
+            let multiples = new Multiples(1);
+            expect(multiples.getNumber()).toBeGreaterThanOrEqual(1);
+            multiples = new Multiples(10, 20);
+            expect(multiples.getNumber()).toBeGreaterThanOrEqual(10);
+            multiples = new Multiples(5);
+            expect(multiples.getNumber()).toEqual(5);
+        }
+    });
+
+    it('returns base not higher than provided', () => {
+        for (let x = 0; x < 100; x++) {
+            let multiples = new Multiples(1, 10);
+            expect(multiples.getNumber()).toBeLessThanOrEqual(10);
+            multiples = new Multiples(1, 1);
+            expect(multiples.getNumber()).toEqual(1);
+        }
+    });
+
+    it('defaults to return multiple nothing lower than the number', () => {
+        for (let x = 0; x < 100; x++) {
+            const multiples = new Multiples();
+            expect(multiples.getMultiple()).toBeGreaterThanOrEqual(
+                multiples.getNumber()
+            );
         }
     });
 
     it('defaults to return multiple nothing greater than 5x', () => {
         for (let x = 0; x < 100; x++) {
-            expect(new Multiples().getMultiple()).toBeLessThanOrEqual(25);
+            const multiples = new Multiples();
+            expect(multiples.getMultiple()).toBeLessThanOrEqual(
+                multiples.getNumber() * 5
+            );
+        }
+    });
+
+    it('returns multiple nothing greater than provided', () => {
+        for (let x = 0; x < 100; x++) {
+            let multiples = new Multiples(2, 7, 10);
+            expect(multiples.getMultiple()).toBeLessThanOrEqual(
+                multiples.getNumber() * 10
+            );
+            multiples = new Multiples(2, 7, 1);
+            expect(multiples.getMultiple()).toEqual(multiples.getNumber());
+        }
+    });
+
+    it('returns a correct multiple', () => {
+        for (let x = 0; x < 100; x++) {
+            const multiples = new Multiples();
+            expect(multiples.getMultiple() % multiples.getNumber()).toEqual(0);
+        }
+    });
+
+    it('defaults to return non multiple nothing lower than 1', () => {
+        for (let x = 0; x < 100; x++) {
+            expect(new Multiples().getNonMultiple()).toBeGreaterThanOrEqual(1);
+        }
+    });
+
+    it('defaults to return non multiple nothing greater than 5x', () => {
+        for (let x = 0; x < 100; x++) {
+            const multiples = new Multiples();
+            expect(multiples.getNonMultiple()).toBeLessThanOrEqual(
+                multiples.getNumber() * 5
+            );
+        }
+    });
+
+    it('returns non multiple nothing greater than provided', () => {
+        for (let x = 0; x < 100; x++) {
+            let multiples = new Multiples(2, 7, 10);
+            expect(multiples.getNonMultiple()).toBeLessThanOrEqual(
+                multiples.getNumber() * 10
+            );
+            multiples = new Multiples(2, 7, 1);
+            expect(multiples.getNonMultiple()).toBeLessThanOrEqual(
+                multiples.getNumber()
+            );
+        }
+    });
+
+    it('returns an incorrect multiple', () => {
+        for (let x = 0; x < 100; x++) {
+            const multiples = new Multiples();
+            expect(
+                multiples.getNonMultiple() % multiples.getNumber()
+            ).not.toEqual(0);
+        }
+    });
+
+    it('returns filler not less than 1', () => {
+        for (let x = 0; x < 100; x++) {
+            expect(new Multiples().getFiller()).toBeGreaterThanOrEqual(1);
+        }
+    });
+
+    it('returns filler nothing greater than 5x', () => {
+        for (let x = 0; x < 100; x++) {
+            const multiples = new Multiples();
+            expect(multiples.getFiller()).toBeLessThanOrEqual(
+                multiples.getNumber() * 5
+            );
+        }
+    });
+
+    it('returns filler nothing greater than provided', () => {
+        for (let x = 0; x < 100; x++) {
+            let multiples = new Multiples(2, 7, 10);
+            expect(multiples.getFiller()).toBeLessThanOrEqual(
+                multiples.getNumber() * 10
+            );
+            multiples = new Multiples(2, 7, 1);
+            expect(multiples.getFiller()).toBeLessThanOrEqual(
+                multiples.getNumber()
+            );
         }
     });
 
     it('verifies some simple factors', () => {
         const multiples = new Multiples();
         const number = multiples.getNumber();
-        expect(multiples.isMultiple(number * 5)).toEqual(true);
-        expect(multiples.isMultiple(number * 3)).toEqual(true);
-        expect(multiples.isMultiple(0)).toEqual(true);
-        expect(multiples.isMultiple(83)).toEqual(false);
-        expect(multiples.isMultiple(97)).toEqual(false);
-    });
-
-    it('defaults to return base not lower than 10', () => {
-        for (let x = 0; x < 100; x++) {
-            expect(new Multiples(10, 20).getNumber()).toBeGreaterThanOrEqual(
-                10
-            );
-        }
-    });
-
-    it('default to return base not higher than 20', () => {
-        for (let x = 0; x < 100; x++) {
-            expect(new Multiples(10, 20).getNumber()).toBeLessThanOrEqual(20);
-        }
-    });
-
-    it('defaults to return multiple nothing greater than 20x', () => {
-        for (let x = 0; x < 100; x++) {
-            expect(new Multiples(10, 20, 20).getMultiple()).toBeLessThanOrEqual(
-                400
-            );
-        }
+        expect(multiples.isCorrect(number * 5)).toEqual(true);
+        expect(multiples.isCorrect(number * 3)).toEqual(true);
+        expect(multiples.isCorrect(0)).toEqual(true);
+        expect(multiples.isCorrect(83)).toEqual(false);
+        expect(multiples.isCorrect(97)).toEqual(false);
     });
 });
