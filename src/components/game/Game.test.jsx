@@ -380,7 +380,52 @@ describe('<Game/>', () => {
         expect(wrapper.state().status).toEqual('');
     });
 
-    // TODO - test out troggle()
+    it('does nothing if there is a notification', () => {
+        const spy = jest.spyOn(wrapper.instance(), 'troggleMuncherCheck');
+        wrapper.state().notification = '123';
+        wrapper.instance().troggle();
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('changes nothing when no troggles moved', () => {
+        const oldSquares = wrapper.state().squares;
+        wrapper.state().notification = '';
+        wrapper.state().troggles = [
+            {
+                troggle: 'happy',
+            },
+        ];
+        wrapper.instance().troggle();
+        expect(wrapper.state().squares).toEqual(oldSquares);
+    });
+
+    it('changes nothing when troggle is on blank space', () => {
+        wrapper.state().squares = Array(30).fill('');
+        wrapper.state().notification = '';
+        wrapper.state().troggles = [
+            {
+                position: { x: 3, y: 2 },
+                troggle: 'happy',
+                direction: { x: 0, y: 1 },
+            },
+        ];
+        wrapper.instance().troggle();
+        expect(wrapper.state().squares).toEqual(Array(30).fill(''));
+    });
+
+    it('changes a number as a troggle moves past', () => {
+        wrapper.state().squares = Array(30).fill('1');
+        wrapper.state().notification = '';
+        wrapper.state().troggles = [
+            {
+                position: { x: 3, y: 2 },
+                troggle: 'happy',
+                direction: { x: 0, y: 1 },
+            },
+        ];
+        wrapper.instance().troggle();
+        expect(wrapper.state().squares[21]).not.toEqual('1');
+    });
 
     it('no troggles does not munch anything', () => {
         wrapper.state().notification = '';

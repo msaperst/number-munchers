@@ -3,6 +3,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Game from './Game';
 import Multiples from '../../objects/Multiples';
+import * as Troggle from '../troggle/Troggle';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -57,5 +58,17 @@ describe('movement', () => {
         wrapper.find('.left').simulate('click');
         wrapper.find('.space').simulate('click');
         expect(wrapper.state().squares[12]).toEqual('');
+    });
+
+    it('manages troggles if there is not a notification', () => {
+        const spyCheck = jest.spyOn(wrapper.instance(), 'troggleMuncherCheck');
+        const spyAdd = jest.spyOn(Troggle, 'addTroggle');
+        const spyMove = jest.spyOn(Troggle, 'moveTroggles');
+        wrapper.state().notification = '';
+        wrapper.instance().troggle();
+        expect(spyCheck).toHaveBeenCalled();
+        expect(spyAdd).toHaveBeenCalled();
+        expect(spyMove).toHaveBeenCalled();
+        jest.clearAllMocks();
     });
 });
