@@ -87,6 +87,25 @@ describe('<Board/>', () => {
         verifyMuncherAndBoard(square);
     });
 
+    it('renders a full board without anything', () => {
+        const square = render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                squares={[
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                ]}
+            />
+        );
+        expect(
+            square.container.querySelector('.troggle')
+        ).not.toBeInTheDocument();
+        verifyMuncherAndBoard(square);
+    });
+
     function verifyMuncherAndBoard(square) {
         expect(square.container.querySelector('.muncher')).toBeInTheDocument();
         expect(

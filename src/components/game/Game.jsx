@@ -99,6 +99,7 @@ class Game extends React.Component {
                             notification: 'You beat the level!',
                             level: level + 1,
                             troggles: [],
+                            status: '',
                             squares: this.setupBoard(game, {
                                 x: 2,
                                 y: 2,
@@ -155,6 +156,7 @@ class Game extends React.Component {
                     muncher,
                 });
                 this.endGame();
+                break;
             } else {
                 muncher.display = '';
                 this.setState({ muncher });
@@ -173,6 +175,7 @@ class Game extends React.Component {
                 level: 1,
                 notification: 'You lost the game!',
                 troggles: [],
+                status: '',
             });
         }
     }

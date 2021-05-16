@@ -27,7 +27,7 @@ describe('<Troggle/>', () => {
         expect(moveTroggles([], 5, 4)).toEqual([]);
     });
 
-    it('can not move a "comming soon" troggle', () => {
+    it('can not move a "coming soon" troggle', () => {
         expect(moveTroggles([{}], 5, 4)).toEqual([{}]);
     });
 
@@ -176,7 +176,7 @@ describe('<Troggle/>', () => {
         const addedTroggle = addTroggle([{}], 2, 5, 5);
         expect(addedTroggle.troggles).toHaveLength(1);
         expect(addedTroggle.troggles[0].position.x).toBeGreaterThanOrEqual(0);
-        expect(addedTroggle.troggles[0].direction.x).toBeGreaterThanOrEqual(0);
+        expect(addedTroggle.troggles[0].direction.x).toBeGreaterThanOrEqual(-1);
         expect(addedTroggle.status).toEqual('');
     });
 
