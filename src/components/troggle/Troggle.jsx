@@ -56,25 +56,6 @@ function moveTroggles(troggles, WIDTH, HEIGHT) {
     return troggles;
 }
 
-function addTroggle(troggles, level, WIDTH, HEIGHT) {
-    let status = '';
-    // initialize any open troggles
-    for (let t = 0; t < troggles.length; t++) {
-        const troggle = troggles[t];
-        if (troggle.position === undefined) {
-            const { position, direction } = initializeTroggle(WIDTH, HEIGHT);
-            troggle.position = position;
-            troggle.direction = direction;
-        }
-    }
-    // we should consider adding a troggle if the troggle count is less than twice the level (rounded up)
-    if (troggles.length < Math.ceil(level / 2) && Math.random() < 0.2) {
-        troggles.push({ troggle: 'normalus' }); // TODO - decide which monster to deploy based on level
-        status = 'Troggle!';
-    }
-    return { troggles, status };
-}
-
 function initializeTroggle(WIDTH, HEIGHT) {
     let x = Math.floor(Math.random() * WIDTH);
     let y = Math.floor(Math.random() * HEIGHT);
@@ -95,6 +76,25 @@ function initializeTroggle(WIDTH, HEIGHT) {
         direction = { x: 0, y: -1 };
     }
     return { position: { x, y }, direction };
+}
+
+function addTroggle(troggles, level, WIDTH, HEIGHT) {
+    let status = '';
+    // initialize any open troggles
+    for (let t = 0; t < troggles.length; t++) {
+        const troggle = troggles[t];
+        if (troggle.position === undefined) {
+            const { position, direction } = initializeTroggle(WIDTH, HEIGHT);
+            troggle.position = position;
+            troggle.direction = direction;
+        }
+    }
+    // we should consider adding a troggle if the troggle count is less than twice the level (rounded up)
+    if (troggles.length < Math.ceil(level / 2) && Math.random() < 0.2) {
+        troggles.push({ troggle: 'normalus' }); // TODO - decide which monster to deploy based on level
+        status = 'Troggle!';
+    }
+    return { troggles, status };
 }
 
 export default Troggle;

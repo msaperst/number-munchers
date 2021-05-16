@@ -114,8 +114,8 @@ describe('<Board/>', () => {
             <Board
                 muncher={{ x: 0, y: 0 }}
                 troggles={[
-                    { x: 1, y: 1, troggle: 'reggie' },
-                    { x: 3, y: 2, troggle: 'worker' },
+                    { position: { x: 1, y: 1 }, troggle: 'reggie' },
+                    { position: { x: 3, y: 2 }, troggle: 'worker' },
                 ]}
                 height="5"
                 width="6"

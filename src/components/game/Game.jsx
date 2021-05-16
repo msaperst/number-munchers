@@ -98,6 +98,7 @@ class Game extends React.Component {
                         this.setState({
                             notification: 'You beat the level!',
                             level: level + 1,
+                            troggles: [],
                             squares: this.setupBoard(game, {
                                 x: 2,
                                 y: 2,
