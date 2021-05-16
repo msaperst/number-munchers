@@ -2,6 +2,8 @@ import React from 'react';
 import './Game.css';
 import Board from '../board/Board';
 import Keyboard from '../keyboard/Keyboard';
+import { addTroggle, moveTroggles } from '../troggle/Troggle';
+import Status from '../status/Status';
 
 const WIDTH = 6;
 const HEIGHT = 5;
@@ -17,6 +19,7 @@ class Game extends React.Component {
             score: 0,
             lives: 3,
             notification: '',
+            status: '',
             muncher,
             troggles: [],
             squares: this.setupBoard(game, muncher),
@@ -31,7 +34,7 @@ class Game extends React.Component {
         });
         this.timer = setInterval(() => {
             this.troggle();
-        }, 4000); // TODO - make this go faster based on the level
+        }, 4000); // TODO - make this go faster based on the level/troggle
     }
 
     componentWillUnmount() {
@@ -53,70 +56,34 @@ class Game extends React.Component {
     }
 
     troggle() {
-        const { level, troggles } = this.state;
-        const remove = [];
-        // move any existing troggles
-        for (let t = 0; t < troggles.length; t++) {
-            const troggle = troggles[t];
-            switch (troggle.direction) {
-                case 'right':
-                    troggle.x++;
-                    break;
-                case 'left':
-                    troggle.x--;
-                    break;
-                case 'down':
-                    troggle.y++;
-                    break;
-                case 'up':
-                    troggle.y--;
-                    break;
-                default:
-                // do nothing
+        const { squares, game, notification, level, troggles } = this.state;
+        if (notification === '') {
+            // handle our troggles
+            const response = addTroggle(
+                moveTroggles(troggles, WIDTH, HEIGHT),
+                level,
+                WIDTH,
+                HEIGHT
+            );
+            // change the numbers behind any
+            for (let i = 0; i < response.troggles.length; i++) {
+                const troggle = response.troggles[i];
+                if (
+                    troggle.position !== undefined &&
+                    squares[troggle.position.y * WIDTH + troggle.position.x] !==
+                        ''
+                ) {
+                    squares[troggle.position.y * WIDTH + troggle.position.x] =
+                        game.getFiller();
+                }
             }
-            // TODO - change the number after passing
-            // TODO - hide the muncher on eating him
-            // TODO - pause the troggle on notification
-            if (
-                troggle.x < 0 ||
-                troggle.y < 0 ||
-                troggle.x > WIDTH - 1 ||
-                troggle.y > HEIGHT - 1
-            ) {
-                remove.push(t);
-            }
+            this.setState({
+                troggles: response.troggles,
+                status: response.status,
+                squares,
+            });
+            this.troggleMuncherCheck();
         }
-        // remove any needed troggles
-        for (let i = 0; i < remove.length; i++) {
-            troggles.splice(i, 1);
-        }
-        this.setState({ troggles });
-
-        // we should consider adding a troggle if the troggle count is less than twice the level + 1
-        if (troggles.length < (level + 1) / 2 && Math.random() < 0.2) {
-            // TODO - first off we need a troggle alert
-            let x = Math.floor(Math.random() * WIDTH);
-            let y = Math.floor(Math.random() * HEIGHT);
-            if (x > 0 && x < WIDTH - 1) {
-                y = Math.abs(HEIGHT - 1 - y) < Math.abs(0 - y) ? HEIGHT - 1 : 0;
-            }
-            if (y > 0 && y < HEIGHT - 1) {
-                x = Math.abs(WIDTH - 1 - x) < Math.abs(0 - x) ? WIDTH - 1 : 0;
-            }
-            let direction;
-            if (x === 0) {
-                direction = 'right';
-            } else if (x === WIDTH - 1) {
-                direction = 'left';
-            } else if (y === 0) {
-                direction = 'down';
-            } else {
-                direction = 'up';
-            }
-            troggles.push({ x, y, troggle: 'reggie', direction }); // TODO - decide which monster to deploy
-            this.setState({ troggles });
-        }
-        this.troggleMuncherCheck();
     }
 
     keyDown(code) {
@@ -170,28 +137,42 @@ class Game extends React.Component {
     }
 
     troggleMuncherCheck() {
-        const { troggles, muncher, game } = this.state;
+        const { troggles, muncher } = this.state;
         let { lives } = this.state;
-        // move any existing troggles
         for (let t = 0; t < troggles.length; t++) {
             const troggle = troggles[t];
-            if (troggle.x === muncher.x && troggle.y === muncher.y) {
-                this.setState({
-                    notification: 'Yikes! You were eaten by a Troggle.', // TODO - put in proper troggle name
-                });
+            if (
+                troggle.position !== undefined &&
+                troggle.position.x === muncher.x &&
+                troggle.position.y === muncher.y
+            ) {
                 lives--;
-                this.setState({ lives });
-                if (lives === 0) {
-                    this.setState({
-                        squares: this.setupBoard(game, { x: 2, y: 2 }),
-                        muncher: { x: 2, y: 2 },
-                        score: 0,
-                        lives: 3,
-                        level: 1,
-                        notification: 'You lost the game!',
-                    });
-                }
+                muncher.display = 'none';
+                this.setState({
+                    notification: `Yikes! You were eaten by a Trogglus ${troggle.troggle}.`,
+                    lives,
+                    muncher,
+                });
+                this.endGame();
+            } else {
+                muncher.display = '';
+                this.setState({ muncher });
             }
+        }
+    }
+
+    endGame() {
+        const { lives, game } = this.state;
+        if (lives === 0) {
+            this.setState({
+                squares: this.setupBoard(game, { x: 2, y: 2 }),
+                muncher: { x: 2, y: 2 },
+                score: 0,
+                lives: 3,
+                level: 1,
+                notification: 'You lost the game!',
+                troggles: [],
+            });
         }
     }
 
@@ -224,16 +205,7 @@ class Game extends React.Component {
             lives--;
         }
         this.setState({ score, lives });
-        if (lives === 0) {
-            this.setState({
-                squares: this.setupBoard(game, { x: 2, y: 2 }),
-                muncher: { x: 2, y: 2 },
-                score: 0,
-                lives: 3,
-                level: 1,
-                notification: 'You lost the game!',
-            });
-        }
+        this.endGame();
     }
 
     checkLevel() {
@@ -258,6 +230,7 @@ class Game extends React.Component {
             score,
             lives,
             notification,
+            status,
         } = this.state;
 
         const munchers = [];
@@ -271,6 +244,7 @@ class Game extends React.Component {
                     <div className="level">{`Level: ${level}`}</div>
                     <div className="title">{game.getTitle()}</div>
                 </div>
+                <Status status={status} />
                 <Board
                     height={HEIGHT}
                     width={WIDTH}

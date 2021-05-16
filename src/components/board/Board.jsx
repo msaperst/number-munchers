@@ -14,18 +14,20 @@ function Board(props) {
     const theseTroggles = [];
     for (let t = 0; t < troggles.length; t++) {
         const troggle = troggles[t];
-        theseTroggles.push(
-            <Troggle
-                key={t}
-                position={{ x: troggle.x, y: troggle.y }}
-                troggle={troggle.troggle}
-            />
-        );
+        if (troggle.position !== undefined) {
+            theseTroggles.push(
+                <Troggle
+                    key={t}
+                    position={troggle.position}
+                    troggle={troggle.troggle}
+                />
+            );
+        }
     }
     const rows = getRows(height, width, squares);
     return (
         <div className="board">
-            <Muncher position={muncher} />
+            <Muncher position={muncher} display={muncher.display} />
             {theseTroggles}
             {alert}
             {rows}

@@ -11,22 +11,22 @@
     width: 16.666%;
 }
 
-.bashful {
+.timidus {
     background-image: url("./Bashful.png");
 }
 
-.helper {
+.assistus {
     background-image: url("./Helper.png");
 }
 
-.reggie {
+.normalus {
     background-image: url("./Reggie.png");
 }
 
-.smarty {
+.smarticus {
     background-image: url("Smarty.png");
 }
 
-.worker {
+.laborus {
     background-image: url("./Worker.png");
 }
