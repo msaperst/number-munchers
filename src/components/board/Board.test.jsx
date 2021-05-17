@@ -68,47 +68,45 @@ describe('<Board/>', () => {
         expect(square.container.querySelector('#c9')).not.toBeInTheDocument();
     });
 
-    it('full Board', () => {
+    it('renders a full board without any troggles', () => {
         const square = render(
             <Board
                 muncher={{ x: 0, y: 0 }}
+                troggles={[]}
                 height="5"
                 width="6"
                 squares={[
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15,
-                    16,
-                    17,
-                    18,
-                    19,
-                    20,
-                    21,
-                    22,
-                    23,
-                    24,
-                    25,
-                    26,
-                    27,
-                    28,
-                    29,
-                    30,
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
                 ]}
             />
         );
+        expect(
+            square.container.querySelector('.troggle')
+        ).not.toBeInTheDocument();
+        verifyMuncherAndBoard(square);
+    });
+
+    it('renders a full board without anything', () => {
+        const square = render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                squares={[
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                ]}
+            />
+        );
+        expect(
+            square.container.querySelector('.troggle')
+        ).not.toBeInTheDocument();
+        verifyMuncherAndBoard(square);
+    });
+
+    function verifyMuncherAndBoard(square) {
         expect(square.container.querySelector('.muncher')).toBeInTheDocument();
         expect(
             square.container.querySelector('.muncher').getBoundingClientRect()
@@ -128,5 +126,51 @@ describe('<Board/>', () => {
         }
         expect(square.container.querySelector('#c30')).not.toBeInTheDocument();
         expect(screen.queryByText('30')).not.toBeInTheDocument();
+    }
+
+    it('renders a full board with two troggles', () => {
+        const square = render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[
+                    { position: { x: 1, y: 1 }, troggle: 'reggie' },
+                    { position: { x: 3, y: 2 }, troggle: 'worker' },
+                ]}
+                height="5"
+                width="6"
+                squares={[
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                ]}
+            />
+        );
+        expect(square.container.querySelectorAll('.troggle')).toHaveLength(2);
+        expect(
+            square.container.querySelectorAll('.troggle')[0].className
+        ).toEqual('troggle reggie');
+        expect(
+            square.container
+                .querySelectorAll('.troggle')[0]
+                .getBoundingClientRect().left
+        ).toEqual(0);
+        expect(
+            square.container
+                .querySelectorAll('.troggle')[0]
+                .getBoundingClientRect().right
+        ).toEqual(0);
+        expect(
+            square.container.querySelectorAll('.troggle')[1].className
+        ).toEqual('troggle worker');
+        expect(
+            square.container
+                .querySelectorAll('.troggle')[1]
+                .getBoundingClientRect().left
+        ).toEqual(0);
+        expect(
+            square.container
+                .querySelectorAll('.troggle')[1]
+                .getBoundingClientRect().right
+        ).toEqual(0);
+        verifyMuncherAndBoard(square);
     });
 });

@@ -29,19 +29,37 @@ class Factors {
         return this.number;
     }
 
-    getFactor() {
-        // 2/5 of our numbers should match
-        if (Math.random() < 0.4) {
-            return this.factors[
-                Math.floor(Math.random() * this.factors.length)
-            ];
-        }
-        // the others will just be random
-        return Math.floor(Math.random() * this.number);
+    getTitle() {
+        return `${this.getGame()} of ${this.number}`;
     }
 
-    isFactor(factor) {
+    getFactor() {
+        return this.factors[Math.floor(Math.random() * this.factors.length)];
+    }
+
+    getNonFactor() {
+        let nonFactor = 1;
+        while (this.isCorrect(nonFactor)) {
+            nonFactor = 1 + Math.floor(Math.random() * this.number);
+        }
+        return nonFactor;
+    }
+
+    getFiller() {
+        // 2/5 of our numbers should match
+        if (Math.random() < 0.4) {
+            return this.getFactor();
+        }
+        // the others will just be random
+        return this.getNonFactor();
+    }
+
+    isCorrect(factor) {
         return this.factors.includes(factor);
+    }
+
+    getError(factor) {
+        return `"${factor}" is not a factor of "${this.getNumber()}".`;
     }
 }
 

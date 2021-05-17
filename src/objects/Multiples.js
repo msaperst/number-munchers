@@ -28,21 +28,41 @@ class Multiples {
         return this.number;
     }
 
-    getMultiple() {
-        // 2/5 of our numbers should match
-        if (Math.random() > 0.4) {
-            return Math.floor(Math.random() * (this.maxMult * this.number));
-        }
+    getTitle() {
+        return `${this.getGame()} of ${this.number}`;
+    }
 
-        // the others will just be random
-        const rand = Math.floor(
-            this.minMult + Math.random() * (this.maxMult - this.minMult)
-        );
+    getMultiple() {
+        const rand =
+            this.minMult +
+            Math.round(Math.random() * (this.maxMult - this.minMult));
         return this.number * rand;
     }
 
-    isMultiple(factor) {
+    getNonMultiple() {
+        let nonMultiple = 0;
+        while (this.isCorrect(nonMultiple)) {
+            nonMultiple =
+                Math.floor(Math.random() * (this.maxMult * this.number)) + 1;
+        }
+        return nonMultiple;
+    }
+
+    getFiller() {
+        // 2/5 of our numbers should match
+        if (Math.random() < 0.4) {
+            return this.getMultiple();
+        }
+        // the others will just be random
+        return this.getNonMultiple();
+    }
+
+    isCorrect(factor) {
         return factor % this.number === 0;
+    }
+
+    getError(factor) {
+        return `"${factor}" is not a multiple of "${this.getNumber()}".`;
     }
 }
 

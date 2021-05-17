@@ -3,17 +3,32 @@ import Square from '../square/Square';
 import './Board.css';
 import Muncher from '../muncher/Muncher';
 import Notification from '../notification/Notification';
+import Troggle from '../troggle/Troggle';
 
 function Board(props) {
-    const { height, width, squares, muncher, notification } = props;
+    const { height, width, squares, muncher, troggles, notification } = props;
     let alert;
     if (notification != null && notification.trim() !== '') {
         alert = <Notification message={notification} />;
     }
+    const theseTroggles = [];
+    for (let t = 0; t < troggles.length; t++) {
+        const troggle = troggles[t];
+        if (troggle.position !== undefined) {
+            theseTroggles.push(
+                <Troggle
+                    key={t}
+                    position={troggle.position}
+                    troggle={troggle.troggle}
+                />
+            );
+        }
+    }
     const rows = getRows(height, width, squares);
     return (
         <div className="board">
-            <Muncher position={muncher} />
+            <Muncher position={muncher} display={muncher.display} />
+            {theseTroggles}
             {alert}
             {rows}
         </div>

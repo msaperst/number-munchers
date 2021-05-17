@@ -9,17 +9,25 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    width: 20%;
+    min-width: 20%;
 }
 
 .title, .lives {
     position: absolute;
-    width: 20%;
+    min-width: 20%;
     text-align: center;
-    top: 20px;
+    top: 12px;
     left: 50%;
     transform: translate(-50%, 0);
     padding: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .title, .lives {
+        right: 20px;
+        left: unset;
+        transform: unset;
+    }
 }
 
 .title {
@@ -30,11 +38,11 @@
 .lives {
     top: 10px;
     height: 50px;
-    width:180px;
+    width: 180px;
 }
 
 .life {
-    background-image: url("../muncher/muncher.png");
+    background-image: url("../muncher/Muncher.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -44,14 +52,7 @@
     width: 50px;
 }
 
-.score > span:nth-child(1) {
-    top: 8px;
-    position: relative;
-}
-
 .points {
     border: 3px solid white;
     padding: 5px;
-    width: 50%;
-    float: right;
 }
