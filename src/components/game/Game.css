@@ -38,11 +38,11 @@
 .lives {
     top: 10px;
     height: 50px;
-    width:180px;
+    width: 180px;
 }
 
 .life {
-    background-image: url("../muncher/muncher.png");
+    background-image: url("../muncher/Muncher.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

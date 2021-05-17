@@ -1,6 +1,6 @@
 .muncher {
     position: absolute;
-    background-image: url("./muncher.png");
+    background-image: url("./Muncher.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -10,4 +10,8 @@
     padding: 0;
     text-align: center;
     width: 16.666%;
+}
+
+.none {
+    display: none;
 }

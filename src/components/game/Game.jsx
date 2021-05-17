@@ -2,6 +2,8 @@ import React from 'react';
 import './Game.css';
 import Board from '../board/Board';
 import Keyboard from '../keyboard/Keyboard';
+import { addTroggle, moveTroggles } from '../troggle/Troggle';
+import Status from '../status/Status';
 
 const WIDTH = 6;
 const HEIGHT = 5;
@@ -17,7 +19,9 @@ class Game extends React.Component {
             score: 0,
             lives: 3,
             notification: '',
+            status: '',
             muncher,
+            troggles: [],
             squares: this.setupBoard(game, muncher),
         };
 
@@ -28,10 +32,14 @@ class Game extends React.Component {
         document.addEventListener('keydown', (event) => {
             this.keyDown(event.code);
         });
+        this.timer = setInterval(() => {
+            this.troggle();
+        }, 4000); // TODO - make this go faster based on the level/troggle
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.keyDown);
+        clearInterval(this.timer);
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -47,6 +55,37 @@ class Game extends React.Component {
         return squares;
     }
 
+    troggle() {
+        const { squares, game, notification, level, troggles } = this.state;
+        if (notification === '') {
+            // handle our troggles
+            const response = addTroggle(
+                moveTroggles(troggles, WIDTH, HEIGHT),
+                level,
+                WIDTH,
+                HEIGHT
+            );
+            // change the numbers behind any
+            for (let i = 0; i < response.troggles.length; i++) {
+                const troggle = response.troggles[i];
+                if (
+                    troggle.position !== undefined &&
+                    squares[troggle.position.y * WIDTH + troggle.position.x] !==
+                        ''
+                ) {
+                    squares[troggle.position.y * WIDTH + troggle.position.x] =
+                        game.getFiller();
+                }
+            }
+            this.setState({
+                troggles: response.troggles,
+                status: response.status,
+                squares,
+            });
+            this.troggleMuncherCheck();
+        }
+    }
+
     keyDown(code) {
         const { notification, game, muncher } = this.state;
         if (notification === '') {
@@ -59,6 +98,8 @@ class Game extends React.Component {
                         this.setState({
                             notification: 'You beat the level!',
                             level: level + 1,
+                            troggles: [],
+                            status: '',
                             squares: this.setupBoard(game, {
                                 x: 2,
                                 y: 2,
@@ -94,6 +135,49 @@ class Game extends React.Component {
                 y: Math.min(Math.max(0, muncher.y + yc), HEIGHT - 1),
             },
         });
+        this.troggleMuncherCheck();
+    }
+
+    troggleMuncherCheck() {
+        const { troggles, muncher } = this.state;
+        let { lives } = this.state;
+        for (let t = 0; t < troggles.length; t++) {
+            const troggle = troggles[t];
+            if (
+                troggle.position !== undefined &&
+                troggle.position.x === muncher.x &&
+                troggle.position.y === muncher.y
+            ) {
+                lives--;
+                muncher.display = 'none';
+                this.setState({
+                    notification: `Yikes! You were eaten by a Trogglus ${troggle.troggle}.`,
+                    lives,
+                    muncher,
+                });
+                this.endGame();
+                break;
+            } else {
+                muncher.display = '';
+                this.setState({ muncher });
+            }
+        }
+    }
+
+    endGame() {
+        const { lives, game } = this.state;
+        if (lives === 0) {
+            this.setState({
+                squares: this.setupBoard(game, { x: 2, y: 2 }),
+                muncher: { x: 2, y: 2 },
+                score: 0,
+                lives: 3,
+                level: 1,
+                notification: 'You lost the game!',
+                troggles: [],
+                status: '',
+            });
+        }
     }
 
     munch() {
@@ -125,16 +209,7 @@ class Game extends React.Component {
             lives--;
         }
         this.setState({ score, lives });
-        if (lives === 0) {
-            this.setState({
-                squares: this.setupBoard(game, { x: 2, y: 2 }),
-                muncher: { x: 2, y: 2 },
-                score: 0,
-                lives: 3,
-                level: 1,
-                notification: 'You lost the game!',
-            });
-        }
+        this.endGame();
     }
 
     checkLevel() {
@@ -150,8 +225,17 @@ class Game extends React.Component {
     }
 
     render() {
-        const { level, game, muncher, squares, score, lives, notification } =
-            this.state;
+        const {
+            level,
+            game,
+            muncher,
+            troggles,
+            squares,
+            score,
+            lives,
+            notification,
+            status,
+        } = this.state;
 
         const munchers = [];
         for (let i = 0; i < lives; i++) {
@@ -164,9 +248,11 @@ class Game extends React.Component {
                     <div className="level">{`Level: ${level}`}</div>
                     <div className="title">{game.getTitle()}</div>
                 </div>
+                <Status status={status} />
                 <Board
                     height={HEIGHT}
                     width={WIDTH}
+                    troggles={troggles}
                     muncher={muncher}
                     squares={squares}
                     notification={notification}

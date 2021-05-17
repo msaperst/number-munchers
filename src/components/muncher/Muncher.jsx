@@ -2,6 +2,11 @@ import React from 'react';
 import './Muncher.css';
 
 function Muncher(props) {
+    const { display } = props;
+    let muncherClass = 'muncher';
+    if (display !== undefined) {
+        muncherClass = `${muncherClass} ${display}`;
+    }
     return (
         <div
             ref={(el) => {
@@ -14,7 +19,7 @@ function Muncher(props) {
                     muncher.getBoundingClientRect().height * props.position.y
                 }px`;
             }}
-            className="muncher"
+            className={muncherClass}
         />
     );
 }
