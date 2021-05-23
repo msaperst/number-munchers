@@ -134,7 +134,34 @@ class Game extends React.Component {
             this.keyDown('Space');
         } else {
             // move to the square
-            console.log(`move to square (${x}, ${y})`);
+            let xc = -1;
+            let yc = -1;
+            if (x === muncher.x) {
+                xc = 0;
+            } else if (x > muncher.x) {
+                xc = 1;
+            }
+            if (y === muncher.y) {
+                yc = 0;
+            } else if (y > muncher.y) {
+                yc = 1;
+            }
+            const timer = setInterval(() => {
+                this.moveMuncher(xc, 0);
+                const { muncher } = this.state;
+                if (x === muncher.x) {
+                    clearInterval(timer);
+                }
+            }, 200);
+            setTimeout(() => {
+                const timer = setInterval(() => {
+                    this.moveMuncher(0, yc);
+                    const { muncher } = this.state;
+                    if (y === muncher.y) {
+                        clearInterval(timer);
+                    }
+                }, 200);
+            }, 100);
         }
     }
 
