@@ -173,4 +173,45 @@ describe('<Board/>', () => {
         ).toEqual(0);
         verifyMuncherAndBoard(square);
     });
+
+    // TODO - figure out how to simulate swipe (https://github.com/FormidableLabs/react-swipeable/blob/1f983e4e9de92c7faba616bc6c696dd81706ee20/__tests__/useSwipeable.spec.tsx#L62)
+
+    it('recognizes clicking on a square', () => {
+        const click = (x, y) => {
+            expect(x).toEqual(2);
+            expect(y).toEqual(2);
+        };
+        render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                squares={[
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                ]}
+                movement={{ click }}
+            />
+        );
+        screen.getByText('14').click();
+    });
+
+    it('recognizes clicking away notification', () => {
+        const keyDown = (value) => {
+            expect(value).toEqual('Space');
+        };
+        render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                notification="1234"
+                squares={new Array(30).fill(5)}
+                movement={{ keyDown }}
+            />
+        );
+        screen.getByText(/1234/).click();
+    });
 });
