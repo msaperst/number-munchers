@@ -137,6 +137,7 @@ class Game extends React.Component {
             const xc = Math.max(Math.min(x - muncher.x, 1), -1); // move left if lower, right if higher, not at all if same
             const yc = Math.max(Math.min(y - muncher.y, 1), -1); // move up if lower, down if higher, not at all if same
             // TODO - BUG - clear out timer if eaten by troggle
+            // TODO - BUG - don't click to move if notification is present
             const timer = setInterval(() => {
                 // move on the x-axis
                 this.moveMuncher(xc, 0);

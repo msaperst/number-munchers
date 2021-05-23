@@ -21,11 +21,15 @@ function Board(props) {
         onSwipedDown: () => movement.keyDown('ArrowDown'),
         onSwipedLeft: () => movement.keyDown('ArrowLeft'),
         onSwipedRight: () => movement.keyDown('ArrowRight'),
+        preventDefaultTouchmoveEvent: true,
     });
     let alert;
     if (notification != null && notification.trim() !== '') {
         alert = (
-            <Notification message={notification} onClick={movement.space} />
+            <Notification
+                message={notification}
+                onClick={() => movement.keyDown('Space')}
+            />
         );
     }
     const theseTroggles = [];
