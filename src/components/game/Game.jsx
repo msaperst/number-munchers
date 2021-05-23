@@ -134,19 +134,10 @@ class Game extends React.Component {
             this.keyDown('Space');
         } else {
             // move to the square
-            let xc = -1;
-            let yc = -1;
-            if (x === muncher.x) {
-                xc = 0;
-            } else if (x > muncher.x) {
-                xc = 1;
-            }
-            if (y === muncher.y) {
-                yc = 0;
-            } else if (y > muncher.y) {
-                yc = 1;
-            }
+            const xc = Math.max(Math.min(x - muncher.x, 1), -1); // move left if lower, right if higher, not at all if same
+            const yc = Math.max(Math.min(y - muncher.y, 1), -1); // move up if lower, down if higher, not at all if same
             const timer = setInterval(() => {
+                // move on the x-axis
                 this.moveMuncher(xc, 0);
                 const { muncher } = this.state;
                 if (x === muncher.x) {
@@ -154,6 +145,7 @@ class Game extends React.Component {
                 }
             }, 200);
             setTimeout(() => {
+                // move on the y-axis
                 const timer = setInterval(() => {
                     this.moveMuncher(0, yc);
                     const { muncher } = this.state;
