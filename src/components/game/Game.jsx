@@ -136,6 +136,7 @@ class Game extends React.Component {
             // move to the square
             const xc = Math.max(Math.min(x - muncher.x, 1), -1); // move left if lower, right if higher, not at all if same
             const yc = Math.max(Math.min(y - muncher.y, 1), -1); // move up if lower, down if higher, not at all if same
+            // TODO - BUG - clear out timer if eaten by troggle
             const timer = setInterval(() => {
                 // move on the x-axis
                 this.moveMuncher(xc, 0);
@@ -288,11 +289,7 @@ class Game extends React.Component {
                     squares={squares}
                     notification={notification}
                     movement={{
-                        up: () => this.keyDown('ArrowUp'),
-                        down: () => this.keyDown('ArrowDown'),
-                        left: () => this.keyDown('ArrowLeft'),
-                        right: () => this.keyDown('ArrowRight'),
-                        space: () => this.keyDown('Space'),
+                        keyDown: this.keyDown,
                         click: (x, y) => this.clickedSquare(x, y),
                     }}
                 />

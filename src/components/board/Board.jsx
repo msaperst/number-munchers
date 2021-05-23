@@ -17,10 +17,10 @@ function Board(props) {
         movement,
     } = props;
     const handlers = useSwipeable({
-        onSwipedUp: movement.up,
-        onSwipedDown: movement.down,
-        onSwipedLeft: movement.left,
-        onSwipedRight: movement.right,
+        onSwipedUp: () => movement.keyDown('ArrowUp'),
+        onSwipedDown: () => movement.keyDown('ArrowDown'),
+        onSwipedLeft: () => movement.keyDown('ArrowLeft'),
+        onSwipedRight: () => movement.keyDown('ArrowRight'),
     });
     let alert;
     if (notification != null && notification.trim() !== '') {
