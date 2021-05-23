@@ -1,7 +1,6 @@
 import React from 'react';
 import './Game.css';
 import Board from '../board/Board';
-import Keyboard from '../keyboard/Keyboard';
 import { addTroggle, moveTroggles } from '../troggle/Troggle';
 import Status from '../status/Status';
 
@@ -127,7 +126,20 @@ class Game extends React.Component {
         }
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    clickedSquare(x, y) {
+        const { muncher } = this.state;
+        if (x === muncher.x && y === muncher.y) {
+            // eat this number
+            this.keyDown('Space');
+        } else {
+            // move to the square
+            console.log(`move to square (${x}, ${y})`);
+        }
+    }
+
     moveMuncher(xc, yc) {
+        // TODO - need to figure out how to animate this
         const { muncher } = this.state;
         this.setState({
             muncher: {
@@ -256,6 +268,14 @@ class Game extends React.Component {
                     muncher={muncher}
                     squares={squares}
                     notification={notification}
+                    movement={{
+                        up: () => this.keyDown('ArrowUp'),
+                        down: () => this.keyDown('ArrowDown'),
+                        left: () => this.keyDown('ArrowLeft'),
+                        right: () => this.keyDown('ArrowRight'),
+                        space: () => this.keyDown('Space'),
+                        click: (x, y) => this.clickedSquare(x, y),
+                    }}
                 />
                 <div className="info">
                     <div className="score">
@@ -264,13 +284,6 @@ class Game extends React.Component {
                     </div>
                     <div className="lives">{munchers}</div>
                 </div>
-                <Keyboard
-                    up={() => this.keyDown('ArrowUp')}
-                    down={() => this.keyDown('ArrowDown')}
-                    left={() => this.keyDown('ArrowLeft')}
-                    right={() => this.keyDown('ArrowRight')}
-                    space={() => this.keyDown('Space')}
-                />
             </div>
         );
     }
