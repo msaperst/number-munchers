@@ -24,7 +24,9 @@ function Board(props) {
     });
     let alert;
     if (notification != null && notification.trim() !== '') {
-        alert = <Notification message={notification} />;
+        alert = (
+            <Notification message={notification} onClick={movement.space} />
+        );
     }
     const theseTroggles = [];
     for (let t = 0; t < troggles.length; t++) {
