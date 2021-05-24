@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/number-munchers/static/css/main.ef5585bd.chunk.css",
-    "main.js": "/number-munchers/static/js/main.4a62a7c2.chunk.js",
-    "main.js.map": "/number-munchers/static/js/main.4a62a7c2.chunk.js.map",
+    "main.css": "/number-munchers/static/css/main.f7f990f9.chunk.css",
+    "main.js": "/number-munchers/static/js/main.77f4515f.chunk.js",
+    "main.js.map": "/number-munchers/static/js/main.77f4515f.chunk.js.map",
     "runtime-main.js": "/number-munchers/static/js/runtime-main.3ea222d5.js",
     "runtime-main.js.map": "/number-munchers/static/js/runtime-main.3ea222d5.js.map",
-    "static/js/2.54298b91.chunk.js": "/number-munchers/static/js/2.54298b91.chunk.js",
-    "static/js/2.54298b91.chunk.js.map": "/number-munchers/static/js/2.54298b91.chunk.js.map",
+    "static/js/2.bd987974.chunk.js": "/number-munchers/static/js/2.bd987974.chunk.js",
+    "static/js/2.bd987974.chunk.js.map": "/number-munchers/static/js/2.bd987974.chunk.js.map",
     "index.html": "/number-munchers/index.html",
-    "static/css/main.ef5585bd.chunk.css.map": "/number-munchers/static/css/main.ef5585bd.chunk.css.map",
-    "static/js/2.54298b91.chunk.js.LICENSE.txt": "/number-munchers/static/js/2.54298b91.chunk.js.LICENSE.txt"
+    "static/css/main.f7f990f9.chunk.css.map": "/number-munchers/static/css/main.f7f990f9.chunk.css.map",
+    "static/js/2.bd987974.chunk.js.LICENSE.txt": "/number-munchers/static/js/2.bd987974.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3ea222d5.js",
-    "static/js/2.54298b91.chunk.js",
-    "static/css/main.ef5585bd.chunk.css",
-    "static/js/main.4a62a7c2.chunk.js"
+    "static/js/2.bd987974.chunk.js",
+    "static/css/main.f7f990f9.chunk.css",
+    "static/js/main.77f4515f.chunk.js"
   ]
 }
