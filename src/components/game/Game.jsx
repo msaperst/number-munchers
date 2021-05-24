@@ -25,6 +25,7 @@ class Game extends React.Component {
         };
 
         this.keyDown = this.keyDown.bind(this);
+        this.clickedSquare = this.clickedSquare.bind(this);
     }
 
     componentDidMount() {
