@@ -13,6 +13,9 @@ describe('<Menu/>', () => {
     let wrapper;
 
     beforeEach(() => {
+        jest.clearAllMocks();
+        jest.resetAllMocks();
+
         wrapper = Enzyme.mount(
             <Menu
                 question="foo"
@@ -61,6 +64,18 @@ describe('<Menu/>', () => {
         ).toEqual(false);
     });
 
+    it('selects the non-selected option on "clicking"', () => {
+        wrapper.instance().clickedOption(2);
+        expect(wrapper.state().selected).toEqual(2);
+    });
+
+    it('chooses the game on "clicking"', () => {
+        wrapper.instance().select = jest.fn();
+        wrapper.update();
+        wrapper.instance().clickedOption(0);
+        expect(wrapper.instance().select).toBeCalledWith();
+    });
+
     // TODO - can't test this quite yet
     // it('selecting nothing renders game', () => {
     //     wrapper.instance().select();
@@ -90,13 +105,12 @@ describe('<Menu/>', () => {
         expect(wrapper.state().selected).toEqual(0);
     });
 
-    // TODO - can't test this quite yet
-    // it('hitting enter renders game', () => {
-    //     wrapper.instance().keyDown('Enter');
-    //     expect(wrapper.find('.title').text()).toEqual(
-    //         `Multiples of ${wrapper.state().game.getNumber()}`
-    //     );
-    // });
+    it('hitting enter renders game', () => {
+        wrapper.instance().select = jest.fn();
+        wrapper.update();
+        wrapper.instance().keyDown('Enter');
+        expect(wrapper.instance().select).toBeCalledWith();
+    });
 
     it('hitting down increments the selected state', () => {
         wrapper.instance().keyDown('ArrowDown');
@@ -125,12 +139,6 @@ describe('<Menu/>', () => {
         expect(wrapper.state().selected).toEqual(0);
     });
 
-    // TODO - can't test this quite yet
-    // it('renders multiples when selecting multiples', () => {
-    //     const event = new KeyboardEvent('keydown', { code: 'Enter' });
-    //     document.dispatchEvent(event);
-    // });
-
     it('select second option', () => {
         const event = new KeyboardEvent('keydown', { code: 'ArrowDown' });
         document.dispatchEvent(event);
@@ -143,33 +151,15 @@ describe('<Menu/>', () => {
         expect(wrapper.state().selected).toEqual(2);
     });
 
-    // TODO - can't test this quite yet
-    // it('clicking enter renders game', () => {
-    //     wrapper.find('instance().keyDown('Enter');
-    //     expect(wrapper.find('.title').text()).toEqual(
-    //         `Multiples of ${wrapper.state().game.getNumber()}`
-    //     );
-    // });
-
-    it('clicking down increments the selected state', () => {
-        wrapper.find('.down').simulate('click');
-        expect(wrapper.state().selected).toEqual(1);
+    it('selects the option when clicking on it', () => {
+        wrapper.find('li').at(2).simulate('click');
+        expect(wrapper.state().selected).toEqual(2);
     });
 
-    it('clicking right increments the selected state', () => {
-        wrapper.find('.right').simulate('click');
-        expect(wrapper.state().selected).toEqual(1);
-    });
-
-    it('clicking up increments the selected state', () => {
-        wrapper.find('.down').simulate('click');
-        wrapper.find('.up').simulate('click');
-        expect(wrapper.state().selected).toEqual(0);
-    });
-
-    it('clicking left increments the selected state', () => {
-        wrapper.find('.down').simulate('click');
-        wrapper.find('.left').simulate('click');
-        expect(wrapper.state().selected).toEqual(0);
+    it('selects the game when clicking on something selected', () => {
+        wrapper.instance().select = jest.fn();
+        wrapper.update();
+        wrapper.find('li').at(0).simulate('click');
+        expect(wrapper.instance().select).toBeCalledWith();
     });
 });

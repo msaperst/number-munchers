@@ -41,4 +41,32 @@ describe('<Options/>', () => {
             wrapper.find('.options').find('li').at(2).hasClass('selected')
         ).toEqual(false);
     });
+
+    it('clicking the elements returns the element', () => {
+        const onClick = (option) => {
+            expect(option).toEqual(2);
+        };
+        const wrapper = Enzyme.mount(
+            <Options
+                options={[new Multiples(), new Factors(), new Primes()]}
+                selected={0}
+                onClick={(option) => onClick(option)}
+            />
+        );
+        wrapper.find('li').at(2).simulate('click');
+    });
+
+    it('clicking the selected elements returns the element', () => {
+        const onClick = (option) => {
+            expect(option).toEqual(0);
+        };
+        const wrapper = Enzyme.mount(
+            <Options
+                options={[new Multiples(), new Factors(), new Primes()]}
+                selected={0}
+                onClick={(option) => onClick(option)}
+            />
+        );
+        wrapper.find('li').at(0).simulate('click');
+    });
 });

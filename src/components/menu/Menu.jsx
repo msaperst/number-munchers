@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import './Menu.css';
-import Keyboard from '../keyboard/Keyboard';
 import Options from '../options/Options';
 import Game from '../game/Game';
 
@@ -12,6 +11,7 @@ class Menu extends React.Component {
             selected: 0,
         };
         this.keyDown = this.keyDown.bind(this);
+        this.clickedOption = this.clickedOption.bind(this);
     }
 
     componentDidMount() {
@@ -42,6 +42,15 @@ class Menu extends React.Component {
         }
     }
 
+    clickedOption(option) {
+        const { selected } = this.state;
+        if (option === selected) {
+            this.select();
+        } else {
+            this.setState({ selected: option });
+        }
+    }
+
     select(movement) {
         let { selected } = this.state;
         const { options } = this.props;
@@ -69,16 +78,13 @@ class Menu extends React.Component {
             <div className="all">
                 <div className="menu">
                     <div className="text">{question}</div>
-                    <Options options={options} selected={selected} />
+                    <Options
+                        options={options}
+                        selected={selected}
+                        onClick={(opt) => this.clickedOption(opt)}
+                    />
                     <div className="text">{instructions}</div>
                 </div>
-                <Keyboard
-                    up={() => this.keyDown('ArrowUp')}
-                    down={() => this.keyDown('ArrowDown')}
-                    left={() => this.keyDown('ArrowLeft')}
-                    right={() => this.keyDown('ArrowRight')}
-                    enter={() => this.keyDown('Enter')}
-                />
             </div>
         );
     }
