@@ -128,7 +128,10 @@ class Game extends React.Component {
     }
 
     clickedSquare(x, y) {
-        const { muncher } = this.state;
+        const { muncher, notification } = this.state;
+        if (notification !== '') {
+            return;
+        }
         if (x === muncher.x && y === muncher.y) {
             // eat this number
             this.keyDown('Space');
@@ -136,23 +139,21 @@ class Game extends React.Component {
             // move to the square
             const xc = Math.max(Math.min(x - muncher.x, 1), -1); // move left if lower, right if higher, not at all if same
             const yc = Math.max(Math.min(y - muncher.y, 1), -1); // move up if lower, down if higher, not at all if same
-            // TODO - BUG - clear out timer if eaten by troggle
-            // TODO - BUG - don't click to move if notification is present
-            const timer = setInterval(() => {
+            this.timerX = setInterval(() => {
                 // move on the x-axis
                 this.moveMuncher(xc, 0);
                 const { muncher } = this.state;
                 if (x === muncher.x) {
-                    clearInterval(timer);
+                    clearInterval(this.timerX);
                 }
             }, 200);
             setTimeout(() => {
                 // move on the y-axis
-                const timer = setInterval(() => {
+                this.timerY = setInterval(() => {
                     this.moveMuncher(0, yc);
                     const { muncher } = this.state;
                     if (y === muncher.y) {
-                        clearInterval(timer);
+                        clearInterval(this.timerY);
                     }
                 }, 200);
             }, 100);
@@ -183,6 +184,8 @@ class Game extends React.Component {
             ) {
                 lives--;
                 muncher.display = 'none';
+                clearInterval(this.timerX);
+                clearInterval(this.timerY);
                 this.setState({
                     notification: `Yikes! You were eaten by a Trogglus ${troggle.troggle}.`,
                     lives,

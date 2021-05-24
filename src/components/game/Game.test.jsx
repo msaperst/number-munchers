@@ -54,6 +54,14 @@ describe('<Game/>', () => {
         expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
     });
 
+    it('does nothing clicking and a notification is present', () => {
+        wrapper.state().notification = '1234';
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.instance().clickedSquare(2, 2);
+        expect(wrapper.instance().keyDown).toBeCalledTimes(0);
+    });
+
     it('emulates a space when muncher equals coordinates', () => {
         wrapper.instance().keyDown = jest.fn();
         wrapper.update();
@@ -645,7 +653,7 @@ describe('<Game/>', () => {
         mount.find('#c25').simulate('click');
         // just run through a bunch of timers (troggle timer means we can be precise with how many)
         // exact timing of movement was tested elsewhere
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 500; i++) {
             act(() => jest.runOnlyPendingTimers());
         }
         expect(mount.state().muncher.x).toEqual(1);
