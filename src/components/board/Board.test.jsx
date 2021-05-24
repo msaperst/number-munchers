@@ -1,7 +1,20 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Board, { getRow, getRows } from './Board.jsx';
+
+const TS = 'touchStart';
+const TM = 'touchMove';
+const TE = 'touchEnd';
+
+const createClientXYObject = (x, y) => ({
+    clientX: x,
+    clientY: y,
+});
+// Create touch event
+const cte = ({ x, y }) => ({
+    touches: [createClientXYObject(x, y)],
+});
 
 describe('<Board/>', () => {
     it('get Empty Small Row', () => {
@@ -175,6 +188,95 @@ describe('<Board/>', () => {
     });
 
     // TODO - figure out how to simulate swipe (https://github.com/FormidableLabs/react-swipeable/blob/1f983e4e9de92c7faba616bc6c696dd81706ee20/__tests__/useSwipeable.spec.tsx#L62)
+    it('recognizes down when swiped down', () => {
+        const keyDown = (value) => {
+            expect(value).toEqual('ArrowDown');
+        };
+        const board = render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                squares={new Array(30).fill(5)}
+                movement={{ keyDown }}
+            />
+        );
+        const touchArea = board.container.querySelector('.board');
+        swipe(touchArea, 'down');
+    });
+
+    it('recognizes up when swiped up', () => {
+        const keyDown = (value) => {
+            expect(value).toEqual('ArrowUp');
+        };
+        const board = render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                squares={new Array(30).fill(5)}
+                movement={{ keyDown }}
+            />
+        );
+        const touchArea = board.container.querySelector('.board');
+        swipe(touchArea, 'up');
+    });
+
+    it('recognizes right when swiped right', () => {
+        const keyDown = (value) => {
+            expect(value).toEqual('ArrowRight');
+        };
+        const board = render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                squares={new Array(30).fill(5)}
+                movement={{ keyDown }}
+            />
+        );
+        const touchArea = board.container.querySelector('.board');
+        swipe(touchArea, 'right');
+    });
+
+    it('recognizes left when swiped left', () => {
+        const keyDown = (value) => {
+            expect(value).toEqual('ArrowLeft');
+        };
+        const board = render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                squares={new Array(30).fill(5)}
+                movement={{ keyDown }}
+            />
+        );
+        const touchArea = board.container.querySelector('.board');
+        swipe(touchArea, 'left');
+    });
+
+    it('recognizes clicking away notification', () => {
+        const keyDown = (value) => {
+            expect(value).toEqual('Space');
+        };
+        render(
+            <Board
+                muncher={{ x: 0, y: 0 }}
+                troggles={[{}]}
+                height="5"
+                width="6"
+                notification="1234"
+                squares={new Array(30).fill(5)}
+                movement={{ keyDown }}
+            />
+        );
+        screen.getByText(/1234/).click();
+    });
 
     it('recognizes clicking on a square', () => {
         const click = (x, y) => {
@@ -197,21 +299,30 @@ describe('<Board/>', () => {
         screen.getByText('14').click();
     });
 
-    it('recognizes clicking away notification', () => {
-        const keyDown = (value) => {
-            expect(value).toEqual('Space');
-        };
-        render(
-            <Board
-                muncher={{ x: 0, y: 0 }}
-                troggles={[{}]}
-                height="5"
-                width="6"
-                notification="1234"
-                squares={new Array(30).fill(5)}
-                movement={{ keyDown }}
-            />
-        );
-        screen.getByText(/1234/).click();
-    });
+    function swipe(touchArea, direction) {
+        let movementx = [100, 100, 100, 100, 100];
+        let movementy = [100, 100, 100, 100, 100];
+        switch (direction) {
+            case 'down':
+                movementy = [100, 125, 150, 175, 200];
+                break;
+            case 'up':
+                movementy = [200, 175, 150, 125, 100];
+                break;
+            case 'right':
+                movementx = [100, 125, 150, 175, 200];
+                break;
+            case 'left':
+                movementx = [200, 175, 150, 125, 100];
+                break;
+            default:
+            // DO NOTHING
+        }
+        fireEvent[TS](touchArea, cte({ x: movementx[0], y: movementy[0] }));
+        fireEvent[TM](touchArea, cte({ x: movementx[1], y: movementy[1] }));
+        fireEvent[TM](touchArea, cte({ x: movementx[2], y: movementy[2] }));
+        fireEvent[TM](touchArea, cte({ x: movementx[3], y: movementy[3] }));
+        fireEvent[TM](touchArea, cte({ x: movementx[4], y: movementy[4] }));
+        fireEvent[TE](touchArea, cte({}));
+    }
 });

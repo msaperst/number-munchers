@@ -126,7 +126,6 @@ class Game extends React.Component {
         }
     }
 
-    // eslint-disable-next-line class-methods-use-this
     clickedSquare(x, y) {
         const { muncher } = this.state;
         if (x === muncher.x && y === muncher.y) {
