@@ -11,6 +11,7 @@ class Menu extends React.Component {
             selected: 0,
         };
         this.keyDown = this.keyDown.bind(this);
+        this.clickedOption = this.clickedOption.bind(this);
     }
 
     componentDidMount() {

@@ -643,12 +643,11 @@ describe('<Game/>', () => {
         mount.instance().componentDidMount = jest.fn();
         mount.update();
         mount.find('#c25').simulate('click');
-        act(() => jest.runOnlyPendingTimers());
-        act(() => jest.runOnlyPendingTimers());
-        act(() => jest.runOnlyPendingTimers());
-        act(() => jest.runOnlyPendingTimers());
-        act(() => jest.runOnlyPendingTimers());
-        act(() => jest.runOnlyPendingTimers());
+        // just run through a bunch of timers (troggle timer means we can be precise with how many)
+        // exact timing of movement was tested elsewhere
+        for (let i = 0; i < 50; i++) {
+            act(() => jest.runOnlyPendingTimers());
+        }
         expect(mount.state().muncher.x).toEqual(1);
         expect(mount.state().muncher.y).toEqual(4);
     });
