@@ -5,11 +5,12 @@ import './index.css';
 import Multiples from './objects/Multiples';
 import Factors from './objects/Factors';
 import Primes from './objects/Primes';
+import Equality from './objects/Equality';
 
 ReactDOM.render(
     <Menu
         question="Which Number Munchers game would you like to play"
-        options={[new Multiples(), new Factors(), new Primes()]}
+        options={[new Multiples(), new Factors(), new Primes(), new Equality()]}
         instructions="Use Arrows to move, then press Enter"
     />,
     document.getElementById('root')
