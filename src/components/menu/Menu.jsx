@@ -3,6 +3,9 @@ import React from 'react';
 import './Menu.css';
 import Options from '../options/Options';
 import Game from '../game/Game';
+import Multiples from '../../objects/Multiples';
+import Factors from '../../objects/Factors';
+import Primes from '../../objects/Primes';
 
 class Menu extends React.Component {
     constructor(props) {
@@ -55,11 +58,18 @@ class Menu extends React.Component {
         let { selected } = this.state;
         const { options } = this.props;
         if (movement === undefined) {
-            const game = options[selected];
-            ReactDOM.render(
-                <Game game={game} />,
-                document.getElementById('root')
-            );
+            // const game = options[selected];
+            const next =
+                typeof options[selected] === 'string' ? (
+                    <Menu
+                        question="Which Number Munchers game would you like to play"
+                        options={[new Multiples(), new Factors(), new Primes()]}
+                        instructions="Use Arrows to move, then press Enter"
+                    />
+                ) : (
+                    <Game game={options[selected]} />
+                );
+            ReactDOM.render(next, document.getElementById('root'));
         } else {
             selected += movement;
             if (selected < 0) {
@@ -72,11 +82,12 @@ class Menu extends React.Component {
     }
 
     render() {
-        const { question, options, instructions } = this.props;
+        const { question, options, instructions, background } = this.props;
         const { selected } = this.state;
+        const className = `menu ${background}`;
         return (
             <div className="all">
-                <div className="menu">
+                <div className={className}>
                     <div className="text">{question}</div>
                     <Options
                         options={options}

@@ -1,8 +1,10 @@
 ol {
-    width: 300px;
+    width: 500px;
     margin: auto;
     list-style: none;
     counter-reset: li;
+    position: relative;
+    top: 140px;
 }
 
 li::before {
