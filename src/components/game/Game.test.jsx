@@ -5,9 +5,9 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import Game from './Game';
-import Multiples from '../../objects/Multiples';
-import Factors from '../../objects/Factors';
-import Primes from '../../objects/Primes';
+import Multiples from '../../games/Multiples';
+import Factors from '../../games/Factors';
+import Primes from '../../games/Primes';
 
 Enzyme.configure({ adapter: new Adapter() });
 
