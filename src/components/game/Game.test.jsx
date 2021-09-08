@@ -653,11 +653,16 @@ describe('<Game/>', () => {
         mount.find('#c25').simulate('click');
         // just run through a bunch of timers (troggle timer means we can be precise with how many)
         // exact timing of movement was tested elsewhere
-        while (mount.state().muncher.y !== 4) {
+        let count = 0;
+        while (mount.state().muncher.x !== 1 && count < 100000) {
             act(() => jest.runOnlyPendingTimers());
+            count++;
         }
-        // TODO - need to fix this
-        // expect(mount.state().muncher.x).toEqual(1);
+        expect(mount.state().muncher.x).toEqual(1);
+        while (mount.state().muncher.y !== 4 && count < 200000) {
+            act(() => jest.runOnlyPendingTimers());
+            count++;
+        }
         expect(mount.state().muncher.y).toEqual(4);
     });
 });
