@@ -17,7 +17,8 @@
     background-image: url("./Opening.png");
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position-x: 50%;
+    background-position-y: top;
 }
 
 .options {
