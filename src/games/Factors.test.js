@@ -1,4 +1,8 @@
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import Factors from './Factors';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('factors', () => {
     it('ensures resetting the number always gives a new one', () => {
@@ -12,7 +16,14 @@ describe('factors', () => {
     });
 
     it('returns factors', () => {
-        expect(new Factors().getGame()).toEqual('Factors');
+        expect(new Factors().getName()).toEqual('Factors');
+    });
+
+    it('returns correct screen', () => {
+        const wrapper = Enzyme.shallow(new Factors().getScreen());
+        expect(wrapper.find('.title').text()).toEqual(
+            `Factors of ${wrapper.state().game.getNumber()}`
+        );
     });
 
     it('returns proper title', () => {

@@ -13,7 +13,16 @@
     border: 8px solid #ff4cf7;
 }
 
+.opening {
+    background-image: url("./Opening.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: top;
+}
+
 .options {
+    top: 50%;
     height: calc(100% - 270px);
 }
 
