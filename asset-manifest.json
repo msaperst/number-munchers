@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/number-munchers/static/css/main.54398b77.chunk.css",
+    "main.css": "/number-munchers/static/css/main.1289c07d.chunk.css",
     "main.js": "/number-munchers/static/js/main.f5d50825.chunk.js",
     "main.js.map": "/number-munchers/static/js/main.f5d50825.chunk.js.map",
     "runtime-main.js": "/number-munchers/static/js/runtime-main.3ea222d5.js",
@@ -8,14 +8,14 @@
     "static/js/2.00a253e0.chunk.js": "/number-munchers/static/js/2.00a253e0.chunk.js",
     "static/js/2.00a253e0.chunk.js.map": "/number-munchers/static/js/2.00a253e0.chunk.js.map",
     "index.html": "/number-munchers/index.html",
-    "static/css/main.54398b77.chunk.css.map": "/number-munchers/static/css/main.54398b77.chunk.css.map",
+    "static/css/main.1289c07d.chunk.css.map": "/number-munchers/static/css/main.1289c07d.chunk.css.map",
     "static/js/2.00a253e0.chunk.js.LICENSE.txt": "/number-munchers/static/js/2.00a253e0.chunk.js.LICENSE.txt",
     "static/media/Menu.css": "/number-munchers/static/media/Opening.bec8f104.png"
   },
   "entrypoints": [
     "static/js/runtime-main.3ea222d5.js",
     "static/js/2.00a253e0.chunk.js",
-    "static/css/main.54398b77.chunk.css",
+    "static/css/main.1289c07d.chunk.css",
     "static/js/main.f5d50825.chunk.js"
   ]
 }
