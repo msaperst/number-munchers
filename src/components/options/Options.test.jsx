@@ -2,9 +2,9 @@ import React from 'react';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Options from './Options';
-import Multiples from '../../objects/Multiples';
-import Factors from '../../objects/Factors';
-import Primes from '../../objects/Primes';
+import Multiples from '../../games/Multiples';
+import Factors from '../../games/Factors';
+import Primes from '../../games/Primes';
 
 Enzyme.configure({ adapter: new Adapter() });
 

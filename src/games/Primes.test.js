@@ -7,7 +7,7 @@ describe('primes', () => {
     });
 
     it('returns primes', () => {
-        expect(new Primes().getGame()).toEqual('Primes');
+        expect(new Primes().getName()).toEqual('Primes');
     });
 
     it('returns proper title', () => {

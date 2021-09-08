@@ -12,7 +12,7 @@ describe('factors', () => {
     });
 
     it('returns factors', () => {
-        expect(new Factors().getGame()).toEqual('Factors');
+        expect(new Factors().getName()).toEqual('Factors');
     });
 
     it('returns proper title', () => {

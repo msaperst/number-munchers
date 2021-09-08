@@ -2,10 +2,6 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import './Menu.css';
 import Options from '../options/Options';
-import Game from '../game/Game';
-import Multiples from '../../objects/Multiples';
-import Factors from '../../objects/Factors';
-import Primes from '../../objects/Primes';
 
 class Menu extends React.Component {
     constructor(props) {
@@ -58,17 +54,7 @@ class Menu extends React.Component {
         let { selected } = this.state;
         const { options } = this.props;
         if (movement === undefined) {
-            // const game = options[selected];
-            const next =
-                typeof options[selected] === 'string' ? (
-                    <Menu
-                        question="Which Number Munchers game would you like to play"
-                        options={[new Multiples(), new Factors(), new Primes()]}
-                        instructions="Use Arrows to move, then press Enter"
-                    />
-                ) : (
-                    <Game game={options[selected]} />
-                );
+            const next = options[selected].getScreen();
             ReactDOM.render(next, document.getElementById('root'));
         } else {
             selected += movement;

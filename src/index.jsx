@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Menu from './components/menu/Menu';
 import './index.css';
-// import Multiples from './objects/Multiples';
-// import Factors from './objects/Factors';
-// import Primes from './objects/Primes';
+import Play from './menus/Play';
+import Hall from './menus/Hall';
+import Info from './menus/Info';
+import Options from './menus/Options';
+import Quit from './menus/Quit';
 
 ReactDOM.render(
     // <Menu
@@ -15,11 +17,11 @@ ReactDOM.render(
     <Menu
         question=""
         options={[
-            'Play Number Munchers',
-            'Hall of Fame',
-            'Information',
-            'Options',
-            'Quit',
+            new Play(),
+            new Hall(),
+            new Info(),
+            new Options(),
+            new Quit(),
         ]}
         instructions="Use Arrows to move, then press Enter"
         background="opening"

@@ -12,7 +12,7 @@ describe('multiples', () => {
     });
 
     it('returns multiples', () => {
-        expect(new Multiples().getGame()).toEqual('Multiples');
+        expect(new Multiples().getName()).toEqual('Multiples');
     });
 
     it('returns proper title', () => {
