@@ -2,6 +2,13 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import './Menu.css';
 import Options from '../options/Options';
+// eslint-disable-next-line import/no-cycle
+import Play from '../../menus/Play';
+import Hall from '../../menus/Hall';
+import Info from '../../menus/Info';
+// eslint-disable-next-line import/no-cycle
+import Option from '../../menus/Option';
+import Quit from '../../menus/Quit';
 
 class Menu extends React.Component {
     constructor(props) {
@@ -36,6 +43,24 @@ class Menu extends React.Component {
             case 'ArrowDown':
                 this.select(1);
                 break;
+            case 'Escape':
+                document.removeEventListener('keydown', this.keyDown);
+                ReactDOM.render(
+                    <Menu
+                        question=""
+                        options={[
+                            new Play(),
+                            new Hall(),
+                            new Info(),
+                            new Option(),
+                            new Quit(),
+                        ]}
+                        instructions="Use Arrows to move, then press Enter"
+                        background="opening"
+                    />,
+                    document.getElementById('root')
+                );
+                break;
             default:
             // do nothing
         }
@@ -54,8 +79,11 @@ class Menu extends React.Component {
         let { selected } = this.state;
         const { options } = this.props;
         if (movement === undefined) {
-            const next = options[selected].getScreen();
-            ReactDOM.render(next, document.getElementById('root'));
+            document.removeEventListener('keydown', this.keyDown);
+            ReactDOM.render(
+                options[selected].getScreen(),
+                document.getElementById('root')
+            );
         } else {
             selected += movement;
             if (selected < 0) {

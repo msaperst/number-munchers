@@ -2,6 +2,7 @@ import React from 'react';
 import Multiples from '../games/Multiples';
 import Factors from '../games/Factors';
 import Primes from '../games/Primes';
+// eslint-disable-next-line import/no-cycle
 import Menu from '../components/menu/Menu';
 
 class Play {

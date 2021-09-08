@@ -8,7 +8,7 @@ import Primes from '../../games/Primes';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('<Options/>', () => {
+describe('<Option/>', () => {
     let wrapper;
 
     beforeEach(() => {

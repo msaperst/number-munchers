@@ -1,4 +1,8 @@
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import Multiples from './Multiples';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('multiples', () => {
     it('ensures resetting the number always gives a new one', () => {
@@ -13,6 +17,13 @@ describe('multiples', () => {
 
     it('returns multiples', () => {
         expect(new Multiples().getName()).toEqual('Multiples');
+    });
+
+    it('returns correct screen', () => {
+        const wrapper = Enzyme.shallow(new Multiples().getScreen());
+        expect(wrapper.find('.title').text()).toEqual(
+            `Multiples of ${wrapper.state().game.getNumber()}`
+        );
     });
 
     it('returns proper title', () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line import/no-cycle
 import Menu from '../components/menu/Menu';
 import Difficulty from './options/Difficulty';
 import Content from './options/Content';
@@ -7,7 +8,7 @@ import Password from './options/Password';
 import Joystick from './options/Joystick';
 import Calibrate from './options/Calibrate';
 
-class Options {
+class Option {
     // eslint-disable-next-line class-methods-use-this
     getName() {
         return 'Options';
@@ -32,4 +33,4 @@ class Options {
     }
 }
 
-export default Options;
+export default Option;
