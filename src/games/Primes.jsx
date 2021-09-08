@@ -1,4 +1,6 @@
+import React from 'react';
 import { GAME_TYPES } from './games';
+import Game from '../components/game/Game';
 
 class Primes {
     constructor(minNum = 2, maxNum = 7) {
@@ -21,8 +23,12 @@ class Primes {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getGame() {
+    getName() {
         return GAME_TYPES.PRIMES;
+    }
+
+    getScreen() {
+        return <Game game={this} />;
     }
 
     getNumber() {

@@ -2,16 +2,27 @@ import React from 'react';
 import './Options.css';
 
 function Options(props) {
-    const { options } = props;
+    const { options, onClick } = props;
     const listElements = options.map((option, index) => {
+        const title = option.getName();
         if (index === props.selected) {
             return (
-                <li key={option.getGame()} className="selected">
-                    {option.getGame()}
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
+                <li
+                    key={title}
+                    className="selected"
+                    onClick={() => onClick(index)}
+                >
+                    {title}
                 </li>
             );
         }
-        return <li key={option.getGame()}>{option.getGame()}</li>;
+        return (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
+            <li key={title} onClick={() => onClick(index)}>
+                {title}
+            </li>
+        );
     });
     return (
         <div className="options">

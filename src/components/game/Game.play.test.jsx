@@ -1,8 +1,8 @@
 import React from 'react';
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Game from './Game';
-import Multiples from '../../objects/Multiples';
+import Multiples from '../../games/Multiples';
 import * as Troggle from '../troggle/Troggle';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -11,6 +11,9 @@ describe('movement', () => {
     let wrapper;
 
     beforeEach(() => {
+        jest.clearAllMocks();
+        jest.resetAllMocks();
+
         wrapper = Enzyme.mount(<Game game={new Multiples()} />);
         const squares = Array(30).fill(wrapper.state().game.getNumber());
         squares[13] = 97;
@@ -45,19 +48,6 @@ describe('movement', () => {
         expect(wrapper.state().score).toEqual(5);
         expect(wrapper.state().lives).toEqual(2);
         expect(wrapper.render().find('.notification')).toHaveLength(0);
-
-        // able to move with keys
-        wrapper.find('.right').simulate('click');
-        expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
-        wrapper.find('.down').simulate('click');
-        expect(wrapper.state().muncher).toEqual({ x: 2, y: 3 });
-        wrapper.find('.left').simulate('click');
-        expect(wrapper.state().muncher).toEqual({ x: 1, y: 3 });
-        wrapper.find('.up').simulate('click');
-        expect(wrapper.state().muncher).toEqual({ x: 1, y: 2 });
-        wrapper.find('.left').simulate('click');
-        wrapper.find('.space').simulate('click');
-        expect(wrapper.state().squares[12]).toEqual('');
     });
 
     it('manages troggles if there is not a notification', () => {
@@ -70,5 +60,6 @@ describe('movement', () => {
         expect(spyAdd).toHaveBeenCalled();
         expect(spyMove).toHaveBeenCalled();
         jest.clearAllMocks();
+        jest.resetAllMocks();
     });
 });

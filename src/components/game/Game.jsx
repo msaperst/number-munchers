@@ -1,7 +1,6 @@
 import React from 'react';
 import './Game.css';
 import Board from '../board/Board';
-import Keyboard from '../keyboard/Keyboard';
 import { addTroggle, moveTroggles } from '../troggle/Troggle';
 import Status from '../status/Status';
 
@@ -26,6 +25,7 @@ class Game extends React.Component {
         };
 
         this.keyDown = this.keyDown.bind(this);
+        this.clickedSquare = this.clickedSquare.bind(this);
     }
 
     componentDidMount() {
@@ -127,7 +127,41 @@ class Game extends React.Component {
         }
     }
 
+    clickedSquare(x, y) {
+        const { muncher, notification } = this.state;
+        if (notification !== '') {
+            return;
+        }
+        if (x === muncher.x && y === muncher.y) {
+            // eat this number
+            this.keyDown('Space');
+        } else {
+            // move to the square
+            const xc = Math.max(Math.min(x - muncher.x, 1), -1); // move left if lower, right if higher, not at all if same
+            const yc = Math.max(Math.min(y - muncher.y, 1), -1); // move up if lower, down if higher, not at all if same
+            this.timerX = setInterval(() => {
+                // move on the x-axis
+                this.moveMuncher(xc, 0);
+                const { muncher } = this.state;
+                if (x === muncher.x) {
+                    clearInterval(this.timerX);
+                }
+            }, 200);
+            setTimeout(() => {
+                // move on the y-axis
+                this.timerY = setInterval(() => {
+                    this.moveMuncher(0, yc);
+                    const { muncher } = this.state;
+                    if (y === muncher.y) {
+                        clearInterval(this.timerY);
+                    }
+                }, 200);
+            }, 100);
+        }
+    }
+
     moveMuncher(xc, yc) {
+        // TODO - need to figure out how to animate this
         const { muncher } = this.state;
         this.setState({
             muncher: {
@@ -150,6 +184,8 @@ class Game extends React.Component {
             ) {
                 lives--;
                 muncher.display = 'none';
+                clearInterval(this.timerX);
+                clearInterval(this.timerY);
                 this.setState({
                     notification: `Yikes! You were eaten by a Trogglus ${troggle.troggle}.`,
                     lives,
@@ -256,6 +292,10 @@ class Game extends React.Component {
                     muncher={muncher}
                     squares={squares}
                     notification={notification}
+                    movement={{
+                        keyDown: this.keyDown,
+                        click: (x, y) => this.clickedSquare(x, y),
+                    }}
                 />
                 <div className="info">
                     <div className="score">
@@ -264,13 +304,6 @@ class Game extends React.Component {
                     </div>
                     <div className="lives">{munchers}</div>
                 </div>
-                <Keyboard
-                    up={() => this.keyDown('ArrowUp')}
-                    down={() => this.keyDown('ArrowDown')}
-                    left={() => this.keyDown('ArrowLeft')}
-                    right={() => this.keyDown('ArrowRight')}
-                    space={() => this.keyDown('Space')}
-                />
             </div>
         );
     }

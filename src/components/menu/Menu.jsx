@@ -1,9 +1,14 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import './Menu.css';
-import Keyboard from '../keyboard/Keyboard';
 import Options from '../options/Options';
-import Game from '../game/Game';
+// eslint-disable-next-line import/no-cycle
+import Play from '../../menus/Play';
+import Hall from '../../menus/Hall';
+import Info from '../../menus/Info';
+// eslint-disable-next-line import/no-cycle
+import Option from '../../menus/Option';
+import Quit from '../../menus/Quit';
 
 class Menu extends React.Component {
     constructor(props) {
@@ -12,6 +17,7 @@ class Menu extends React.Component {
             selected: 0,
         };
         this.keyDown = this.keyDown.bind(this);
+        this.clickedOption = this.clickedOption.bind(this);
     }
 
     componentDidMount() {
@@ -37,8 +43,35 @@ class Menu extends React.Component {
             case 'ArrowDown':
                 this.select(1);
                 break;
+            case 'Escape':
+                document.removeEventListener('keydown', this.keyDown);
+                ReactDOM.render(
+                    <Menu
+                        question=""
+                        options={[
+                            new Play(),
+                            new Hall(),
+                            new Info(),
+                            new Option(),
+                            new Quit(),
+                        ]}
+                        instructions="Use Arrows to move, then press Enter"
+                        background="opening"
+                    />,
+                    document.getElementById('root')
+                );
+                break;
             default:
             // do nothing
+        }
+    }
+
+    clickedOption(option) {
+        const { selected } = this.state;
+        if (option === selected) {
+            this.select();
+        } else {
+            this.setState({ selected: option });
         }
     }
 
@@ -46,9 +79,9 @@ class Menu extends React.Component {
         let { selected } = this.state;
         const { options } = this.props;
         if (movement === undefined) {
-            const game = options[selected];
+            document.removeEventListener('keydown', this.keyDown);
             ReactDOM.render(
-                <Game game={game} />,
+                options[selected].getScreen(),
                 document.getElementById('root')
             );
         } else {
@@ -63,22 +96,20 @@ class Menu extends React.Component {
     }
 
     render() {
-        const { question, options, instructions } = this.props;
+        const { question, options, instructions, background } = this.props;
         const { selected } = this.state;
+        const className = `menu ${background}`;
         return (
             <div className="all">
-                <div className="menu">
+                <div className={className}>
                     <div className="text">{question}</div>
-                    <Options options={options} selected={selected} />
+                    <Options
+                        options={options}
+                        selected={selected}
+                        onClick={(opt) => this.clickedOption(opt)}
+                    />
                     <div className="text">{instructions}</div>
                 </div>
-                <Keyboard
-                    up={() => this.keyDown('ArrowUp')}
-                    down={() => this.keyDown('ArrowDown')}
-                    left={() => this.keyDown('ArrowLeft')}
-                    right={() => this.keyDown('ArrowRight')}
-                    enter={() => this.keyDown('Enter')}
-                />
             </div>
         );
     }

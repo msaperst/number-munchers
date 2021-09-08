@@ -8,13 +8,21 @@
 .menu {
     margin: 0;
     height: calc(100% - 16px);
-    max-height: calc(100vw * .95);
     background: black;
     color: white;
     border: 8px solid #ff4cf7;
 }
 
+.opening {
+    background-image: url("./Opening.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: top;
+}
+
 .options {
+    top: 50%;
     height: calc(100% - 270px);
 }
 

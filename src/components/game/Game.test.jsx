@@ -1,12 +1,13 @@
 import React from 'react';
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import Game from './Game';
-import Multiples from '../../objects/Multiples';
-import Factors from '../../objects/Factors';
-import Primes from '../../objects/Primes';
+import Multiples from '../../games/Multiples';
+import Factors from '../../games/Factors';
+import Primes from '../../games/Primes';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -14,6 +15,8 @@ describe('<Game/>', () => {
     let wrapper;
 
     beforeEach(() => {
+        jest.clearAllMocks();
+        jest.resetAllMocks();
         wrapper = Enzyme.shallow(<Game game={new Multiples()} />);
     });
 
@@ -49,6 +52,98 @@ describe('<Game/>', () => {
         const event = new KeyboardEvent('keydown', { code: 'L' });
         document.dispatchEvent(event);
         expect(wrapper.state().muncher).toEqual({ x: 2, y: 2 });
+    });
+
+    it('does nothing clicking and a notification is present', () => {
+        wrapper.state().notification = '1234';
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.instance().clickedSquare(2, 2);
+        expect(wrapper.instance().keyDown).toBeCalledTimes(0);
+    });
+
+    it('emulates a space when muncher equals coordinates', () => {
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.instance().clickedSquare(2, 2);
+        expect(wrapper.instance().keyDown).toBeCalledWith('Space');
+    });
+
+    it('does not emulate a space when muncher does not equal x coordinate', () => {
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.instance().clickedSquare(1, 2);
+        expect(wrapper.instance().keyDown).toBeCalledTimes(0);
+    });
+
+    it('does not emulate a space when muncher does not equal y coordinate', () => {
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.instance().clickedSquare(2, 1);
+        expect(wrapper.instance().keyDown).toBeCalledTimes(0);
+    });
+
+    it('moves the muncher up to the square when clicking', () => {
+        jest.useFakeTimers();
+        const shallow = Enzyme.shallow(<Game game={new Multiples()} />);
+        shallow.instance().componentDidMount = jest.fn();
+        shallow.update();
+        shallow.instance().clickedSquare(2, 0);
+        expect(shallow.state().muncher.x).toEqual(2);
+        expect(shallow.state().muncher.y).toEqual(2);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(2);
+        expect(shallow.state().muncher.y).toEqual(2);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(2);
+        expect(shallow.state().muncher.y).toEqual(1);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(2);
+        expect(shallow.state().muncher.y).toEqual(0);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(2);
+        expect(shallow.state().muncher.y).toEqual(0);
+    });
+
+    it('moves the muncher right to the square when clicking', () => {
+        jest.useFakeTimers();
+        const shallow = Enzyme.shallow(<Game game={new Multiples()} />);
+        shallow.instance().componentDidMount = jest.fn();
+        shallow.update();
+        shallow.instance().clickedSquare(4, 2);
+        expect(shallow.state().muncher.x).toEqual(2);
+        expect(shallow.state().muncher.y).toEqual(2);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(3);
+        expect(shallow.state().muncher.y).toEqual(2);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(4);
+        expect(shallow.state().muncher.y).toEqual(2);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(4);
+        expect(shallow.state().muncher.y).toEqual(2);
+    });
+
+    it('moves the muncher down and left to the square when clicking', () => {
+        jest.useFakeTimers();
+        const shallow = Enzyme.shallow(<Game game={new Multiples()} />);
+        shallow.instance().componentDidMount = jest.fn();
+        shallow.update();
+        shallow.instance().clickedSquare(1, 4);
+        expect(shallow.state().muncher.x).toEqual(2);
+        expect(shallow.state().muncher.y).toEqual(2);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(1);
+        expect(shallow.state().muncher.y).toEqual(2);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(1);
+        expect(shallow.state().muncher.y).toEqual(3);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(1);
+        expect(shallow.state().muncher.y).toEqual(4);
+        act(() => jest.runOnlyPendingTimers());
+        expect(shallow.state().muncher.x).toEqual(1);
+        expect(shallow.state().muncher.y).toEqual(4);
     });
 
     it('moves the muncher', () => {
@@ -540,4 +635,35 @@ describe('<Game/>', () => {
         expect(wrapper.state().troggles).toEqual([]);
         expect(wrapper.state().status).toEqual('');
     });
+
+    it('calls troggle on appropriate timing', () => {
+        jest.useFakeTimers();
+        const mount = Enzyme.mount(<Game game={new Multiples()} />);
+        const spy = jest.spyOn(mount.instance(), 'troggle');
+        expect(spy).toBeCalledTimes(0);
+        act(() => jest.runOnlyPendingTimers());
+        expect(spy).toBeCalledTimes(1);
+    });
+
+    // TODO - commenting out test as it is unstable
+    // it('recognizes clicking on a square', () => {
+    //     jest.useFakeTimers();
+    //     const mount = Enzyme.mount(<Game game={new Multiples()} />);
+    //     mount.instance().componentDidMount = jest.fn();
+    //     mount.update();
+    //     mount.find('#c25').simulate('click');
+    //     // just run through a bunch of timers (troggle timer means we can be precise with how many)
+    //     // exact timing of movement was tested elsewhere
+    //     let count = 0;
+    //     while (mount.state().muncher.x !== 1 && count < 100000) {
+    //         act(() => jest.runOnlyPendingTimers());
+    //         count++;
+    //     }
+    //     expect(mount.state().muncher.x).toEqual(1);
+    //     while (mount.state().muncher.y !== 4 && count < 200000) {
+    //         act(() => jest.runOnlyPendingTimers());
+    //         count++;
+    //     }
+    //     expect(mount.state().muncher.y).toEqual(4);
+    // });
 });

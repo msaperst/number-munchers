@@ -1,4 +1,8 @@
+import Enzyme from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Primes from './Primes';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('primes', () => {
     it('ensures resetting the number gives null', () => {
@@ -7,7 +11,12 @@ describe('primes', () => {
     });
 
     it('returns primes', () => {
-        expect(new Primes().getGame()).toEqual('Primes');
+        expect(new Primes().getName()).toEqual('Primes');
+    });
+
+    it('returns correct screen', () => {
+        const wrapper = Enzyme.shallow(new Primes().getScreen());
+        expect(wrapper.find('.title').text()).toEqual(`Prime Numbers`);
     });
 
     it('returns proper title', () => {

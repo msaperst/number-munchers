@@ -1,4 +1,6 @@
+import React from 'react';
 import { GAME_TYPES } from './games';
+import Game from '../components/game/Game';
 
 class Multiples {
     constructor(minNum = 2, maxNum = 5, maxMult = 5) {
@@ -20,8 +22,12 @@ class Multiples {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getGame() {
+    getName() {
         return GAME_TYPES.MULTIPLES;
+    }
+
+    getScreen() {
+        return <Game game={this} />;
     }
 
     getNumber() {
@@ -29,7 +35,7 @@ class Multiples {
     }
 
     getTitle() {
-        return `${this.getGame()} of ${this.number}`;
+        return `${this.getName()} of ${this.number}`;
     }
 
     getMultiple() {
