@@ -1,6 +1,6 @@
 import React from 'react';
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
