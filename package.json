@@ -77,6 +77,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "gh-pages": "^3.2.3",
     "jest-junit": "^12.2.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.4.0"
   }
 }
