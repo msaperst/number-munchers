@@ -1,6 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line import/no-cycle
 import Menu from '../components/menu/Menu';
+// eslint-disable-next-line import/no-cycle
 import Difficulty from './options/Difficulty';
 import Content from './options/Content';
 import Hall from './options/Hall';
@@ -20,7 +21,7 @@ class Option {
             <Menu
                 question="Choose an option:"
                 options={[
-                    new Difficulty(),
+                    new Difficulty({ level: '3rd Grade Advanced' }),
                     new Content(),
                     new Hall(),
                     new Password(),
@@ -28,6 +29,7 @@ class Option {
                     new Calibrate(),
                 ]}
                 instructions="Use Arrows to move, then press Enter. Escape: Main Menu"
+                width="w550"
             />
         );
     }

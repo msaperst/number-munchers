@@ -22,7 +22,6 @@
 }
 
 .options {
-    top: 50%;
     height: calc(100% - 270px);
 }
 
@@ -31,6 +30,7 @@
     position: relative;
     padding: 30px;
     display: flex;
+    white-space: pre;
 }
 
 .text:nth-child(3) {

@@ -1,19 +1,33 @@
 ol {
-    width: 500px;
     margin: auto;
     list-style: none;
     counter-reset: li;
     position: relative;
+}
+
+.w300 {
+    width: 300px;
+}
+
+.w550 {
+    width: 550px;
+}
+
+.t20 {
+    top: 20px;
+}
+
+.t140 {
     top: 140px;
 }
 
 li::before {
-    content: counter(li);
+    content: counter(li) ". ";
     color: white;
     display: inline-block;
     width: 1em;
     margin-left: -2em;
-    margin-right: 1em;
+    margin-right: 3em;
 }
 
 li {

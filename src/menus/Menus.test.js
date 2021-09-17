@@ -5,6 +5,7 @@ import Info from './Info';
 import Option from './Option';
 import Play from './Play';
 import Quit from './Quit';
+import { optionsMenu } from './options/Difficulty.test';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -47,16 +48,9 @@ describe('menus', () => {
         expect(e).toThrow(TypeError);
     });
 
+    // eslint-disable-next-line jest/expect-expect
     it('option returns correct screen', () => {
-        const wrapper = Enzyme.mount(new Option().getScreen());
-        expect(wrapper.find('.text').at(0).text()).toEqual('Choose an option:');
-        expect(wrapper.find('.options').find('li')).toHaveLength(6);
-        expect(wrapper.find('.options').text()).toEqual(
-            'Set Difficulty LevelSet ContentErase Hall of FameSet PasswordTurn Joystick ONCalibrate Joystick'
-        );
-        expect(wrapper.find('.text').at(1).text()).toEqual(
-            'Use Arrows to move, then press Enter. Escape: Main Menu'
-        );
+        optionsMenu(new Option());
     });
 
     it('play returns correct screen', () => {

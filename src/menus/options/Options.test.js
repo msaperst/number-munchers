@@ -1,7 +1,6 @@
 import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Calibrate from './Calibrate';
-import Difficulty from './Difficulty';
 import Content from './Content';
 import Hall from './Hall';
 import Joystick from './Joystick';
@@ -18,10 +17,6 @@ describe('menus', () => {
 
     it('content returns correct name', () => {
         expect(new Content().getName()).toEqual('Set Content');
-    });
-
-    it('difficulty returns correct name', () => {
-        expect(new Difficulty().getName()).toEqual('Set Difficulty Level');
     });
 
     it('hall returns correct name', () => {
@@ -48,13 +43,6 @@ describe('menus', () => {
     it('content returns no screen', () => {
         const e = () => {
             new Content().getScreen();
-        };
-        expect(e).toThrow(TypeError);
-    });
-
-    it('difficulty returns no screen', () => {
-        const e = () => {
-            new Difficulty().getScreen();
         };
         expect(e).toThrow(TypeError);
     });

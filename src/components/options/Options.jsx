@@ -2,7 +2,7 @@ import React from 'react';
 import './Options.css';
 
 function Options(props) {
-    const { options, onClick } = props;
+    const { options, width, top, onClick } = props;
     const listElements = options.map((option, index) => {
         const title = option.getName();
         if (index === props.selected) {
@@ -24,9 +24,11 @@ function Options(props) {
             </li>
         );
     });
+    const oWidth = width || 'w300';
+    const oTop = top || 't20';
     return (
         <div className="options">
-            <ol>{listElements}</ol>
+            <ol className={`${oWidth} ${oTop}`}>{listElements}</ol>
         </div>
     );
 }

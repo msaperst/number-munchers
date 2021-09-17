@@ -14,6 +14,8 @@ ReactDOM.render(
         options={[new Play(), new Hall(), new Info(), new Option(), new Quit()]}
         instructions="Use Arrows to move, then press Enter"
         background="opening"
+        width="w550"
+        top="t140"
     />,
     document.getElementById('root')
 );
