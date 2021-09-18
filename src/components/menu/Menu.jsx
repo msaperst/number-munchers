@@ -14,7 +14,7 @@ class Menu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: 0,
+            selected: props.selected || 0,
         };
         this.keyDown = this.keyDown.bind(this);
         this.clickedOption = this.clickedOption.bind(this);
@@ -57,6 +57,8 @@ class Menu extends React.Component {
                         ]}
                         instructions="Use Arrows to move, then press Enter"
                         background="opening"
+                        width="w550"
+                        top="t140"
                     />,
                     document.getElementById('root')
                 );
@@ -96,16 +98,18 @@ class Menu extends React.Component {
     }
 
     render() {
-        const { question, options, instructions, background } = this.props;
+        const { question, options, instructions, background, width, top } =
+            this.props;
         const { selected } = this.state;
-        const className = `menu ${background}`;
         return (
             <div className="all">
-                <div className={className}>
+                <div className={`menu ${background}`}>
                     <div className="text">{question}</div>
                     <Options
                         options={options}
                         selected={selected}
+                        width={width}
+                        top={top}
                         onClick={(opt) => this.clickedOption(opt)}
                     />
                     <div className="text">{instructions}</div>
