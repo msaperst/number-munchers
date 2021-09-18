@@ -1,18 +1,6 @@
 import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import Difficulty, {
-    Grade3Advanced,
-    Grade3Easy,
-    Grade4Advanced,
-    Grade4Easy,
-    Grade5Advanced,
-    Grade5Easy,
-    Grade6Advanced,
-    Grade6Easy,
-    Grade7Advanced,
-    Grade7Easy,
-    Grade8AndAbove,
-} from './Difficulty';
+import Difficulty from './Difficulty';
 
 Enzyme.configure({ adapter: new Adapter() });
 

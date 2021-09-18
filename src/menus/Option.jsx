@@ -21,7 +21,7 @@ class Option {
             <Menu
                 question="Choose an option:"
                 options={[
-                    new Difficulty({ level: '3rd Grade Advanced' }),
+                    new Difficulty(),
                     new Content(),
                     new Hall(),
                     new Password(),
