@@ -66,12 +66,108 @@ class Grade3Easy extends Difficulties {
     getName() {
         return difficulties[0];
     }
+
+    static getMultiples() {
+        return {
+            use: false,
+            range: { min: 2, max: 5 },
+            sequence: true,
+            other: 5,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: false,
+            range: { min: 3, max: 5 },
+            sequence: true,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: false,
+            range: { min: 2, max: 25 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 20 },
+            sequence: true,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 10 },
+            sequence: true,
+            other: ['+', '-'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
+    }
 }
 
 class Grade3Advanced extends Difficulties {
     // eslint-disable-next-line class-methods-use-this
     getName() {
         return difficulties[1];
+    }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 5 },
+            sequence: true,
+            other: 5,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 25 },
+            sequence: true,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: false,
+            range: { min: 2, max: 25 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 20 },
+            sequence: true,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 20 },
+            sequence: true,
+            other: ['+', '-'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
     }
 }
 
@@ -80,12 +176,108 @@ class Grade4Easy extends Difficulties {
     getName() {
         return difficulties[2];
     }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 9 },
+            sequence: true,
+            other: 5,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 25 },
+            sequence: true,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: false,
+            range: { min: 2, max: 50 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 24 },
+            sequence: true,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 20 },
+            sequence: true,
+            other: ['+', '-'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
+    }
 }
 
 class Grade4Advanced extends Difficulties {
     // eslint-disable-next-line class-methods-use-this
     getName() {
         return difficulties[3];
+    }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 9 },
+            sequence: false,
+            other: 9,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 64 },
+            sequence: false,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: false,
+            range: { min: 2, max: 50 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 24 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 20 },
+            sequence: false,
+            other: ['+', '-', 'x'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
     }
 }
 
@@ -94,12 +286,108 @@ class Grade5Easy extends Difficulties {
     getName() {
         return difficulties[4];
     }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 9 },
+            sequence: false,
+            other: 9,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 64 },
+            sequence: false,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: false,
+            range: { min: 2, max: 50 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 24 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 24 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
+    }
 }
 
 class Grade5Advanced extends Difficulties {
     // eslint-disable-next-line class-methods-use-this
     getName() {
         return difficulties[5];
+    }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 11 },
+            sequence: false,
+            other: 13,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 81 },
+            sequence: false,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: true,
+            range: { min: 2, max: 50 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 24 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
     }
 }
 
@@ -108,12 +396,108 @@ class Grade6Easy extends Difficulties {
     getName() {
         return difficulties[6];
     }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 11 },
+            sequence: false,
+            other: 13,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 81 },
+            sequence: false,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: true,
+            range: { min: 2, max: 50 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
+    }
 }
 
 class Grade6Advanced extends Difficulties {
     // eslint-disable-next-line class-methods-use-this
     getName() {
         return difficulties[7];
+    }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 12 },
+            sequence: false,
+            other: 13,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 99 },
+            sequence: false,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: true,
+            range: { min: 2, max: 99 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
     }
 }
 
@@ -122,6 +506,54 @@ class Grade7Easy extends Difficulties {
     getName() {
         return difficulties[8];
     }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 12 },
+            sequence: false,
+            other: 18,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 99 },
+            sequence: false,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: true,
+            range: { min: 2, max: 99 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
+    }
 }
 
 class Grade7Advanced extends Difficulties {
@@ -129,12 +561,108 @@ class Grade7Advanced extends Difficulties {
     getName() {
         return difficulties[9];
     }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 20 },
+            sequence: false,
+            other: 20,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 99 },
+            sequence: false,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: true,
+            range: { min: 2, max: 199 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
+    }
 }
 
 class Grade8AndAbove extends Difficulties {
     // eslint-disable-next-line class-methods-use-this
     getName() {
         return difficulties[10];
+    }
+
+    static getMultiples() {
+        return {
+            use: true,
+            range: { min: 2, max: 20 },
+            sequence: false,
+            other: 50,
+        };
+    }
+
+    static getFactors() {
+        return {
+            use: true,
+            range: { min: 3, max: 99 },
+            sequence: false,
+        };
+    }
+
+    static getPrimes() {
+        return {
+            use: true,
+            range: { min: 2, max: 199 },
+        };
+    }
+
+    static getEquality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getInequality() {
+        return {
+            use: true,
+            range: { min: 1, max: 50 },
+            sequence: false,
+            other: ['+', '-', 'x', '÷'],
+        };
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
     }
 }
 
