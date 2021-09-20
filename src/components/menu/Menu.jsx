@@ -130,7 +130,16 @@ class Menu extends React.Component {
                         top={top}
                         onClick={(opt) => this.clickedOption(opt)}
                     />
-                    <div className="text">{instructions}</div>
+                    {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus */}
+                    <div
+                        key="go-back"
+                        role="button"
+                        className="text"
+                        onClick={() => this.keyDown('Escape')}
+                        onKeyPress={() => this.keyDown('Escape')}
+                    >
+                        {instructions}
+                    </div>
                 </div>
             </div>
         );
