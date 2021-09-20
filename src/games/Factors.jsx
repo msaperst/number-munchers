@@ -1,11 +1,16 @@
 import React from 'react';
 import { GAME_TYPES } from './games';
 import Game from '../components/game/Game';
+// eslint-disable-next-line import/no-cycle
+import Difficulty from '../menus/options/Difficulty';
 
 class Factors {
-    constructor(minNum = 3, maxNum = 25) {
-        this.minNum = minNum;
-        this.maxNum = maxNum;
+    constructor(minNum, maxNum) {
+        const factorConfig = Difficulty.getDifficulty(
+            localStorage.getItem('difficulty')
+        ).getFactors();
+        this.minNum = minNum || factorConfig.range.min;
+        this.maxNum = maxNum || factorConfig.range.max;
 
         this.resetNumber();
     }

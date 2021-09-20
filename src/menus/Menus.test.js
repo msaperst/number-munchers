@@ -53,7 +53,34 @@ describe('menus', () => {
         optionsMenu(new Option());
     });
 
-    it('play returns correct screen', () => {
+    it('play returns correct screen level 0', () => {
+        localStorage.setItem('difficulty', 0);
+        const wrapper = Enzyme.mount(new Play().getScreen());
+        expect(wrapper.find('.text').at(0).text()).toEqual(
+            'Which Number Munchers game would you like to play'
+        );
+        expect(wrapper.find('.options').find('li')).toHaveLength(0);
+        expect(wrapper.find('.options').text()).toEqual('');
+        expect(wrapper.find('.text').at(1).text()).toEqual(
+            'Use Arrows to move, then press Enter'
+        );
+    });
+
+    it('play returns correct screen level 2', () => {
+        localStorage.setItem('difficulty', 2);
+        const wrapper = Enzyme.mount(new Play().getScreen());
+        expect(wrapper.find('.text').at(0).text()).toEqual(
+            'Which Number Munchers game would you like to play'
+        );
+        expect(wrapper.find('.options').find('li')).toHaveLength(2);
+        expect(wrapper.find('.options').text()).toEqual('MultiplesFactors');
+        expect(wrapper.find('.text').at(1).text()).toEqual(
+            'Use Arrows to move, then press Enter'
+        );
+    });
+
+    it('play returns correct screen level 6', () => {
+        localStorage.setItem('difficulty', 6);
         const wrapper = Enzyme.mount(new Play().getScreen());
         expect(wrapper.find('.text').at(0).text()).toEqual(
             'Which Number Munchers game would you like to play'

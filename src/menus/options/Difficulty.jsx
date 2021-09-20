@@ -53,6 +53,35 @@ class Difficulty extends React.Component {
             />
         );
     }
+
+    static getDifficulty(difficulty) {
+        switch (parseInt(difficulty, 10)) {
+            case 0:
+                return Grade3Easy;
+            case 1:
+                return Grade3Advanced;
+            case 2:
+                return Grade4Easy;
+            case 3:
+                return Grade4Advanced;
+            case 4:
+                return Grade5Easy;
+            case 5:
+                return Grade5Advanced;
+            case 6:
+                return Grade6Easy;
+            case 7:
+                return Grade6Advanced;
+            case 8:
+                return Grade7Easy;
+            case 9:
+                return Grade7Advanced;
+            case 10:
+                return Grade8AndAbove;
+            default:
+                return Grade3Advanced;
+        }
+    }
 }
 
 class Difficulties extends React.Component {
