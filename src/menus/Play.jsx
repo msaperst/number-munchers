@@ -17,6 +17,7 @@ class Play {
             <Menu
                 question="Which Number Munchers game would you like to play"
                 options={[new Multiples(), new Factors(), new Primes()]}
+                escape={Menu.mainMenu()}
                 instructions="Use Arrows to move, then press Enter"
             />
         );

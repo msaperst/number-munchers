@@ -4,13 +4,32 @@ import './Menu.css';
 import Options from '../options/Options';
 // eslint-disable-next-line import/no-cycle
 import Play from '../../menus/Play';
-import Hall from '../../menus/Hall';
+import Hall from '../../menus/options/Hall';
 import Info from '../../menus/Info';
 // eslint-disable-next-line import/no-cycle
 import Option from '../../menus/Option';
 import Quit from '../../menus/Quit';
 
 class Menu extends React.Component {
+    static mainMenu() {
+        return (
+            <Menu
+                question=""
+                options={[
+                    new Play(),
+                    new Hall(),
+                    new Info(),
+                    new Option(),
+                    new Quit(),
+                ]}
+                instructions="Use Arrows to move, then press Enter"
+                background="opening"
+                width="w550"
+                top="t140"
+            />
+        );
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -31,6 +50,7 @@ class Menu extends React.Component {
     }
 
     keyDown(code) {
+        const { escape } = this.props;
         switch (code) {
             case 'Enter':
                 this.select();
@@ -44,24 +64,10 @@ class Menu extends React.Component {
                 this.select(1);
                 break;
             case 'Escape':
-                document.removeEventListener('keydown', this.keyDown);
-                ReactDOM.render(
-                    <Menu
-                        question=""
-                        options={[
-                            new Play(),
-                            new Hall(),
-                            new Info(),
-                            new Option(),
-                            new Quit(),
-                        ]}
-                        instructions="Use Arrows to move, then press Enter"
-                        background="opening"
-                        width="w550"
-                        top="t140"
-                    />,
-                    document.getElementById('root')
-                );
+                if (escape !== undefined) {
+                    document.removeEventListener('keydown', this.keyDown);
+                    ReactDOM.render(escape, document.getElementById('root'));
+                }
                 break;
             default:
             // do nothing

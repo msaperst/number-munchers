@@ -28,6 +28,7 @@ class Option {
                     new Joystick(),
                     new Calibrate(),
                 ]}
+                escape={Menu.mainMenu()}
                 instructions="Use Arrows to move, then press Enter. Escape: Main Menu"
                 width="w550"
             />

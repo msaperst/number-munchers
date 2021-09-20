@@ -44,6 +44,7 @@ class Difficulty extends React.Component {
                     new Grade7Advanced(),
                     new Grade8AndAbove(),
                 ]}
+                escape={new Option().getScreen()}
                 instructions={`Use Arrows to move, then press Enter.\n\nEscape: Options Menu`}
                 width="w550"
             />
