@@ -1,6 +1,18 @@
 import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import Difficulty from './Difficulty';
+import Difficulty, {
+    Grade3Advanced,
+    Grade3Easy,
+    Grade4Advanced,
+    Grade4Easy,
+    Grade5Advanced,
+    Grade5Easy,
+    Grade6Advanced,
+    Grade6Easy,
+    Grade7Advanced,
+    Grade7Easy,
+    Grade8AndAbove,
+} from './Difficulty';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -23,6 +35,20 @@ describe('difficulty', () => {
         expect(wrapper.find('.text').at(1).text()).toEqual(
             `Use Arrows to move, then press Enter.\n\nEscape: Options Menu`
         );
+    });
+
+    it('returns the correct difficulty', () => {
+        expect(Difficulty.getDifficulty(0)).toEqual(Grade3Easy);
+        expect(Difficulty.getDifficulty(1)).toEqual(Grade3Advanced);
+        expect(Difficulty.getDifficulty(2)).toEqual(Grade4Easy);
+        expect(Difficulty.getDifficulty(3)).toEqual(Grade4Advanced);
+        expect(Difficulty.getDifficulty(4)).toEqual(Grade5Easy);
+        expect(Difficulty.getDifficulty(5)).toEqual(Grade5Advanced);
+        expect(Difficulty.getDifficulty(6)).toEqual(Grade6Easy);
+        expect(Difficulty.getDifficulty(7)).toEqual(Grade6Advanced);
+        expect(Difficulty.getDifficulty(8)).toEqual(Grade7Easy);
+        expect(Difficulty.getDifficulty(9)).toEqual(Grade7Advanced);
+        expect(Difficulty.getDifficulty(10)).toEqual(Grade8AndAbove);
     });
 });
 

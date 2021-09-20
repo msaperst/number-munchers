@@ -17,6 +17,7 @@ describe('<Game/>', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         jest.resetAllMocks();
+        localStorage.setItem('difficulty', 2);
         wrapper = Enzyme.shallow(<Game game={new Multiples()} />);
     });
 

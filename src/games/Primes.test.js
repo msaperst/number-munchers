@@ -7,6 +7,7 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('primes', () => {
     it('ensures resetting the number gives null', () => {
         const primes = new Primes();
+        localStorage.setItem('difficulty', 2);
         expect(primes.getNumber()).toEqual(null);
     });
 
@@ -45,9 +46,9 @@ describe('primes', () => {
         }
     });
 
-    it('defaults to return prime nothing greater 7', () => {
-        for (let x = 0; x < 100; x++) {
-            expect(new Primes().getPrime()).toBeLessThanOrEqual(7);
+    it('defaults to return prime nothing greater 50', () => {
+        for (let x = 0; x < 200; x++) {
+            expect(new Primes().getPrime()).toBeLessThanOrEqual(50);
         }
     });
 
@@ -74,9 +75,9 @@ describe('primes', () => {
         }
     });
 
-    it('defaults to return not prime nothing greater 7', () => {
-        for (let x = 0; x < 100; x++) {
-            expect(new Primes().getNonPrime()).toBeLessThanOrEqual(7);
+    it('defaults to return not prime nothing greater 50', () => {
+        for (let x = 0; x < 200; x++) {
+            expect(new Primes().getNonPrime()).toBeLessThanOrEqual(50);
         }
     });
 
@@ -109,9 +110,9 @@ describe('primes', () => {
         }
     });
 
-    it('returns filler nothing greater than 7', () => {
-        for (let x = 0; x < 100; x++) {
-            expect(new Primes().getFiller()).toBeLessThanOrEqual(7);
+    it('returns filler nothing greater than 50', () => {
+        for (let x = 0; x < 200; x++) {
+            expect(new Primes().getFiller()).toBeLessThanOrEqual(50);
         }
     });
 
