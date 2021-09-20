@@ -30,6 +30,7 @@ class Difficulty extends React.Component {
         const level = localStorage.getItem('difficulty') || 1;
         return (
             <Menu
+                title="Select Difficulty"
                 question={`Current Difficulty: ${difficulties[level]}\n\nChoose a level:`}
                 options={[
                     new Grade3Easy(),
@@ -45,8 +46,10 @@ class Difficulty extends React.Component {
                     new Grade8AndAbove(),
                 ]}
                 escape={new Option().getScreen()}
+                extraClass="options-border"
                 instructions={`Use Arrows to move, then press Enter.\n\nEscape: Options Menu`}
                 width="w550"
+                top="tn40"
             />
         );
     }

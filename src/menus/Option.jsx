@@ -15,10 +15,10 @@ class Option {
         return 'Options';
     }
 
-    // eslint-disable-next-line class-methods-use-this
     getScreen() {
         return (
             <Menu
+                title={this.getName()}
                 question="Choose an option:"
                 options={[
                     new Difficulty(),
@@ -29,7 +29,8 @@ class Option {
                     new Calibrate(),
                 ]}
                 escape={Menu.mainMenu()}
-                instructions="Use Arrows to move, then press Enter. Escape: Main Menu"
+                extraClass="options-border"
+                instructions={`Use Arrows to move, then press Enter.\n\nEscape: Main Menu`}
                 width="w550"
             />
         );

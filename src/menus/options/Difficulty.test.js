@@ -35,6 +35,6 @@ export const optionsMenu = (option) => {
         'Set Difficulty LevelSet ContentErase Hall of FameSet PasswordTurn Joystick ONCalibrate Joystick'
     );
     expect(wrapper.find('.text').at(1).text()).toEqual(
-        'Use Arrows to move, then press Enter. Escape: Main Menu'
+        'Use Arrows to move, then press Enter.\n\nEscape: Main Menu'
     );
 };

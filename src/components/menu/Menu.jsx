@@ -14,7 +14,6 @@ class Menu extends React.Component {
     static mainMenu() {
         return (
             <Menu
-                question=""
                 options={[
                     new Play(),
                     new Hall(),
@@ -23,7 +22,7 @@ class Menu extends React.Component {
                     new Quit(),
                 ]}
                 instructions="Use Arrows to move, then press Enter"
-                background="opening"
+                extraClass="opening"
                 width="w550"
                 top="t140"
             />
@@ -104,12 +103,25 @@ class Menu extends React.Component {
     }
 
     render() {
-        const { question, options, instructions, background, width, top } =
-            this.props;
+        const {
+            title,
+            question,
+            options,
+            instructions,
+            extraClass,
+            width,
+            top,
+        } = this.props;
         const { selected } = this.state;
+        const menuTitle = title ? (
+            <div className="menu-title">{title}</div>
+        ) : (
+            ''
+        );
         return (
             <div className="all">
-                <div className={`menu ${background}`}>
+                {menuTitle}
+                <div className={`menu ${extraClass}`}>
                     <div className="text">{question}</div>
                     <Options
                         options={options}
