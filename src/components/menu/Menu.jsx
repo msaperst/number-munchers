@@ -11,6 +11,24 @@ import Option from '../../menus/Option';
 import Quit from '../../menus/Quit';
 
 class Menu extends React.Component {
+    static mainMenu() {
+        return (
+            <Menu
+                options={[
+                    new Play(),
+                    new Hall(),
+                    new Info(),
+                    new Option(),
+                    new Quit(),
+                ]}
+                instructions="Use Arrows to move, then press Enter"
+                extraClass="opening"
+                width="w550"
+                top="t140"
+            />
+        );
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -31,6 +49,7 @@ class Menu extends React.Component {
     }
 
     keyDown(code) {
+        const { escape } = this.props;
         switch (code) {
             case 'Enter':
                 this.select();
@@ -44,24 +63,10 @@ class Menu extends React.Component {
                 this.select(1);
                 break;
             case 'Escape':
-                document.removeEventListener('keydown', this.keyDown);
-                ReactDOM.render(
-                    <Menu
-                        question=""
-                        options={[
-                            new Play(),
-                            new Hall(),
-                            new Info(),
-                            new Option(),
-                            new Quit(),
-                        ]}
-                        instructions="Use Arrows to move, then press Enter"
-                        background="opening"
-                        width="w550"
-                        top="t140"
-                    />,
-                    document.getElementById('root')
-                );
+                if (escape !== undefined) {
+                    document.removeEventListener('keydown', this.keyDown);
+                    ReactDOM.render(escape, document.getElementById('root'));
+                }
                 break;
             default:
             // do nothing
@@ -98,12 +103,25 @@ class Menu extends React.Component {
     }
 
     render() {
-        const { question, options, instructions, background, width, top } =
-            this.props;
+        const {
+            title,
+            question,
+            options,
+            instructions,
+            extraClass,
+            width,
+            top,
+        } = this.props;
         const { selected } = this.state;
+        const menuTitle = title ? (
+            <div className="menu-title">{title}</div>
+        ) : (
+            ''
+        );
         return (
             <div className="all">
-                <div className={`menu ${background}`}>
+                {menuTitle}
+                <div className={`menu ${extraClass}`}>
                     <div className="text">{question}</div>
                     <Options
                         options={options}
@@ -112,7 +130,16 @@ class Menu extends React.Component {
                         top={top}
                         onClick={(opt) => this.clickedOption(opt)}
                     />
-                    <div className="text">{instructions}</div>
+                    {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus */}
+                    <div
+                        key="go-back"
+                        role="button"
+                        className="text"
+                        onClick={() => this.keyDown('Escape')}
+                        onKeyPress={() => this.keyDown('Escape')}
+                    >
+                        {instructions}
+                    </div>
                 </div>
             </div>
         );
