@@ -5,7 +5,7 @@
 }
 
 .board {
-    border: 4px double #ff4cf7;
+    border: 11px double #ff4cf7;
     position: relative;
     width: calc(95% - 30px);
     height: calc(100% - 160px);

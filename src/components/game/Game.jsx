@@ -3,6 +3,7 @@ import './Game.css';
 import Board from '../board/Board';
 import { addTroggle, moveTroggles } from '../troggle/Troggle';
 import Status from '../status/Status';
+import Quit from '../quit/Quit';
 
 const WIDTH = 6;
 const HEIGHT = 5;
@@ -15,6 +16,7 @@ class Game extends React.Component {
         this.state = {
             game,
             pause: false,
+            quit: false,
             level: 1,
             score: 0,
             lives: 3,
@@ -120,7 +122,7 @@ class Game extends React.Component {
                     this.moveMuncher(0, 1);
                     break;
                 case 'Escape':
-                    this.setState({ pause: true });
+                    this.setState({ quit: true, pause: true });
                     break;
                 default:
                 // do nothing
@@ -128,7 +130,7 @@ class Game extends React.Component {
         } else if (e.code === 'Space') {
             this.setState({ pause: false, notification: '' });
         } else if (e.code === 'Escape') {
-            this.setState({ pause: false });
+            this.setState({ quit: false, pause: false });
         }
     }
 
@@ -272,6 +274,7 @@ class Game extends React.Component {
         const {
             level,
             game,
+            quit,
             muncher,
             troggles,
             squares,
@@ -286,8 +289,14 @@ class Game extends React.Component {
             munchers.push(<span key={i} className="life" />);
         }
 
+        let quitMenu;
+        if (quit) {
+            quitMenu = <Quit />;
+        }
+
         return (
             <div className="full">
+                {quitMenu}
                 <div className="info">
                     <div className="level">{`Level: ${level}`}</div>
                     <div className="title">{game.getTitle()}</div>

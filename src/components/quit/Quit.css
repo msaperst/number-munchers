@@ -1,0 +1,23 @@
+.quit {
+    width: calc(100% - 22px);
+    position: absolute;
+    text-align: center;
+    height: calc(50% - 135px);
+    border:11px double aqua;
+    background: #000574;
+    z-index: 10;
+    top: 50%;
+    transform: translate(0, calc(-50% + 5px));
+}
+
+.quit-yes {
+    position: absolute;
+    top: 65%;
+    left: 40%;
+}
+
+.quit-no {
+    position: absolute;
+    top: 65%;
+    left: 60%;
+}
