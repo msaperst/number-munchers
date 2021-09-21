@@ -39,18 +39,16 @@ class Menu extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener('keydown', (event) => {
-            this.keyDown(event.code);
-        });
+        document.addEventListener('keydown', this.keyDown);
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.keyDown);
     }
 
-    keyDown(code) {
+    keyDown(e) {
         const { escape } = this.props;
-        switch (code) {
+        switch (e.code) {
             case 'Enter':
                 this.select();
                 break;
@@ -64,7 +62,6 @@ class Menu extends React.Component {
                 break;
             case 'Escape':
                 if (escape !== undefined) {
-                    document.removeEventListener('keydown', this.keyDown);
                     ReactDOM.render(escape, document.getElementById('root'));
                 }
                 break;
@@ -86,7 +83,6 @@ class Menu extends React.Component {
         let { selected } = this.state;
         const { options } = this.props;
         if (movement === undefined) {
-            document.removeEventListener('keydown', this.keyDown);
             ReactDOM.render(
                 options[selected].getScreen(),
                 document.getElementById('root')
