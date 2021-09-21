@@ -1,6 +1,7 @@
 # Number Muncher
 
-This is an attempt to remake the original MECC DOS Number Munchers Version 1.1
+This is an attempt to remake the original 
+[MECC DOS Number Munchers (Version 1.1)](http://mecc.co/mathematics/number-munchers---a-170/).
 An online emulator can be 
 [found here](https://playold.games/play-game/number-munchers/play/), which is
 where images/gameplay/etc. was gathered and backwards engineered. You can play a 
