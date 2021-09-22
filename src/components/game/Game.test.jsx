@@ -1,6 +1,6 @@
-import React from 'react';
-import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Enzyme from 'enzyme';
+import React from 'react';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
@@ -325,6 +325,68 @@ describe('<Game/>', () => {
         expect(wrapper.state().game.getNumber()).not.toEqual(originalNumber);
     });
 
+    it('sets the quit state', () => {
+        wrapper.state().quit = false;
+        wrapper.state().pause = true;
+        wrapper.instance().keyDownNotQuit({ code: 'Escape' });
+        expect(wrapper.state().quit).toEqual(true);
+        expect(wrapper.state().pause).toEqual(true);
+    });
+
+    it('removes the pause state', () => {
+        wrapper.state().quit = false;
+        wrapper.state().pause = true;
+        wrapper.state().status = 'Time out';
+        wrapper.instance().keyDownNotQuit({ code: 'Enter' });
+        expect(wrapper.state().pause).toEqual(false);
+        expect(wrapper.state().status).toEqual('');
+    });
+
+    it('does not remove the pause state', () => {
+        wrapper.state().quit = false;
+        wrapper.state().pause = true;
+        wrapper.state().status = 'Troggle';
+        wrapper.state().notification = 'Some notification';
+        wrapper.instance().keyDownNotQuit({ code: 'Enter' });
+        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().status).toEqual('Troggle');
+    });
+
+    it('does nothing to pause state', () => {
+        wrapper.state().quit = false;
+        wrapper.state().pause = true;
+        wrapper.state().status = 'Time out';
+        wrapper.instance().keyDownNotQuit({ code: 'Space' });
+        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().status).toEqual('Time out');
+    });
+
+    it('clears the notification', () => {
+        wrapper.state().quit = false;
+        wrapper.state().pause = true;
+        wrapper.state().status = 'Notification';
+        wrapper.instance().keyDownNotQuit({ code: 'Space' });
+        expect(wrapper.state().pause).toEqual(false);
+        expect(wrapper.state().notification).toEqual('');
+    });
+
+    it('removes the escape state', () => {
+        wrapper.state().quit = true;
+        wrapper.state().pause = true;
+        wrapper.instance().keyDownEscape();
+        expect(wrapper.state().quit).toEqual(false);
+        expect(wrapper.state().pause).toEqual(false);
+    });
+
+    it('removes the escape state and unpauses', () => {
+        wrapper.state().quit = true;
+        wrapper.state().pause = true;
+        wrapper.state().status = 'Time out';
+        wrapper.instance().keyDownEscape();
+        expect(wrapper.state().quit).toEqual(false);
+        expect(wrapper.state().pause).toEqual(true);
+    });
+
     it('properly stops the game', () => {
         wrapper.instance().keyDown({ code: 'Escape' });
         expect(wrapper.state().pause).toEqual(true);
@@ -336,6 +398,36 @@ describe('<Game/>', () => {
         wrapper.instance().keyDown({ code: 'Escape' });
         expect(wrapper.state().pause).toEqual(false);
         expect(wrapper.state().quit).toEqual(false);
+    });
+
+    it('properly pauses the game', () => {
+        wrapper.instance().keyDown({ code: 'Enter' });
+        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().status).toEqual('Time out');
+    });
+
+    it('escapes when the game is paused', () => {
+        wrapper.instance().keyDown({ code: 'Enter' });
+        wrapper.instance().keyDown({ code: 'Escape' });
+        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().quit).toEqual(true);
+        expect(wrapper.state().status).toEqual('Time out');
+    });
+
+    it('properly un-pauses the game', () => {
+        wrapper.instance().keyDown({ code: 'Enter' });
+        wrapper.instance().keyDown({ code: 'Enter' });
+        expect(wrapper.state().pause).toEqual(false);
+        expect(wrapper.state().status).toEqual('');
+    });
+
+    it('unescapes when the game is paused', () => {
+        wrapper.instance().keyDown({ code: 'Enter' });
+        wrapper.instance().keyDown({ code: 'Escape' });
+        wrapper.instance().keyDown({ code: 'Escape' });
+        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().quit).toEqual(false);
+        expect(wrapper.state().status).toEqual('Time out');
     });
 
     it('moves Muncher Right', () => {
