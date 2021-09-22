@@ -108,36 +108,43 @@ describe('<Menu/>', () => {
     it('hitting enter renders game', () => {
         wrapper.instance().select = jest.fn();
         wrapper.update();
-        wrapper.instance().keyDown('Enter');
+        wrapper.instance().keyDown({ code: 'Enter' });
         expect(wrapper.instance().select).toBeCalledWith();
     });
 
     it('hitting down increments the selected state', () => {
-        wrapper.instance().keyDown('ArrowDown');
+        wrapper.instance().keyDown({ code: 'ArrowDown' });
         expect(wrapper.state().selected).toEqual(1);
     });
 
     it('hitting right increments the selected state', () => {
-        wrapper.instance().keyDown('ArrowRight');
+        wrapper.instance().keyDown({ code: 'ArrowRight' });
         expect(wrapper.state().selected).toEqual(1);
     });
 
     it('hitting up increments the selected state', () => {
-        wrapper.instance().keyDown('ArrowDown');
-        wrapper.instance().keyDown('ArrowUp');
+        wrapper.instance().keyDown({ code: 'ArrowDown' });
+        wrapper.instance().keyDown({ code: 'ArrowUp' });
         expect(wrapper.state().selected).toEqual(0);
     });
 
     it('hitting left increments the selected state', () => {
-        wrapper.instance().keyDown('ArrowDown');
-        wrapper.instance().keyDown('ArrowLeft');
+        wrapper.instance().keyDown({ code: 'ArrowDown' });
+        wrapper.instance().keyDown({ code: 'ArrowLeft' });
         expect(wrapper.state().selected).toEqual(0);
     });
 
     it('hitting space does nothing', () => {
-        wrapper.instance().keyDown('Space');
+        wrapper.instance().keyDown({ code: 'Space' });
         expect(wrapper.state().selected).toEqual(0);
     });
+
+    it('hitting escape does nothing when nothing is set', () => {
+        wrapper.instance().keyDown({ code: 'Escape' });
+        expect(wrapper.state().selected).toEqual(0);
+    });
+
+    // TODO - unable to test escape with a menu item
 
     it('select second option', () => {
         const event = new KeyboardEvent('keydown', { code: 'ArrowDown' });
@@ -151,6 +158,13 @@ describe('<Menu/>', () => {
         expect(wrapper.state().selected).toEqual(2);
     });
 
+    // eslint-disable-next-line jest/expect-expect
+    it('select escape', () => {
+        const event = new KeyboardEvent('keydown', { code: 'Escape' });
+        document.dispatchEvent(event);
+        // no error thrown means system wasn't reloaded
+    });
+
     it('selects the option when clicking on it', () => {
         wrapper.find('li').at(2).simulate('click');
         expect(wrapper.state().selected).toEqual(2);
@@ -161,5 +175,19 @@ describe('<Menu/>', () => {
         wrapper.update();
         wrapper.find('li').at(0).simulate('click');
         expect(wrapper.instance().select).toBeCalledWith();
+    });
+
+    it('does nothing when escape is clicked', () => {
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.find('.text').at(1).simulate('click');
+        expect(wrapper.instance().keyDown).toBeCalledWith({ code: 'Escape' });
+    });
+
+    it('does nothing when escape is pressed', () => {
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.find('.text').at(1).simulate('keypress');
+        expect(wrapper.instance().keyDown).toBeCalledWith({ code: 'Escape' });
     });
 });

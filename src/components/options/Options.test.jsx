@@ -56,6 +56,20 @@ describe('<Option/>', () => {
         wrapper.find('li').at(2).simulate('click');
     });
 
+    it('pressing the elements returns the element', () => {
+        const onClick = (option) => {
+            expect(option).toEqual(2);
+        };
+        const wrapper = Enzyme.mount(
+            <Options
+                options={[new Multiples(), new Factors(), new Primes()]}
+                selected={0}
+                onClick={(option) => onClick(option)}
+            />
+        );
+        wrapper.find('li').at(2).simulate('keypress');
+    });
+
     it('clicking the selected elements returns the element', () => {
         const onClick = (option) => {
             expect(option).toEqual(0);
@@ -68,5 +82,19 @@ describe('<Option/>', () => {
             />
         );
         wrapper.find('li').at(0).simulate('click');
+    });
+
+    it('pressing the selected elements returns the element', () => {
+        const onClick = (option) => {
+            expect(option).toEqual(0);
+        };
+        const wrapper = Enzyme.mount(
+            <Options
+                options={[new Multiples(), new Factors(), new Primes()]}
+                selected={0}
+                onClick={(option) => onClick(option)}
+            />
+        );
+        wrapper.find('li').at(0).simulate('keypress');
     });
 });
