@@ -1,9 +1,12 @@
 import React from 'react';
 import './Game.css';
+import ReactDOM from 'react-dom';
 import Board from '../board/Board';
 import { addTroggle, moveTroggles } from '../troggle/Troggle';
 import Status from '../status/Status';
 import Quit from '../quit/Quit';
+// eslint-disable-next-line import/no-cycle
+import Menu from '../menu/Menu';
 
 const WIDTH = 6;
 const HEIGHT = 5;
@@ -88,7 +91,7 @@ class Game extends React.Component {
     }
 
     keyDown(e) {
-        const { pause, game, muncher } = this.state;
+        const { pause, quit, game, muncher } = this.state;
         if (!pause) {
             switch (e.code) {
                 case 'Space':
@@ -127,7 +130,7 @@ class Game extends React.Component {
                 default:
                 // do nothing
             }
-        } else if (e.code === 'Space') {
+        } else if (e.code === 'Space' && !quit) {
             this.setState({ pause: false, notification: '' });
         } else if (e.code === 'Escape') {
             this.setState({ quit: false, pause: false });
@@ -291,7 +294,18 @@ class Game extends React.Component {
 
         let quitMenu;
         if (quit) {
-            quitMenu = <Quit />;
+            quitMenu = (
+                <Quit
+                    no={() => this.keyDown({ code: 'Escape' })}
+                    yes={() =>
+                        // eslint-disable-next-line react/no-render-return-value
+                        ReactDOM.render(
+                            Menu.mainMenu(),
+                            document.getElementById('root')
+                        )
+                    }
+                />
+            );
         }
 
         return (

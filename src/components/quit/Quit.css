@@ -10,14 +10,20 @@
     transform: translate(0, calc(-50% + 5px));
 }
 
-.quit-yes {
+.quit-button {
     position: absolute;
     top: 65%;
+    padding: 10px;
+}
+.quit-yes {
     left: 40%;
 }
 
 .quit-no {
-    position: absolute;
-    top: 65%;
     left: 60%;
+}
+
+.quit-selected {
+    background: white;
+    color: black;
 }
