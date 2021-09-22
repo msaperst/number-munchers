@@ -1,12 +1,12 @@
 import React from 'react';
-import './Game.css';
 import ReactDOM from 'react-dom';
 import Board from '../board/Board';
-import { addTroggle, moveTroggles } from '../troggle/Troggle';
 import Status from '../status/Status';
-import Quit from '../quit/Quit';
 // eslint-disable-next-line import/no-cycle
 import Menu from '../menu/Menu';
+import Quit from '../quit/Quit';
+import { addTroggle, moveTroggles } from '../troggle/Troggle';
+import './Game.css';
 
 const WIDTH = 6;
 const HEIGHT = 5;
@@ -91,7 +91,7 @@ class Game extends React.Component {
     }
 
     keyDown(e) {
-        const { pause, quit, game, muncher } = this.state;
+        const { pause, quit, status, game, muncher } = this.state;
         if (!pause) {
             switch (e.code) {
                 case 'Space':
@@ -125,15 +125,25 @@ class Game extends React.Component {
                     this.moveMuncher(0, 1);
                     break;
                 case 'Escape':
-                    this.setState({ quit: true, pause: true });
+                    this.setState({ pause: true, quit: true });
+                    break;
+                case 'Enter':
+                    this.setState({ pause: true, status: 'Time out' });
                     break;
                 default:
                 // do nothing
             }
-        } else if (e.code === 'Space' && !quit) {
-            this.setState({ pause: false, notification: '' });
+        } else if (e.code === 'Escape' && !quit) {
+            this.setState({ pause: true, quit: true });
         } else if (e.code === 'Escape') {
-            this.setState({ quit: false, pause: false });
+            this.setState({ quit: false });
+            if (status !== 'Time out') {
+                this.setState({ pause: false });
+            }
+        } else if (e.code === 'Space' && !quit && status !== 'Time out') {
+            this.setState({ pause: false, notification: '' });
+        } else if (e.code === 'Enter' && !quit) {
+            this.setState({ pause: false, status: '' });
         }
     }
 
