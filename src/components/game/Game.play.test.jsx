@@ -1,7 +1,6 @@
 import React from 'react';
 import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { waitFor } from '@testing-library/react';
 import Game from './Game';
 import Multiples from '../../games/Multiples';
 import * as Troggle from '../troggle/Troggle';
