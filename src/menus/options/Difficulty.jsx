@@ -26,6 +26,11 @@ class Difficulty extends React.Component {
     }
 
     // eslint-disable-next-line class-methods-use-this
+    getSelected() {
+        return parseInt(localStorage.getItem('difficulty'), 10) || 1;
+    }
+
+    // eslint-disable-next-line class-methods-use-this
     getScreen() {
         const level = localStorage.getItem('difficulty') || 1;
         return (
