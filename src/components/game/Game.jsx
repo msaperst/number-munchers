@@ -141,7 +141,7 @@ class Game extends React.Component {
         }
         if (x === muncher.x && y === muncher.y) {
             // eat this number
-            this.keyDown('Space');
+            this.keyDown({ code: 'Space' });
         } else {
             // move to the square
             const xc = Math.max(Math.min(x - muncher.x, 1), -1); // move left if lower, right if higher, not at all if same

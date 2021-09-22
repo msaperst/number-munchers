@@ -67,7 +67,7 @@ describe('<Game/>', () => {
         wrapper.instance().keyDown = jest.fn();
         wrapper.update();
         wrapper.instance().clickedSquare(2, 2);
-        expect(wrapper.instance().keyDown).toBeCalledWith('Space');
+        expect(wrapper.instance().keyDown).toBeCalledWith({ code: 'Space' });
     });
 
     it('does not emulate a space when muncher does not equal x coordinate', () => {

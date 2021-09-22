@@ -131,8 +131,8 @@ class Menu extends React.Component {
                         key="go-back"
                         role="button"
                         className="text"
-                        onClick={() => this.keyDown('Escape')}
-                        onKeyPress={() => this.keyDown('Escape')}
+                        onClick={() => this.keyDown({ code: 'Escape' })}
+                        onKeyPress={() => this.keyDown({ code: 'Escape' })}
                     >
                         {instructions}
                     </div>

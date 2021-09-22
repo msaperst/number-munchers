@@ -139,6 +139,13 @@ describe('<Menu/>', () => {
         expect(wrapper.state().selected).toEqual(0);
     });
 
+    it('hitting escape does nothing when nothing is set', () => {
+        wrapper.instance().keyDown({ code: 'Escape' });
+        expect(wrapper.state().selected).toEqual(0);
+    });
+
+    // TODO - unable to test escape with a menu item
+
     it('select second option', () => {
         const event = new KeyboardEvent('keydown', { code: 'ArrowDown' });
         document.dispatchEvent(event);
@@ -151,6 +158,13 @@ describe('<Menu/>', () => {
         expect(wrapper.state().selected).toEqual(2);
     });
 
+    // eslint-disable-next-line jest/expect-expect
+    it('select escape', () => {
+        const event = new KeyboardEvent('keydown', { code: 'Escape' });
+        document.dispatchEvent(event);
+        // no error thrown means system wasn't reloaded
+    });
+
     it('selects the option when clicking on it', () => {
         wrapper.find('li').at(2).simulate('click');
         expect(wrapper.state().selected).toEqual(2);
@@ -161,5 +175,19 @@ describe('<Menu/>', () => {
         wrapper.update();
         wrapper.find('li').at(0).simulate('click');
         expect(wrapper.instance().select).toBeCalledWith();
+    });
+
+    it('does nothing when escape is clicked', () => {
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.find('.text').at(1).simulate('click');
+        expect(wrapper.instance().keyDown).toBeCalledWith({ code: 'Escape' });
+    });
+
+    it('does nothing when escape is pressed', () => {
+        wrapper.instance().keyDown = jest.fn();
+        wrapper.update();
+        wrapper.find('.text').at(1).simulate('keypress');
+        expect(wrapper.instance().keyDown).toBeCalledWith({ code: 'Escape' });
     });
 });
