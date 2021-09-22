@@ -32,7 +32,7 @@ class Menu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: props.selected || 0,
+            selected: 0,
         };
         this.keyDown = this.keyDown.bind(this);
         this.clickedOption = this.clickedOption.bind(this);
@@ -62,6 +62,7 @@ class Menu extends React.Component {
                 break;
             case 'Escape':
                 if (escape !== undefined) {
+                    this.setState({ selected: 0 });
                     ReactDOM.render(escape, document.getElementById('root'));
                 }
                 break;
@@ -83,6 +84,11 @@ class Menu extends React.Component {
         let { selected } = this.state;
         const { options } = this.props;
         if (movement === undefined) {
+            this.setState({
+                selected: options[selected].getSelected
+                    ? options[selected].getSelected()
+                    : 0,
+            });
             ReactDOM.render(
                 options[selected].getScreen(),
                 document.getElementById('root')

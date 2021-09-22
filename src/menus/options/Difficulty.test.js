@@ -23,6 +23,16 @@ describe('difficulty', () => {
         expect(new Difficulty().getName()).toEqual('Set Difficulty Level');
     });
 
+    it('returns a default selection of 1', () => {
+        expect(new Difficulty().getSelected()).toEqual(1);
+    });
+
+    it('returns the set selection value', () => {
+        localStorage.setItem('difficulty', 4);
+        expect(new Difficulty().getSelected()).toEqual(4);
+        localStorage.removeItem('difficulty');
+    });
+
     it('difficulty returns correct screen', () => {
         const wrapper = Enzyme.mount(new Difficulty().getScreen());
         expect(wrapper.find('.text').at(0).text()).toEqual(
