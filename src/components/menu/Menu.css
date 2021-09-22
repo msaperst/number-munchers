@@ -33,7 +33,7 @@
     content: '';
     display: block;
     position: absolute;
-    left: 0px;
+    left: 0;
     top: -20px;
     border-top: 4px solid aqua;
     width: calc(100% - 20px);
