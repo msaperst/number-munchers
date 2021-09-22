@@ -108,34 +108,34 @@ describe('<Menu/>', () => {
     it('hitting enter renders game', () => {
         wrapper.instance().select = jest.fn();
         wrapper.update();
-        wrapper.instance().keyDown('Enter');
+        wrapper.instance().keyDown({ code: 'Enter' });
         expect(wrapper.instance().select).toBeCalledWith();
     });
 
     it('hitting down increments the selected state', () => {
-        wrapper.instance().keyDown('ArrowDown');
+        wrapper.instance().keyDown({ code: 'ArrowDown' });
         expect(wrapper.state().selected).toEqual(1);
     });
 
     it('hitting right increments the selected state', () => {
-        wrapper.instance().keyDown('ArrowRight');
+        wrapper.instance().keyDown({ code: 'ArrowRight' });
         expect(wrapper.state().selected).toEqual(1);
     });
 
     it('hitting up increments the selected state', () => {
-        wrapper.instance().keyDown('ArrowDown');
-        wrapper.instance().keyDown('ArrowUp');
+        wrapper.instance().keyDown({ code: 'ArrowDown' });
+        wrapper.instance().keyDown({ code: 'ArrowUp' });
         expect(wrapper.state().selected).toEqual(0);
     });
 
     it('hitting left increments the selected state', () => {
-        wrapper.instance().keyDown('ArrowDown');
-        wrapper.instance().keyDown('ArrowLeft');
+        wrapper.instance().keyDown({ code: 'ArrowDown' });
+        wrapper.instance().keyDown({ code: 'ArrowLeft' });
         expect(wrapper.state().selected).toEqual(0);
     });
 
     it('hitting space does nothing', () => {
-        wrapper.instance().keyDown('Space');
+        wrapper.instance().keyDown({ code: 'Space' });
         expect(wrapper.state().selected).toEqual(0);
     });
 
