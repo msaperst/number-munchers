@@ -22,8 +22,10 @@ class Quit extends React.Component {
         const { selected } = this.state;
         switch (e.code) {
             case 'ArrowLeft':
+                this.select(2);
                 return this.select(0);
             case 'ArrowRight':
+                this.select(2);
                 return this.select(1);
             case 'Enter':
                 return this.select(selected);
