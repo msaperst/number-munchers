@@ -133,17 +133,19 @@ class Game extends React.Component {
                 default:
                 // do nothing
             }
-        } else if (e.code === 'Escape' && !quit) {
-            this.setState({ pause: true, quit: true });
+        } else if (!quit) {
+            if (e.code === 'Escape') {
+                this.setState({ pause: true, quit: true });
+            } else if (e.code === 'Enter') {
+                this.setState({ pause: false, status: '' });
+            } else if (e.code === 'Space' && status !== 'Time out') {
+                this.setState({ pause: false, notification: '' });
+            }
         } else if (e.code === 'Escape') {
             this.setState({ quit: false });
             if (status !== 'Time out') {
                 this.setState({ pause: false });
             }
-        } else if (e.code === 'Space' && !quit && status !== 'Time out') {
-            this.setState({ pause: false, notification: '' });
-        } else if (e.code === 'Enter' && !quit) {
-            this.setState({ pause: false, status: '' });
         }
     }
 
