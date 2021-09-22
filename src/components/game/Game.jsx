@@ -91,7 +91,7 @@ class Game extends React.Component {
     }
 
     keyDown(e) {
-        const { pause, quit, status, game, muncher } = this.state;
+        const { pause, quit, game, muncher } = this.state;
         if (!pause) {
             switch (e.code) {
                 case 'Space':
@@ -134,18 +134,28 @@ class Game extends React.Component {
                 // do nothing
             }
         } else if (!quit) {
-            if (e.code === 'Escape') {
-                this.setState({ pause: true, quit: true });
-            } else if (e.code === 'Enter') {
-                this.setState({ pause: false, status: '' });
-            } else if (e.code === 'Space' && status !== 'Time out') {
-                this.setState({ pause: false, notification: '' });
-            }
+            this.keyDownNotQuit(e);
         } else if (e.code === 'Escape') {
-            this.setState({ quit: false });
-            if (status !== 'Time out') {
-                this.setState({ pause: false });
-            }
+            this.keyDownEscape();
+        }
+    }
+
+    keyDownNotQuit(e) {
+        const { status, notification } = this.state;
+        if (e.code === 'Escape') {
+            this.setState({ quit: true });
+        } else if (e.code === 'Enter' && notification === '') {
+            this.setState({ pause: false, status: '' });
+        } else if (e.code === 'Space' && status !== 'Time out') {
+            this.setState({ pause: false, notification: '' });
+        }
+    }
+
+    keyDownEscape() {
+        const { status } = this.state;
+        this.setState({ quit: false });
+        if (status !== 'Time out') {
+            this.setState({ pause: false });
         }
     }
 
