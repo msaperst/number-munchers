@@ -4,11 +4,6 @@ ol {
     counter-reset: li;
     position: relative;
     max-width: calc(100% - 85px);
-    /*margin-block-start: 10px;*/
-    /*margin-block-end: 10px;*/
-    /*margin-inline-start: 0;*/
-    /*margin-inline-end: 0;*/
-    /*padding-inline-start: 40px;*/
 }
 
 .w300 {
