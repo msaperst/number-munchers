@@ -1,5 +1,5 @@
-import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Enzyme from 'enzyme';
 import Difficulty, {
     Grade3Advanced,
     Grade3Easy,
@@ -36,14 +36,14 @@ describe('difficulty', () => {
     it('difficulty returns correct screen', () => {
         const wrapper = Enzyme.mount(new Difficulty().getScreen());
         expect(wrapper.find('.text').at(0).text()).toEqual(
-            `Current Difficulty: 3rd Grade Advanced\n\nChoose a level:`
+            'Current Difficulty: 3rd Grade AdvancedChoose a level:'
         );
         expect(wrapper.find('.options').find('li')).toHaveLength(11);
         expect(wrapper.find('.options').text()).toEqual(
             '3rd Grade Easy3rd Grade Advanced4th Grade Easy4th Grade Advanced5th Grade Easy5th Grade Advanced6th Grade Easy6th Grade Advanced7th Grade Easy7th Grade Advanced8th Grade and Above'
         );
         expect(wrapper.find('.text').at(1).text()).toEqual(
-            `Use Arrows to move, then press Enter.\n\nEscape: Options Menu`
+            'Use Arrows to move, then press Enter.Escape: Options Menu'
         );
     });
 
@@ -71,6 +71,6 @@ export const optionsMenu = (option) => {
         'Set Difficulty LevelSet ContentErase Hall of FameSet PasswordTurn Joystick ONCalibrate Joystick'
     );
     expect(wrapper.find('.text').at(1).text()).toEqual(
-        'Use Arrows to move, then press Enter.\n\nEscape: Main Menu'
+        'Use Arrows to move, then press Enter.Escape: Main Menu'
     );
 };

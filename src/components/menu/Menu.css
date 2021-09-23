@@ -61,7 +61,6 @@
     position: relative;
     padding: 30px;
     display: flex;
-    white-space: pre;
 }
 
 .text:nth-child(3) {

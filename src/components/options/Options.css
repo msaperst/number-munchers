@@ -3,6 +3,12 @@ ol {
     list-style: none;
     counter-reset: li;
     position: relative;
+    max-width: calc(100% - 85px);
+    /*margin-block-start: 10px;*/
+    /*margin-block-end: 10px;*/
+    /*margin-inline-start: 0;*/
+    /*margin-inline-end: 0;*/
+    /*padding-inline-start: 40px;*/
 }
 
 .w300 {
@@ -29,9 +35,9 @@ li::before {
     content: counter(li) ". ";
     color: white;
     display: inline-block;
-    width: 1em;
-    margin-left: -2em;
-    margin-right: 3em;
+    width: 10px;
+    margin-left: -25px;
+    margin-right: 40px;
 }
 
 li {
