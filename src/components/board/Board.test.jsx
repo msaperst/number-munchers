@@ -190,7 +190,7 @@ describe('<Board/>', () => {
     // TODO - figure out how to simulate swipe (https://github.com/FormidableLabs/react-swipeable/blob/1f983e4e9de92c7faba616bc6c696dd81706ee20/__tests__/useSwipeable.spec.tsx#L62)
     it('recognizes down when swiped down', () => {
         const keyDown = (value) => {
-            expect(value).toEqual('ArrowDown');
+            expect(value).toEqual({ code: 'ArrowDown' });
         };
         const board = render(
             <Board
@@ -208,7 +208,7 @@ describe('<Board/>', () => {
 
     it('recognizes up when swiped up', () => {
         const keyDown = (value) => {
-            expect(value).toEqual('ArrowUp');
+            expect(value).toEqual({ code: 'ArrowUp' });
         };
         const board = render(
             <Board
@@ -226,7 +226,7 @@ describe('<Board/>', () => {
 
     it('recognizes right when swiped right', () => {
         const keyDown = (value) => {
-            expect(value).toEqual('ArrowRight');
+            expect(value).toEqual({ code: 'ArrowRight' });
         };
         const board = render(
             <Board
@@ -244,7 +244,7 @@ describe('<Board/>', () => {
 
     it('recognizes left when swiped left', () => {
         const keyDown = (value) => {
-            expect(value).toEqual('ArrowLeft');
+            expect(value).toEqual({ code: 'ArrowLeft' });
         };
         const board = render(
             <Board
@@ -262,7 +262,7 @@ describe('<Board/>', () => {
 
     it('recognizes clicking away notification', () => {
         const keyDown = (value) => {
-            expect(value).toEqual('Space');
+            expect(value).toEqual({ code: 'Space' });
         };
         render(
             <Board

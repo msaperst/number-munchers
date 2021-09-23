@@ -3,6 +3,7 @@ ol {
     list-style: none;
     counter-reset: li;
     position: relative;
+    max-width: calc(100% - 85px);
 }
 
 .w300 {
@@ -29,9 +30,9 @@ li::before {
     content: counter(li) ". ";
     color: white;
     display: inline-block;
-    width: 1em;
-    margin-left: -2em;
-    margin-right: 3em;
+    width: 10px;
+    margin-left: -25px;
+    margin-right: 40px;
 }
 
 li {

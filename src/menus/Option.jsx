@@ -30,7 +30,12 @@ class Option {
                 ]}
                 escape={Menu.mainMenu()}
                 extraClass="options-border"
-                instructions={`Use Arrows to move, then press Enter.\n\nEscape: Main Menu`}
+                instructions={
+                    <span>
+                        <p>Use Arrows to move, then press Enter.</p>
+                        <p>Escape: Main Menu</p>
+                    </span>
+                }
                 width="w550"
             />
         );

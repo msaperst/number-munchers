@@ -36,7 +36,12 @@ class Difficulty extends React.Component {
         return (
             <Menu
                 title="Select Difficulty"
-                question={`Current Difficulty: ${difficulties[level]}\n\nChoose a level:`}
+                question={
+                    <span>
+                        <p>Current Difficulty: {difficulties[level]}</p>
+                        <p>Choose a level:</p>
+                    </span>
+                }
                 options={[
                     new Grade3Easy(),
                     new Grade3Advanced(),
@@ -52,7 +57,12 @@ class Difficulty extends React.Component {
                 ]}
                 escape={new Option().getScreen()}
                 extraClass="options-border"
-                instructions={`Use Arrows to move, then press Enter.\n\nEscape: Options Menu`}
+                instructions={
+                    <span>
+                        <p>Use Arrows to move, then press Enter.</p>
+                        <p>Escape: Options Menu</p>
+                    </span>
+                }
                 width="w550"
                 top="tn40"
             />
