@@ -41,6 +41,7 @@
     "owasp": "owasp-dependency-check --scan package-lock.json --project 'number-muncher' -f HTML JSON",
     "test": "react-scripts test --coverage",
     "test:ci": "react-scripts test --coverage --watchAll=false",
+    "selenium": "jest tests/*",
     "lint": "eslint ./src/",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
@@ -66,6 +67,7 @@
   },
   "devDependencies": {
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
+    "chromedriver": "^93.0.1",
     "enzyme": "^3.11.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -75,8 +77,10 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "geckodriver": "^2.0.4",
     "gh-pages": "^3.2.3",
     "jest-junit": "^12.3.0",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "selenium-webdriver": "^3.6.0"
   }
 }

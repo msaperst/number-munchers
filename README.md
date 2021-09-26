@@ -64,3 +64,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for
 small and middle deployments, and you shouldn’t feel obligated to use this 
 feature. However we understand that this tool wouldn’t be useful if you 
 couldn’t customize it when you are ready for it.
+
+## Testing
+Functional tests exist, and can be run using the
+#### `npm run selenium`
+command. These will execute Selenium tests on the application deployed on 
+localhost. Alternatively, a different address can be provided to test on another
+environment. For example, to test in prod:
+#### ` APP=https://msaperst.github.io/number-munchers/ npm run selenium`
