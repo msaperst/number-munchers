@@ -31,8 +31,8 @@ li::before {
     color: white;
     display: inline-block;
     width: 10px;
-    margin-left: -25px;
-    margin-right: 40px;
+    margin-left: -2em;
+    margin-right: 3em;
 }
 
 li {
