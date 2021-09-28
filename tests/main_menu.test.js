@@ -1,4 +1,4 @@
-const { Key } = require('selenium-webdriver');
+const { Key, By } = require('selenium-webdriver');
 const Base = require('./common/base');
 const Menu = require('./common/menu');
 require('chromedriver');
@@ -15,6 +15,9 @@ describe('main menu', () => {
     }, 15000);
 
     it('displays correct text', async () => {
+        expect(
+            await driver.findElements(By.className('menu-title'))
+        ).toHaveLength(0);
         expect(await (await Menu.getQuestion(driver)).getText()).toEqual('');
         expect(await (await Menu.getInstructions(driver)).getText()).toEqual(
             'Use Arrows to move, then press Enter'
