@@ -27,7 +27,13 @@ describe('difficulty', () => {
         expect(new Difficulty().getSelected()).toEqual(1);
     });
 
-    it('returns the set selection value', () => {
+    it('returns the set selection value of 0', () => {
+        localStorage.setItem('difficulty', 0);
+        expect(new Difficulty().getSelected()).toEqual(0);
+        localStorage.removeItem('difficulty');
+    });
+
+    it('returns the set selection value of 4', () => {
         localStorage.setItem('difficulty', 4);
         expect(new Difficulty().getSelected()).toEqual(4);
         localStorage.removeItem('difficulty');

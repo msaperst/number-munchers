@@ -65,16 +65,15 @@ describe('options menu', () => {
         expect(await options[1].getAttribute('class')).toEqual('selected');
     });
 
-    // it('goes to game selection when selecting play number munchers', async () => {
-    //     const actions = driver.actions();
-    //     await actions.sendKeys(Key.ENTER).perform();
-    //     expect(await Menu.onPlayNumberMunchersMenu(driver)).toEqual(true);
-    // });
-    //
-    // it('goes to options when selecting options', async () => {
-    //     const options = await Menu.getOptions(driver);
-    //     await options[3].click();
-    //     await options[3].click();
-    //     expect(await Menu.onOptionsMenu(driver)).toEqual(true);
-    // });
+    it('goes to difficulty level when selecting set difficulty level', async () => {
+        const actions = driver.actions();
+        await actions.sendKeys(Key.ENTER).perform();
+        expect(await Menu.onDifficultyLevelMenu(driver)).toEqual(true);
+    });
+
+    it('goes to difficulty level when clicking set difficulty level', async () => {
+        const options = await Menu.getOptions(driver);
+        await options[0].click();
+        expect(await Menu.onDifficultyLevelMenu(driver)).toEqual(true);
+    });
 });

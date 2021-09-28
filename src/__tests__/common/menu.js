@@ -42,5 +42,11 @@ class Menu {
         expect(await title.getText()).toEqual('Options');
         return true;
     }
+
+    async onDifficultyLevelMenu(driver) {
+        const title = await this.getTitle(driver);
+        expect(await title.getText()).toEqual('Select Difficulty');
+        return true;
+    }
 }
 module.exports = new Menu();

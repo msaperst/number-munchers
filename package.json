@@ -16,7 +16,8 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "!**/index.jsx"
+      "!**/index.jsx",
+      "!src/__tests__/**/*.{js,jsx,ts,tsx}"
     ]
   },
   "jest-junit": {
@@ -39,9 +40,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "owasp": "owasp-dependency-check --scan package-lock.json --project 'number-muncher' -f HTML JSON",
-    "test": "react-scripts test --coverage",
-    "test:ci": "react-scripts test --coverage --watchAll=false",
-    "selenium": "jest tests/*",
+    "test": "react-scripts test --coverage --testPathIgnorePatterns __tests__",
+    "test:ci": "react-scripts test --coverage --watchAll=false --testPathIgnorePatterns __tests__",
+    "selenium": "jest src/__tests__/*.js",
     "lint": "eslint ./src/",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
