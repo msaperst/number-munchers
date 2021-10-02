@@ -46,9 +46,8 @@ jobs:
           push: false
 
       - name: Run Docker Container 🏃‍♀️
-        uses: addnab/docker-run-action@v3
-        with:
-          image: number-munchers:latest
+        uses: docker-practice/actions-setup-docker@master
+        run: docker version; docker run --rm -it -p 80:80 number-munchers:latest
 
       - name: Functional Test 🔒
         run: APP=http://localhost/ npm run selenium

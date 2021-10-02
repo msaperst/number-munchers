@@ -72,3 +72,12 @@ command. These will execute Selenium tests on the application deployed on
 localhost. Alternatively, a different address can be provided to test on another
 environment. For example, to test in prod:
 #### `APP=https://msaperst.github.io/number-munchers/ npm run selenium`
+
+## Docker
+A docker container can be build from this code to run/play the app on. To
+build the docker container run the below command
+#### `docker build -t number-munchers .`
+
+To run the container run the below command
+#### `docker run --rm -it -p 80:80 number-munchers`
+And then navigate to http://localhost/ to use the app
