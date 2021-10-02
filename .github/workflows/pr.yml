@@ -49,7 +49,7 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: number-munchers:latest
-          options: --rm -it -p 8080:80
+          options: -p 8080:80
 
       - name: Functional Test 🔒
         run: APP=http://localhost:8080/ npm run selenium
