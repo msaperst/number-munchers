@@ -40,4 +40,4 @@ jobs:
         run: npm run owasp
 
       - name: Functional Test 🔒
-        run: npm run selenium
+        run: APP=https://msaperst.github.io/number-munchers/ npm run selenium

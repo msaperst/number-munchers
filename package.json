@@ -22,7 +22,7 @@
   },
   "jest-junit": {
     "suiteName": "jest tests",
-    "output": "/coverage/junit.xml"
+    "output": "junit.xml"
   },
   "private": true,
   "dependencies": {

@@ -71,4 +71,4 @@ Functional tests exist, and can be run using the
 command. These will execute Selenium tests on the application deployed on 
 localhost. Alternatively, a different address can be provided to test on another
 environment. For example, to test in prod:
-#### ` APP=https://msaperst.github.io/number-munchers/ npm run selenium`
+#### `APP=https://msaperst.github.io/number-munchers/ npm run selenium`
