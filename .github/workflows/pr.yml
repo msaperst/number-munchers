@@ -43,13 +43,10 @@ jobs:
         uses: docker-practice/actions-setup-docker@1.0.8
 
       - name: Build Dockerfile 🐋
-        uses: docker/build-push-action@v2
-        with:
-          tags: number-munchers:latest
-          push: false
+        run: docker build -t number-munchers .
 
       - name: Run Docker Container 🏃‍♀️
-        run: docker version; docker run --rm -it -p 80:80 number-munchers:latest
+        run: docker version; docker run --rm -p 80:80 number-munchers:latest
 
       - name: Functional Test 🔒
         run: APP=http://localhost/ npm run selenium
