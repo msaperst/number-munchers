@@ -46,7 +46,7 @@ jobs:
         run: docker build -t number-munchers .
 
       - name: Run Docker Container 🏃‍♀️
-        run: docker version; docker run --rm -p 80:80 -d number-munchers:latest
+        run: docker run --rm -p 80:80 -d number-munchers:latest
 
       - name: Functional Test 🔒
         run: APP=http://localhost/ npm run selenium
