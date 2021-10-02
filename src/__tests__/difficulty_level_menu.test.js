@@ -95,16 +95,16 @@ describe('options menu', () => {
         expect(await options[0].getAttribute('class')).toEqual('selected');
     });
 
-    it('selects 5th Grade Advanced when selecting 3rd Grade Easy', async () => {
+    it('selects 5th Grade Advanced when selecting 5th Grade Advanced', async () => {
         let options = await Menu.getOptions(driver);
-        await options[7].click();
-        await options[7].click();
+        await options[5].click();
+        await options[5].click();
         const actions = driver.actions();
         await actions.sendKeys(Key.ENTER).perform();
         expect(await (await Menu.getQuestion(driver)).getText()).toEqual(
-            'Current Difficulty: 6th Grade Advanced\nChoose a level:'
+            'Current Difficulty: 5th Grade Advanced\nChoose a level:'
         );
         options = await Menu.getOptions(driver);
-        expect(await options[7].getAttribute('class')).toEqual('selected');
+        expect(await options[5].getAttribute('class')).toEqual('selected');
     });
 });

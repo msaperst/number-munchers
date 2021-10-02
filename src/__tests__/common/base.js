@@ -1,4 +1,5 @@
 const { Builder } = require('selenium-webdriver');
+const { Options } = require('selenium-webdriver/chrome');
 
 class Base {
     static getApp() {
@@ -7,10 +8,10 @@ class Base {
 
     // eslint-disable-next-line class-methods-use-this
     async getDriver() {
-        // let builder = new Builder().forBrowser('chrome');
-        // builder = builder.setChromeOptions(new chrome.Options().headless());
-        // driver = await builder.build();
-        const driver = await new Builder().forBrowser('chrome').build();
+        const driver = await new Builder()
+            .forBrowser('chrome')
+            .setChromeOptions(new Options().headless())
+            .build();
         await driver.get(Base.getApp());
         return driver;
     }
