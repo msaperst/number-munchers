@@ -39,6 +39,9 @@ jobs:
       - name: Dependency Check 🐛
         run: npm run owasp
 
+      - name Setup Docker 🐋
+        uses: docker-practice/actions-setup-docker@master
+
       - name: Build Dockerfile 🐋
         uses: docker/build-push-action@v2
         with:
@@ -46,7 +49,6 @@ jobs:
           push: false
 
       - name: Run Docker Container 🏃‍♀️
-        uses: docker-practice/actions-setup-docker@master
         run: docker version; docker run --rm -it -p 80:80 number-munchers:latest
 
       - name: Functional Test 🔒
