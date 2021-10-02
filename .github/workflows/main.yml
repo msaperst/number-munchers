@@ -5,33 +5,27 @@ name: Main CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [ 10.x ]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Build 🔧 and Test 🤞 on ${{ matrix.node-version }}
+      - name: Setup Node ☕
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: |
-          npm ci
-          npm run build --if-present
-          npm run lint
-          npm run test:ci
-          npm run owasp
+          node-version: 10.x
+
+      - name: Install 🔧
+        run: npm ci
+
+      - name: Build🛠 ️
+        run: npm run build --if-present
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
