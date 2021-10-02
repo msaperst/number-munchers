@@ -39,8 +39,8 @@ jobs:
       - name: Dependency Check 🐛
         run: npm run owasp
 
-      - name Setup Docker 🐋
-        uses: docker-practice/actions-setup-docker@master
+      - name: Setup Docker 🐋
+        uses: docker-practice/actions-setup-docker@1.0.8
 
       - name: Build Dockerfile 🐋
         uses: docker/build-push-action@v2
