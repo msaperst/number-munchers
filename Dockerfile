@@ -9,8 +9,7 @@ WORKDIR /app
 # Copy all files from current directory to working dir in image
 COPY . .
 # install node modules and build assets
-RUN sed -i '3d' package.json
-RUN npm ci && npm run build
+RUN sed -i '3d' package.json && npm ci && npm run build
 
 # nginx state for serving content
 FROM nginx:alpine
