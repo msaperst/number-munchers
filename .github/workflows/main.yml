@@ -24,7 +24,7 @@ jobs:
       - name: Install 🔧
         run: npm ci
 
-      - name: Build🛠 ️
+      - name: Build 🛠 ️
         run: npm run build --if-present
 
       - name: Deploy 🚀
