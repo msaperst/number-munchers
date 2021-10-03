@@ -16,12 +16,13 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "!**/index.jsx"
+      "!**/index.jsx",
+      "!src/__tests__/**/*.{js,jsx,ts,tsx}"
     ]
   },
   "jest-junit": {
     "suiteName": "jest tests",
-    "output": "/coverage/junit.xml"
+    "output": "junit.xml"
   },
   "private": true,
   "dependencies": {
@@ -39,8 +40,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "owasp": "owasp-dependency-check --scan package-lock.json --project 'number-muncher' -f HTML JSON",
-    "test": "react-scripts test --coverage",
-    "test:ci": "react-scripts test --coverage --watchAll=false",
+    "test": "react-scripts test --coverage --testPathIgnorePatterns __tests__",
+    "test:ci": "react-scripts test --coverage --watchAll=false --testPathIgnorePatterns __tests__",
+    "selenium": "jest src/__tests__/*.js",
     "lint": "eslint ./src/",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
@@ -66,6 +68,7 @@
   },
   "devDependencies": {
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
+    "chromedriver": "^94.0.0",
     "enzyme": "^3.11.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -75,8 +78,10 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "geckodriver": "^2.0.4",
     "gh-pages": "^3.2.3",
     "jest-junit": "^12.3.0",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "selenium-webdriver": "^3.6.0"
   }
 }

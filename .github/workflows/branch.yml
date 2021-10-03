@@ -1,16 +1,19 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Main CI
+name: Pull Request CI
 
-on:
-  push:
-    branches: [ main ]
+on: [ push ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 10.x, 12.x, 14.x, 15.x ]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Checkout 🛎️
@@ -19,7 +22,7 @@ jobs:
       - name: Setup Node ☕
         uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: ${{ matrix.node-version }}
 
       - name: Install 🔧
         run: npm ci
@@ -27,8 +30,11 @@ jobs:
       - name: Build 🛠 ️
         run: npm run build --if-present
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          branch: gh-pages
-          folder: build
+      - name: Lint 🔍
+        run: npm run lint
+
+      - name: Unit Test 🤞
+        run: npm run test:ci
+
+      - name: Dependency Check 🐛
+        run: npm run owasp
