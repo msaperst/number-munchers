@@ -82,6 +82,6 @@
     "gh-pages": "^3.2.3",
     "jest-junit": "^13.0.0",
     "prettier": "^2.4.1",
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "^4.6.1"
   }
 }
