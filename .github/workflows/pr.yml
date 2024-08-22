@@ -23,7 +23,9 @@ jobs:
         run: npm ci
 
       - name: Run Application
-        run: npm start &; sleep 60
+        run: |
+          npm start &
+          sleep 60
 
       - name: Functional Test 🔒
         run: APP=http://localhost/ npm run selenium
