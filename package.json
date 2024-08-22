@@ -41,7 +41,7 @@
     "test": "react-scripts test --coverage --testPathIgnorePatterns __tests__",
     "test:ci": "react-scripts test --coverage --watchAll=false --testPathIgnorePatterns __tests__",
     "selenium": "jest src/__tests__/*.js",
-    "lint": "eslint ./src/",
+    "lint": "eslint ./src/ -f @microsoft/eslint-formatter-sarif -o lint-results.sarif",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -65,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "chromedriver": "^128.0.0",
     "enzyme": "^3.11.0",

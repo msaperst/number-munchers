@@ -47,9 +47,11 @@ jobs:
       - name: Upload Sarif 📊
         if: always()
         uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: lint-results.sarif
 
   test:
-    name: Test
+    name: Unit Test
     runs-on: ubuntu-latest
 
     steps:
@@ -90,11 +92,3 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: reports/dependency-check-report.sarif
-          category: api
-
-      - name: Publish Result 📊
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: OWASP Dependency Check API Results
-          path: reports
