@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import { GAME_TYPES } from './games';
 // eslint-disable-next-line import/no-cycle
-import Game from "../components/game/Game";
+import Game from '../components/game/Game';
 // eslint-disable-next-line import/no-cycle
 import Difficulty from '../menus/options/Difficulty';
 
@@ -13,7 +13,8 @@ class Equality {
         this.minNum = minNum || equalityConfig.range.min;
         this.maxNum = maxNum || equalityConfig.range.max;
         this.operations = operations || equalityConfig.other;
-
+        this.divisionFactor =
+            parseInt(localStorage.getItem('difficulty'), 10) * 15 + 5;
         this.resetNumber();
     }
 
@@ -55,22 +56,21 @@ class Equality {
         let second;
         switch (operation) {
             case '+':
-                second = Math.floor(Math.random() * Math.min(26, this.number));
+                second = Math.floor(Math.random() * this.number);
                 first = this.number - second;
                 break;
             case '-':
-                second = Math.floor(Math.random() * 10);
-                first = this.number + second;
+                first = Math.floor(Math.random() * this.number) + this.number;
+                second = first - this.number;
                 break;
             case 'x': {
-                // eslint-disable-next-line no-case-declarations
                 const factors = this.getFactors(this.number);
                 second = factors[Math.floor(Math.random() * factors.length)];
                 first = this.number / second;
                 break;
             }
             case '÷':
-                second = Math.floor(Math.random() * 9) + 1;
+                second = Math.floor(Math.random() * this.divisionFactor) + 1;
                 first = this.number * second;
                 break;
             default:
@@ -91,12 +91,14 @@ class Equality {
                 first = Math.floor(Math.random() * this.number * 0.75);
                 break;
             case '-':
-                second = Math.floor(Math.random() * this.number) + this.number;
-                first = Math.floor(Math.random() * this.number * 0.75);
+                first = Math.floor(Math.random() * this.number) + this.number;
+                second = Math.floor(Math.random() * this.number);
                 break;
             case '÷':
-                second = Math.floor(Math.random() * 10);
-                first = Math.floor(Math.random() * this.number) + this.number;
+                second = Math.floor(Math.random() * this.divisionFactor) + 1;
+                first =
+                    Math.floor(Math.random() * this.number * this.number) +
+                    this.number;
                 break;
             default:
                 second = 0;

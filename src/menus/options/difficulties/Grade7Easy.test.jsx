@@ -20,7 +20,6 @@ describe('grade7Easy', () => {
         expect(multiples.use).toEqual(true);
         expect(multiples.range.min).toEqual(2);
         expect(multiples.range.max).toEqual(12);
-        expect(multiples.sequence).toEqual(false);
         expect(multiples.other).toEqual(18);
     });
 
@@ -29,7 +28,6 @@ describe('grade7Easy', () => {
         expect(factors.use).toEqual(true);
         expect(factors.range.min).toEqual(3);
         expect(factors.range.max).toEqual(99);
-        expect(factors.sequence).toEqual(false);
         expect(factors.other).toEqual(undefined);
     });
 
@@ -38,7 +36,6 @@ describe('grade7Easy', () => {
         expect(primes.use).toEqual(true);
         expect(primes.range.min).toEqual(2);
         expect(primes.range.max).toEqual(99);
-        expect(primes.sequence).toEqual(undefined);
         expect(primes.other).toEqual(undefined);
     });
 
@@ -47,7 +44,6 @@ describe('grade7Easy', () => {
         expect(equality.use).toEqual(true);
         expect(equality.range.min).toEqual(1);
         expect(equality.range.max).toEqual(50);
-        expect(equality.sequence).toEqual(false);
         expect(equality.other).toEqual(['+', '-', 'x', '÷']);
     });
 
@@ -56,7 +52,6 @@ describe('grade7Easy', () => {
         expect(inequality.use).toEqual(true);
         expect(inequality.range.min).toEqual(1);
         expect(inequality.range.max).toEqual(50);
-        expect(inequality.sequence).toEqual(false);
         expect(inequality.other).toEqual(['+', '-', 'x', '÷']);
     });
 
@@ -64,7 +59,6 @@ describe('grade7Easy', () => {
         const challenge = Grade7Easy.getChallenge();
         expect(challenge.use).toEqual(true);
         expect(challenge.range).toEqual(undefined);
-        expect(challenge.sequence).toEqual(undefined);
         expect(challenge.other).toEqual(undefined);
     });
 });

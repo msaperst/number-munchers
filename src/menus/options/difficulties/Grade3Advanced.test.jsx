@@ -20,7 +20,6 @@ describe('grade3Advanced', () => {
         expect(multiples.use).toEqual(true);
         expect(multiples.range.min).toEqual(2);
         expect(multiples.range.max).toEqual(5);
-        expect(multiples.sequence).toEqual(true);
         expect(multiples.other).toEqual(5);
     });
 
@@ -29,7 +28,6 @@ describe('grade3Advanced', () => {
         expect(factors.use).toEqual(true);
         expect(factors.range.min).toEqual(3);
         expect(factors.range.max).toEqual(25);
-        expect(factors.sequence).toEqual(true);
         expect(factors.other).toEqual(undefined);
     });
 
@@ -38,7 +36,6 @@ describe('grade3Advanced', () => {
         expect(primes.use).toEqual(false);
         expect(primes.range.min).toEqual(2);
         expect(primes.range.max).toEqual(25);
-        expect(primes.sequence).toEqual(undefined);
         expect(primes.other).toEqual(undefined);
     });
 
@@ -47,7 +44,6 @@ describe('grade3Advanced', () => {
         expect(equality.use).toEqual(true);
         expect(equality.range.min).toEqual(1);
         expect(equality.range.max).toEqual(20);
-        expect(equality.sequence).toEqual(true);
         expect(equality.other).toEqual(['+', '-', 'x', '÷']);
     });
 
@@ -56,7 +52,6 @@ describe('grade3Advanced', () => {
         expect(inequality.use).toEqual(true);
         expect(inequality.range.min).toEqual(1);
         expect(inequality.range.max).toEqual(20);
-        expect(inequality.sequence).toEqual(true);
         expect(inequality.other).toEqual(['+', '-']);
     });
 
@@ -64,7 +59,6 @@ describe('grade3Advanced', () => {
         const challenge = Grade3Advanced.getChallenge();
         expect(challenge.use).toEqual(true);
         expect(challenge.range).toEqual(undefined);
-        expect(challenge.sequence).toEqual(undefined);
         expect(challenge.other).toEqual(undefined);
     });
 });
