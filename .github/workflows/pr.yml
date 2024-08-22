@@ -17,13 +17,15 @@ jobs:
       - name: Setup Node ☕
         uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 20.x
 
       - name: Install 🔧
         run: npm ci
 
       - name: Run Application
-        run: npm start &; sleep 60
+        run: |
+          npm start &
+          sleep 60
 
       - name: Functional Test 🔒
         run: APP=http://localhost/ npm run selenium
