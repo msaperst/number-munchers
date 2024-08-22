@@ -2,11 +2,9 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import './Menu.css';
 import Options from '../options/Options';
-// eslint-disable-next-line import/no-cycle
 import Play from '../../menus/Play';
 import Hall from '../../menus/Hall';
 import Info from '../../menus/Info';
-// eslint-disable-next-line import/no-cycle
 import Option from '../../menus/Option';
 import Quit from '../../menus/Quit';
 

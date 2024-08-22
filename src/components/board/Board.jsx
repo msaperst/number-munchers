@@ -43,7 +43,7 @@ function Board(props) {
                     key={t}
                     position={troggle.position}
                     troggle={troggle.troggle}
-                />
+                />,
             );
         }
     }
@@ -65,7 +65,7 @@ function getRows(height, width, squares, movement) {
         rows.push(
             <div key={`row${r}`} className="board-row">
                 {row}
-            </div>
+            </div>,
         );
     }
     return rows;
@@ -81,7 +81,7 @@ function getRow(width, r, squares, movement) {
                 cell={int}
                 value={squares[int]}
                 onClick={() => movement.click(cell, r)}
-            />
+            />,
         );
     }
     return row;
