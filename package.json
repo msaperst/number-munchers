@@ -29,7 +29,6 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "owasp-dependency-check": "^0.0.18",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -39,11 +38,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "owasp": "owasp-dependency-check --scan package-lock.json --project 'number-muncher' -f HTML JSON",
     "test": "react-scripts test --coverage --testPathIgnorePatterns __tests__",
     "test:ci": "react-scripts test --coverage --watchAll=false --testPathIgnorePatterns __tests__",
     "selenium": "jest src/__tests__/*.js",
-    "lint": "eslint ./src/",
+    "lint": "eslint ./src/ -f @microsoft/eslint-formatter-sarif -o lint-results.sarif",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -67,8 +65,9 @@
     ]
   },
   "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
-    "chromedriver": "^94.0.0",
+    "chromedriver": "^128.0.0",
     "enzyme": "^3.11.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",

@@ -6,32 +6,24 @@ name: Pull Request CI
 on: [ pull_request ]
 
 jobs:
-  build:
-
+  test:
+    name: Selenium Test
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [ 10.x, 12.x, 14.x, 15.x ]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Build Dockerfile 🐋
-        run: docker build -t number-munchers .
-
-      - name: Run Docker Container 🏃‍♀️
-        run: docker run --rm -p 80:80 -d number-munchers:latest
-
       - name: Setup Node ☕
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
 
       - name: Install 🔧
         run: npm ci
+
+      - name: Run Application
+        run: npm start &; sleep 60
 
       - name: Functional Test 🔒
         run: APP=http://localhost/ npm run selenium
