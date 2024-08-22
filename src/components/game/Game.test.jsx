@@ -175,7 +175,7 @@ describe('<Game/>', () => {
 
     it('is all empty needs new board', () => {
         wrapper.state().squares = Array(2).fill('');
-        expect(wrapper.instance().checkLevel()).toEqual(true);
+        expect(wrapper.instance().checkLevel()).toBeTruthy();
     });
 
     function assertCheckLevelMatches(game, value) {
@@ -183,7 +183,7 @@ describe('<Game/>', () => {
         squares[1] = value;
         wrapper.state().game = game;
         wrapper.state().squares = squares;
-        expect(wrapper.instance().checkLevel()).toEqual(false);
+        expect(wrapper.instance().checkLevel()).toBeFalsy();
     }
 
     // eslint-disable-next-line jest/expect-expect
@@ -209,7 +209,7 @@ describe('<Game/>', () => {
         squares[1] = 97;
         wrapper.state().game = game;
         wrapper.state().squares = squares;
-        expect(wrapper.instance().checkLevel()).toEqual(true);
+        expect(wrapper.instance().checkLevel()).toBeTruthy();
     }
 
     // eslint-disable-next-line jest/expect-expect
@@ -231,7 +231,7 @@ describe('<Game/>', () => {
     });
 
     it('full board does not need new board', () => {
-        expect(wrapper.instance().checkLevel()).toEqual(false);
+        expect(wrapper.instance().checkLevel()).toBeFalsy();
     });
 
     it('able to setup a new board', () => {
@@ -284,7 +284,7 @@ describe('<Game/>', () => {
         wrapper.state().pause = true;
         wrapper.state().notification = '123';
         wrapper.instance().keyDown({ code: 'Space' });
-        expect(wrapper.state().pause).toEqual(false);
+        expect(wrapper.state().pause).toBeFalsy();
         expect(wrapper.state().notification).toEqual('');
     });
 
@@ -292,7 +292,7 @@ describe('<Game/>', () => {
         wrapper.state().squares = Array(30).fill('');
         wrapper.instance().keyDown({ code: 'Space' });
         expect(wrapper.state().notification).toEqual('You beat the level!');
-        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().pause).toBeTruthy();
     });
 
     it('properly calculates new level', () => {
@@ -329,8 +329,8 @@ describe('<Game/>', () => {
         wrapper.state().quit = false;
         wrapper.state().pause = true;
         wrapper.instance().keyDownNotQuit({ code: 'Escape' });
-        expect(wrapper.state().quit).toEqual(true);
-        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().quit).toBeTruthy();
+        expect(wrapper.state().pause).toBeTruthy();
     });
 
     it('removes the pause state', () => {
@@ -338,7 +338,7 @@ describe('<Game/>', () => {
         wrapper.state().pause = true;
         wrapper.state().status = 'Time out';
         wrapper.instance().keyDownNotQuit({ code: 'Enter' });
-        expect(wrapper.state().pause).toEqual(false);
+        expect(wrapper.state().pause).toBeFalsy();
         expect(wrapper.state().status).toEqual('');
     });
 
@@ -348,7 +348,7 @@ describe('<Game/>', () => {
         wrapper.state().status = 'Troggle';
         wrapper.state().notification = 'Some notification';
         wrapper.instance().keyDownNotQuit({ code: 'Enter' });
-        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().pause).toBeTruthy();
         expect(wrapper.state().status).toEqual('Troggle');
     });
 
@@ -357,7 +357,7 @@ describe('<Game/>', () => {
         wrapper.state().pause = true;
         wrapper.state().status = 'Time out';
         wrapper.instance().keyDownNotQuit({ code: 'Space' });
-        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().pause).toBeTruthy();
         expect(wrapper.state().status).toEqual('Time out');
     });
 
@@ -366,7 +366,7 @@ describe('<Game/>', () => {
         wrapper.state().pause = true;
         wrapper.state().status = 'Notification';
         wrapper.instance().keyDownNotQuit({ code: 'Space' });
-        expect(wrapper.state().pause).toEqual(false);
+        expect(wrapper.state().pause).toBeFalsy();
         expect(wrapper.state().notification).toEqual('');
     });
 
@@ -374,8 +374,8 @@ describe('<Game/>', () => {
         wrapper.state().quit = true;
         wrapper.state().pause = true;
         wrapper.instance().keyDownEscape();
-        expect(wrapper.state().quit).toEqual(false);
-        expect(wrapper.state().pause).toEqual(false);
+        expect(wrapper.state().quit).toBeFalsy();
+        expect(wrapper.state().pause).toBeFalsy();
     });
 
     it('removes the escape state and unpauses', () => {
@@ -383,41 +383,41 @@ describe('<Game/>', () => {
         wrapper.state().pause = true;
         wrapper.state().status = 'Time out';
         wrapper.instance().keyDownEscape();
-        expect(wrapper.state().quit).toEqual(false);
-        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().quit).toBeFalsy();
+        expect(wrapper.state().pause).toBeTruthy();
     });
 
     it('properly stops the game', () => {
         wrapper.instance().keyDown({ code: 'Escape' });
-        expect(wrapper.state().pause).toEqual(true);
-        expect(wrapper.state().quit).toEqual(true);
+        expect(wrapper.state().pause).toBeTruthy();
+        expect(wrapper.state().quit).toBeTruthy();
     });
 
     it('properly restarts the game', () => {
         wrapper.instance().keyDown({ code: 'Escape' });
         wrapper.instance().keyDown({ code: 'Escape' });
-        expect(wrapper.state().pause).toEqual(false);
-        expect(wrapper.state().quit).toEqual(false);
+        expect(wrapper.state().pause).toBeFalsy();
+        expect(wrapper.state().quit).toBeFalsy();
     });
 
     it('properly pauses the game', () => {
         wrapper.instance().keyDown({ code: 'Enter' });
-        expect(wrapper.state().pause).toEqual(true);
+        expect(wrapper.state().pause).toBeTruthy();
         expect(wrapper.state().status).toEqual('Time out');
     });
 
     it('escapes when the game is paused', () => {
         wrapper.instance().keyDown({ code: 'Enter' });
         wrapper.instance().keyDown({ code: 'Escape' });
-        expect(wrapper.state().pause).toEqual(true);
-        expect(wrapper.state().quit).toEqual(true);
+        expect(wrapper.state().pause).toBeTruthy();
+        expect(wrapper.state().quit).toBeTruthy();
         expect(wrapper.state().status).toEqual('Time out');
     });
 
     it('properly un-pauses the game', () => {
         wrapper.instance().keyDown({ code: 'Enter' });
         wrapper.instance().keyDown({ code: 'Enter' });
-        expect(wrapper.state().pause).toEqual(false);
+        expect(wrapper.state().pause).toBeFalsy();
         expect(wrapper.state().status).toEqual('');
     });
 
@@ -425,8 +425,8 @@ describe('<Game/>', () => {
         wrapper.instance().keyDown({ code: 'Enter' });
         wrapper.instance().keyDown({ code: 'Escape' });
         wrapper.instance().keyDown({ code: 'Escape' });
-        expect(wrapper.state().pause).toEqual(true);
-        expect(wrapper.state().quit).toEqual(false);
+        expect(wrapper.state().pause).toBeTruthy();
+        expect(wrapper.state().quit).toBeFalsy();
         expect(wrapper.state().status).toEqual('Time out');
     });
 
@@ -478,7 +478,7 @@ describe('<Game/>', () => {
         // eslint-disable-next-line no-param-reassign
         wrapper.state().squares = squares;
         const result = wrapper.instance().munch();
-        expect(result.isValid).toEqual(false);
+        expect(result.isValid).toBeFalsy();
         expect(result.value).toEqual(97);
         for (let i = 0; i < squares.length; i++) {
             if (i !== 14) {
@@ -512,7 +512,7 @@ describe('<Game/>', () => {
         squares[14] = '';
         wrapper.state().squares = squares;
         const result = wrapper.instance().munch();
-        expect(result.isValid).toEqual(true);
+        expect(result.isValid).toBeTruthy();
         expect(result.value).toEqual('');
         for (let i = 0; i < squares.length; i++) {
             if (i !== 14) {
@@ -527,7 +527,7 @@ describe('<Game/>', () => {
         squares[14] = 0;
         wrapper.state().squares = squares;
         const result = wrapper.instance().munch();
-        expect(result.isValid).toEqual(true);
+        expect(result.isValid).toBeTruthy();
         expect(result.value).toEqual(0);
         for (let i = 0; i < squares.length; i++) {
             if (i !== 14) {
@@ -753,24 +753,24 @@ describe('<Game/>', () => {
     });
 
     // TODO - commenting out test as it is unstable
-    // it('recognizes clicking on a square', () => {
-    //     jest.useFakeTimers();
-    //     const mount = Enzyme.mount(<Game game={new Multiples()} />);
-    //     mount.instance().componentDidMount = jest.fn();
-    //     mount.update();
-    //     mount.find('#c25').simulate('click');
-    //     // just run through a bunch of timers (troggle timer means we can be precise with how many)
-    //     // exact timing of movement was tested elsewhere
-    //     let count = 0;
-    //     while (mount.state().muncher.x !== 1 && count < 100000) {
-    //         act(() => jest.runOnlyPendingTimers());
-    //         count++;
-    //     }
-    //     expect(mount.state().muncher.x).toEqual(1);
-    //     while (mount.state().muncher.y !== 4 && count < 200000) {
-    //         act(() => jest.runOnlyPendingTimers());
-    //         count++;
-    //     }
-    //     expect(mount.state().muncher.y).toEqual(4);
-    // });
+    xit('recognizes clicking on a square', () => {
+        jest.useFakeTimers();
+        const mount = Enzyme.mount(<Game game={new Multiples()} />);
+        mount.instance().componentDidMount = jest.fn();
+        mount.update();
+        mount.find('#c25').simulate('click');
+        // just run through a bunch of timers (troggle timer means we can be precise with how many)
+        // exact timing of movement was tested elsewhere
+        let count = 0;
+        while (mount.state().muncher.x !== 1 && count < 100000) {
+            act(() => jest.runOnlyPendingTimers());
+            count++;
+        }
+        expect(mount.state().muncher.x).toEqual(1);
+        while (mount.state().muncher.y !== 4 && count < 200000) {
+            act(() => jest.runOnlyPendingTimers());
+            count++;
+        }
+        expect(mount.state().muncher.y).toEqual(4);
+    });
 });

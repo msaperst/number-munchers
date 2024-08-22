@@ -46,9 +46,9 @@ describe('multiples', () => {
         }
     });
 
-    it('default to return base not higher than 5', () => {
+    it('default to return base not higher than 6', () => {
         for (let x = 0; x < 100; x++) {
-            expect(new Multiples().getNumber()).toBeLessThanOrEqual(5);
+            expect(new Multiples().getNumber()).toBeLessThanOrEqual(6);
         }
     });
 
@@ -58,8 +58,8 @@ describe('multiples', () => {
             expect(multiples.getNumber()).toBeGreaterThanOrEqual(1);
             multiples = new Multiples(10, 20);
             expect(multiples.getNumber()).toBeGreaterThanOrEqual(10);
-            multiples = new Multiples(5);
-            expect(multiples.getNumber()).toEqual(5);
+            multiples = new Multiples(6);
+            expect(multiples.getNumber()).toEqual(6);
         }
     });
 
@@ -176,10 +176,10 @@ describe('multiples', () => {
     it('verifies some simple factors', () => {
         const multiples = new Multiples();
         const number = multiples.getNumber();
-        expect(multiples.isCorrect(number * 5)).toEqual(true);
-        expect(multiples.isCorrect(number * 3)).toEqual(true);
-        expect(multiples.isCorrect(0)).toEqual(true);
-        expect(multiples.isCorrect(83)).toEqual(false);
-        expect(multiples.isCorrect(97)).toEqual(false);
+        expect(multiples.isCorrect(number * 5)).toBeTruthy();
+        expect(multiples.isCorrect(number * 3)).toBeTruthy();
+        expect(multiples.isCorrect(0)).toBeTruthy();
+        expect(multiples.isCorrect(83)).toBeFalsy();
+        expect(multiples.isCorrect(97)).toBeFalsy();
     });
 });

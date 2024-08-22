@@ -37,13 +37,13 @@ describe('main menu', () => {
     it('clicking bottom text does nothing', async () => {
         const instructions = await Menu.getInstructions(driver);
         await instructions.click();
-        expect(await Menu.onMainMenu(driver)).toEqual(true);
+        expect(await Menu.onMainMenu(driver)).toBeTruthy();
     });
 
     it('hitting escape does nothing', async () => {
         const actions = driver.actions();
         await actions.sendKeys(Key.ESCAPE).perform();
-        expect(await Menu.onMainMenu(driver)).toEqual(true);
+        expect(await Menu.onMainMenu(driver)).toBeTruthy();
     });
 
     it('clicking on Options selects options', async () => {
@@ -62,13 +62,13 @@ describe('main menu', () => {
     it('goes to game selection when selecting play number munchers', async () => {
         const actions = driver.actions();
         await actions.sendKeys(Key.ENTER).perform();
-        expect(await Menu.onPlayNumberMunchersMenu(driver)).toEqual(true);
+        expect(await Menu.onPlayNumberMunchersMenu(driver)).toBeTruthy();
     });
 
     it('goes to options when selecting options', async () => {
         const options = await Menu.getOptions(driver);
         await options[3].click();
         await options[3].click();
-        expect(await Menu.onOptionsMenu(driver)).toEqual(true);
+        expect(await Menu.onOptionsMenu(driver)).toBeTruthy();
     });
 });

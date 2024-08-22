@@ -26,7 +26,7 @@ describe('<Quit/>', () => {
                 .find('.quit-button')
                 .at(1)
                 .hasClass('quit-selected')
-        ).toEqual(true);
+        ).toBeTruthy();
     });
 
     it('has other options not selected', () => {
@@ -36,7 +36,7 @@ describe('<Quit/>', () => {
                 .find('.quit-button')
                 .at(0)
                 .hasClass('quit-selected')
-        ).toEqual(false);
+        ).toBeFalsy();
     });
 
     it('selects the first element on select 0', () => {
@@ -52,10 +52,10 @@ describe('<Quit/>', () => {
 
     it('executes the yes command when selecting yes', () => {
         const yes = () => {
-            expect(true).toEqual(true);
+            expect(true).toBeTruthy();
         };
         const no = () => {
-            expect(true).toEqual(false);
+            expect(true).toBeFalsy();
         };
         const wrapper = Enzyme.mount(
             <Quit yes={() => yes()} no={() => no()} />
@@ -66,10 +66,10 @@ describe('<Quit/>', () => {
 
     it('executes the no command when selecting no', () => {
         const yes = () => {
-            expect(true).toEqual(false);
+            expect(true).toBeFalsy();
         };
         const no = () => {
-            expect(true).toEqual(true);
+            expect(true).toBeTruthy();
         };
         const wrapper = Enzyme.mount(
             <Quit yes={() => yes()} no={() => no()} />
@@ -106,10 +106,10 @@ describe('<Quit/>', () => {
 
     it('executes the yes command when pressing enter on yes', () => {
         const yes = () => {
-            expect(true).toEqual(true);
+            expect(true).toBeTruthy();
         };
         const no = () => {
-            expect(true).toEqual(false);
+            expect(true).toBeFalsy();
         };
         const wrapper = Enzyme.mount(
             <Quit yes={() => yes()} no={() => no()} />
@@ -120,10 +120,10 @@ describe('<Quit/>', () => {
 
     it('executes the no command when pressing enter on no', () => {
         const yes = () => {
-            expect(true).toEqual(false);
+            expect(true).toBeFalsy();
         };
         const no = () => {
-            expect(true).toEqual(true);
+            expect(true).toBeTruthy();
         };
         const wrapper = Enzyme.mount(
             <Quit yes={() => yes()} no={() => no()} />

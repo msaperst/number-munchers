@@ -55,13 +55,13 @@ describe('options menu', () => {
     it('clicking bottom text returns to options menu', async () => {
         const instructions = await Menu.getInstructions(driver);
         await instructions.click();
-        expect(await Menu.onOptionsMenu(driver)).toEqual(true);
+        expect(await Menu.onOptionsMenu(driver)).toBeTruthy();
     });
 
     it('hitting escape returns to options menu', async () => {
         const actions = driver.actions();
         await actions.sendKeys(Key.ESCAPE).perform();
-        expect(await Menu.onOptionsMenu(driver)).toEqual(true);
+        expect(await Menu.onOptionsMenu(driver)).toBeTruthy();
     });
 
     it('clicking on 5th Grade Advanced selects 5th Grade Advanced', async () => {
@@ -80,7 +80,7 @@ describe('options menu', () => {
     it('returns to options when selecting 3rd Grade Easy', async () => {
         const actions = driver.actions();
         await actions.sendKeys(Key.ENTER).perform();
-        expect(await Menu.onOptionsMenu(driver)).toEqual(true);
+        expect(await Menu.onOptionsMenu(driver)).toBeTruthy();
     });
 
     it('selects 3rd Grade Easy when selecting 3rd Grade Easy', async () => {

@@ -17,54 +17,48 @@ describe('grade4Advanced', () => {
 
     it('should return proper multiples', () => {
         const multiples = Grade4Advanced.getMultiples();
-        expect(multiples.use).toEqual(true);
+        expect(multiples.use).toBeTruthy();
         expect(multiples.range.min).toEqual(2);
-        expect(multiples.range.max).toEqual(9);
-        expect(multiples.sequence).toEqual(false);
+        expect(multiples.range.max).toEqual(11);
         expect(multiples.other).toEqual(9);
     });
 
     it('should return proper factors', () => {
         const factors = Grade4Advanced.getFactors();
-        expect(factors.use).toEqual(true);
+        expect(factors.use).toBeTruthy();
         expect(factors.range.min).toEqual(3);
-        expect(factors.range.max).toEqual(64);
-        expect(factors.sequence).toEqual(false);
+        expect(factors.range.max).toEqual(40);
         expect(factors.other).toEqual(undefined);
     });
 
     it('should return proper primes', () => {
         const primes = Grade4Advanced.getPrimes();
-        expect(primes.use).toEqual(false);
+        expect(primes.use).toBeFalsy();
         expect(primes.range.min).toEqual(2);
-        expect(primes.range.max).toEqual(50);
-        expect(primes.sequence).toEqual(undefined);
+        expect(primes.range.max).toEqual(40);
         expect(primes.other).toEqual(undefined);
     });
 
     it('should return proper equality', () => {
         const equality = Grade4Advanced.getEquality();
-        expect(equality.use).toEqual(true);
+        expect(equality.use).toBeTruthy();
         expect(equality.range.min).toEqual(1);
-        expect(equality.range.max).toEqual(24);
-        expect(equality.sequence).toEqual(false);
+        expect(equality.range.max).toEqual(40);
         expect(equality.other).toEqual(['+', '-', 'x', '÷']);
     });
 
     it('should return proper inequality', () => {
         const inequality = Grade4Advanced.getInequality();
-        expect(inequality.use).toEqual(true);
+        expect(inequality.use).toBeTruthy();
         expect(inequality.range.min).toEqual(1);
-        expect(inequality.range.max).toEqual(20);
-        expect(inequality.sequence).toEqual(false);
-        expect(inequality.other).toEqual(['+', '-', 'x']);
+        expect(inequality.range.max).toEqual(40);
+        expect(inequality.other).toEqual(['+', '-', 'x', '÷']);
     });
 
     it('should return proper challenge', () => {
         const challenge = Grade4Advanced.getChallenge();
-        expect(challenge.use).toEqual(true);
+        expect(challenge.use).toBeTruthy();
         expect(challenge.range).toEqual(undefined);
-        expect(challenge.sequence).toEqual(undefined);
         expect(challenge.other).toEqual(undefined);
     });
 });

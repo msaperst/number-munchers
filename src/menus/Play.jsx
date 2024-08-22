@@ -4,6 +4,8 @@ import Multiples from '../games/Multiples';
 // eslint-disable-next-line import/no-cycle
 import Factors from '../games/Factors';
 // eslint-disable-next-line import/no-cycle
+import Equality from '../games/Equality';
+// eslint-disable-next-line import/no-cycle
 import Primes from '../games/Primes';
 // eslint-disable-next-line import/no-cycle
 import Menu from '../components/menu/Menu';
@@ -19,25 +21,19 @@ class Play {
     // eslint-disable-next-line class-methods-use-this
     getScreen() {
         const games = [];
-        if (
-            Difficulty.getDifficulty(
-                localStorage.getItem('difficulty')
-            ).getMultiples().use
-        ) {
+        const difficulty = Difficulty.getDifficulty(
+            localStorage.getItem('difficulty')
+        );
+        if (difficulty.getMultiples().use) {
             games.push(new Multiples());
         }
-        if (
-            Difficulty.getDifficulty(
-                localStorage.getItem('difficulty')
-            ).getFactors().use
-        ) {
+        if (difficulty.getFactors().use) {
             games.push(new Factors());
         }
-        if (
-            Difficulty.getDifficulty(
-                localStorage.getItem('difficulty')
-            ).getPrimes().use
-        ) {
+        if (difficulty.getEquality().use) {
+            games.push(new Equality());
+        }
+        if (difficulty.getPrimes().use) {
             games.push(new Primes());
         }
         return (

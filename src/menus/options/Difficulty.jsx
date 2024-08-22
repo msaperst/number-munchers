@@ -110,6 +110,16 @@ class Difficulties extends React.Component {
         );
         return new Option().getScreen();
     }
+
+    static getInequality() {
+        return this.getEquality();
+    }
+
+    static getChallenge() {
+        return {
+            use: true,
+        };
+    }
 }
 
 class Grade3Easy extends Difficulties {
@@ -122,7 +132,6 @@ class Grade3Easy extends Difficulties {
         return {
             use: false,
             range: { min: 2, max: 5 },
-            sequence: true,
             other: 5,
         };
     }
@@ -130,15 +139,14 @@ class Grade3Easy extends Difficulties {
     static getFactors() {
         return {
             use: false,
-            range: { min: 3, max: 5 },
-            sequence: true,
+            range: { min: 3, max: 20 },
         };
     }
 
     static getPrimes() {
         return {
             use: false,
-            range: { min: 2, max: 25 },
+            range: { min: 2, max: 20 },
         };
     }
 
@@ -146,23 +154,7 @@ class Grade3Easy extends Difficulties {
         return {
             use: true,
             range: { min: 1, max: 20 },
-            sequence: true,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 10 },
-            sequence: true,
             other: ['+', '-'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -176,8 +168,7 @@ class Grade3Advanced extends Difficulties {
     static getMultiples() {
         return {
             use: true,
-            range: { min: 2, max: 5 },
-            sequence: true,
+            range: { min: 2, max: 6 },
             other: 5,
         };
     }
@@ -186,7 +177,6 @@ class Grade3Advanced extends Difficulties {
         return {
             use: true,
             range: { min: 3, max: 25 },
-            sequence: true,
         };
     }
 
@@ -200,24 +190,8 @@ class Grade3Advanced extends Difficulties {
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 20 },
-            sequence: true,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 20 },
-            sequence: true,
+            range: { min: 1, max: 25 },
             other: ['+', '-'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -232,7 +206,6 @@ class Grade4Easy extends Difficulties {
         return {
             use: true,
             range: { min: 2, max: 9 },
-            sequence: true,
             other: 5,
         };
     }
@@ -240,39 +213,22 @@ class Grade4Easy extends Difficulties {
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 25 },
-            sequence: true,
+            range: { min: 3, max: 30 },
         };
     }
 
     static getPrimes() {
         return {
             use: false,
-            range: { min: 2, max: 50 },
+            range: { min: 2, max: 30 },
         };
     }
 
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 24 },
-            sequence: true,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 20 },
-            sequence: true,
-            other: ['+', '-'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
+            range: { min: 1, max: 30 },
+            other: ['+', '-', 'x'],
         };
     }
 }
@@ -286,8 +242,7 @@ class Grade4Advanced extends Difficulties {
     static getMultiples() {
         return {
             use: true,
-            range: { min: 2, max: 9 },
-            sequence: false,
+            range: { min: 2, max: 11 },
             other: 9,
         };
     }
@@ -295,39 +250,22 @@ class Grade4Advanced extends Difficulties {
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 64 },
-            sequence: false,
+            range: { min: 3, max: 40 },
         };
     }
 
     static getPrimes() {
         return {
             use: false,
-            range: { min: 2, max: 50 },
+            range: { min: 2, max: 40 },
         };
     }
 
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 24 },
-            sequence: false,
+            range: { min: 1, max: 40 },
             other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 20 },
-            sequence: false,
-            other: ['+', '-', 'x'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -341,17 +279,15 @@ class Grade5Easy extends Difficulties {
     static getMultiples() {
         return {
             use: true,
-            range: { min: 2, max: 9 },
-            sequence: false,
-            other: 9,
+            range: { min: 2, max: 12 },
+            other: 10,
         };
     }
 
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 64 },
-            sequence: false,
+            range: { min: 3, max: 50 },
         };
     }
 
@@ -365,24 +301,8 @@ class Grade5Easy extends Difficulties {
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 24 },
-            sequence: false,
+            range: { min: 1, max: 50 },
             other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 24 },
-            sequence: false,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -396,48 +316,30 @@ class Grade5Advanced extends Difficulties {
     static getMultiples() {
         return {
             use: true,
-            range: { min: 2, max: 11 },
-            sequence: false,
-            other: 13,
+            range: { min: 2, max: 13 },
+            other: 11,
         };
     }
 
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 81 },
-            sequence: false,
+            range: { min: 3, max: 60 },
         };
     }
 
     static getPrimes() {
         return {
             use: true,
-            range: { min: 2, max: 50 },
+            range: { min: 2, max: 60 },
         };
     }
 
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
+            range: { min: 1, max: 60 },
             other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 24 },
-            sequence: false,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -451,48 +353,30 @@ class Grade6Easy extends Difficulties {
     static getMultiples() {
         return {
             use: true,
-            range: { min: 2, max: 11 },
-            sequence: false,
-            other: 13,
+            range: { min: 2, max: 14 },
+            other: 12,
         };
     }
 
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 81 },
-            sequence: false,
+            range: { min: 3, max: 70 },
         };
     }
 
     static getPrimes() {
         return {
             use: true,
-            range: { min: 2, max: 50 },
+            range: { min: 2, max: 70 },
         };
     }
 
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
+            range: { min: 1, max: 70 },
             other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -506,8 +390,7 @@ class Grade6Advanced extends Difficulties {
     static getMultiples() {
         return {
             use: true,
-            range: { min: 2, max: 12 },
-            sequence: false,
+            range: { min: 2, max: 15 },
             other: 13,
         };
     }
@@ -515,39 +398,22 @@ class Grade6Advanced extends Difficulties {
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 99 },
-            sequence: false,
+            range: { min: 3, max: 80 },
         };
     }
 
     static getPrimes() {
         return {
             use: true,
-            range: { min: 2, max: 99 },
+            range: { min: 2, max: 80 },
         };
     }
 
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
+            range: { min: 1, max: 80 },
             other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -561,48 +427,30 @@ class Grade7Easy extends Difficulties {
     static getMultiples() {
         return {
             use: true,
-            range: { min: 2, max: 12 },
-            sequence: false,
-            other: 18,
+            range: { min: 2, max: 16 },
+            other: 14,
         };
     }
 
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 99 },
-            sequence: false,
+            range: { min: 3, max: 90 },
         };
     }
 
     static getPrimes() {
         return {
             use: true,
-            range: { min: 2, max: 99 },
+            range: { min: 2, max: 90 },
         };
     }
 
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
+            range: { min: 1, max: 90 },
             other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -616,48 +464,30 @@ class Grade7Advanced extends Difficulties {
     static getMultiples() {
         return {
             use: true,
-            range: { min: 2, max: 20 },
-            sequence: false,
-            other: 20,
+            range: { min: 2, max: 17 },
+            other: 15,
         };
     }
 
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 99 },
-            sequence: false,
+            range: { min: 3, max: 100 },
         };
     }
 
     static getPrimes() {
         return {
             use: true,
-            range: { min: 2, max: 199 },
+            range: { min: 2, max: 100 },
         };
     }
 
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
+            range: { min: 1, max: 100 },
             other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
@@ -672,47 +502,29 @@ class Grade8AndAbove extends Difficulties {
         return {
             use: true,
             range: { min: 2, max: 20 },
-            sequence: false,
-            other: 50,
+            other: 20,
         };
     }
 
     static getFactors() {
         return {
             use: true,
-            range: { min: 3, max: 99 },
-            sequence: false,
+            range: { min: 3, max: 200 },
         };
     }
 
     static getPrimes() {
         return {
             use: true,
-            range: { min: 2, max: 199 },
+            range: { min: 2, max: 200 },
         };
     }
 
     static getEquality() {
         return {
             use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
+            range: { min: 1, max: 150 },
             other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getInequality() {
-        return {
-            use: true,
-            range: { min: 1, max: 50 },
-            sequence: false,
-            other: ['+', '-', 'x', '÷'],
-        };
-    }
-
-    static getChallenge() {
-        return {
-            use: true,
         };
     }
 }
