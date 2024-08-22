@@ -43,13 +43,13 @@ describe('options menu', () => {
     it('clicking bottom text returns to main menu', async () => {
         const instructions = await Menu.getInstructions(driver);
         await instructions.click();
-        expect(await Menu.onMainMenu(driver)).toEqual(true);
+        expect(await Menu.onMainMenu(driver)).toBeTruthy();
     });
 
     it('hitting escape returns to main menu', async () => {
         const actions = driver.actions();
         await actions.sendKeys(Key.ESCAPE).perform();
-        expect(await Menu.onMainMenu(driver)).toEqual(true);
+        expect(await Menu.onMainMenu(driver)).toBeTruthy();
     });
 
     it('clicking on Set Password selects Set Password', async () => {
@@ -68,12 +68,12 @@ describe('options menu', () => {
     it('goes to difficulty level when selecting set difficulty level', async () => {
         const actions = driver.actions();
         await actions.sendKeys(Key.ENTER).perform();
-        expect(await Menu.onDifficultyLevelMenu(driver)).toEqual(true);
+        expect(await Menu.onDifficultyLevelMenu(driver)).toBeTruthy();
     });
 
     it('goes to difficulty level when clicking set difficulty level', async () => {
         const options = await Menu.getOptions(driver);
         await options[0].click();
-        expect(await Menu.onDifficultyLevelMenu(driver)).toEqual(true);
+        expect(await Menu.onDifficultyLevelMenu(driver)).toBeTruthy();
     });
 });

@@ -59,8 +59,8 @@ describe('menus', () => {
         expect(wrapper.find('.text').at(0).text()).toEqual(
             'Which Number Munchers game would you like to play'
         );
-        expect(wrapper.find('.options').find('li')).toHaveLength(0);
-        expect(wrapper.find('.options').text()).toEqual('');
+        expect(wrapper.find('.options').find('li')).toHaveLength(1);
+        expect(wrapper.find('.options').text()).toEqual('Equality');
         expect(wrapper.find('.text').at(1).text()).toEqual(
             'Use Arrows to move, then press Enter'
         );
@@ -72,8 +72,10 @@ describe('menus', () => {
         expect(wrapper.find('.text').at(0).text()).toEqual(
             'Which Number Munchers game would you like to play'
         );
-        expect(wrapper.find('.options').find('li')).toHaveLength(2);
-        expect(wrapper.find('.options').text()).toEqual('MultiplesFactors');
+        expect(wrapper.find('.options').find('li')).toHaveLength(3);
+        expect(wrapper.find('.options').text()).toEqual(
+            'MultiplesFactorsEquality'
+        );
         expect(wrapper.find('.text').at(1).text()).toEqual(
             'Use Arrows to move, then press Enter'
         );
@@ -85,9 +87,9 @@ describe('menus', () => {
         expect(wrapper.find('.text').at(0).text()).toEqual(
             'Which Number Munchers game would you like to play'
         );
-        expect(wrapper.find('.options').find('li')).toHaveLength(3);
+        expect(wrapper.find('.options').find('li')).toHaveLength(4);
         expect(wrapper.find('.options').text()).toEqual(
-            'MultiplesFactorsPrimes'
+            'MultiplesFactorsEqualityPrimes'
         );
         expect(wrapper.find('.text').at(1).text()).toEqual(
             'Use Arrows to move, then press Enter'

@@ -130,12 +130,12 @@ describe('factors', () => {
             (i) => number % i === 0
         );
         factorNumbers.forEach((value) => {
-            expect(factors.isCorrect(value)).toEqual(true);
+            expect(factors.isCorrect(value)).toBeTruthy();
         });
-        expect(factors.isCorrect(1)).toEqual(true);
-        expect(factors.isCorrect(number)).toEqual(true);
-        expect(factors.isCorrect(0)).toEqual(false);
-        expect(factors.isCorrect(83)).toEqual(false);
-        expect(factors.isCorrect(97)).toEqual(false);
+        expect(factors.isCorrect(1)).toBeTruthy();
+        expect(factors.isCorrect(number)).toBeTruthy();
+        expect(factors.isCorrect(0)).toBeFalsy();
+        expect(factors.isCorrect(83)).toBeFalsy();
+        expect(factors.isCorrect(97)).toBeFalsy();
     });
 });

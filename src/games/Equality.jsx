@@ -14,7 +14,7 @@ class Equality {
         this.maxNum = maxNum || equalityConfig.range.max;
         this.operations = operations || equalityConfig.other;
         this.divisionFactor =
-            parseInt(localStorage.getItem('difficulty'), 10) * 15 + 5;
+            (parseInt(localStorage.getItem('difficulty'), 10) || 0) * 15 + 5;
         this.resetNumber();
     }
 
@@ -82,6 +82,8 @@ class Equality {
 
     // eslint-disable-next-line class-methods-use-this,no-unused-vars
     getNonEquality(operation) {
+        let nonEquality = `${this.getNumber()}+0`;
+        // while (this.isCorrect(nonEquality)) {
         let first;
         let second;
         switch (operation) {
@@ -104,11 +106,14 @@ class Equality {
                 second = 0;
                 first = 0;
         }
-        return `${first}${operation}${second}`;
+        nonEquality = `${first}${operation}${second}`;
+        // }
+        return nonEquality;
     }
 
     getFiller() {
-        const operation = this.operations[Math.floor(Math.random() * 4)];
+        const operation =
+            this.operations[Math.floor(Math.random() * this.operations.length)];
         // 2/5 of our numbers should match
         if (Math.random() < 0.4) {
             return this.getEquality(operation);

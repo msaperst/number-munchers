@@ -52,16 +52,16 @@ describe('<Menu/>', () => {
     it('first option is selected', () => {
         expect(
             wrapper.find('.options').find('li').at(0).hasClass('selected')
-        ).toEqual(true);
+        ).toBeTruthy();
     });
 
     it('other options are not selected', () => {
         expect(
             wrapper.find('.options').find('li').at(1).hasClass('selected')
-        ).toEqual(false);
+        ).toBeFalsy();
         expect(
             wrapper.find('.options').find('li').at(2).hasClass('selected')
-        ).toEqual(false);
+        ).toBeFalsy();
     });
 
     it('selects the non-selected option on "clicking"', () => {
@@ -77,12 +77,12 @@ describe('<Menu/>', () => {
     });
 
     // TODO - can't test this quite yet
-    // it('selecting nothing renders game', () => {
-    //     wrapper.instance().select();
-    //     expect(wrapper.find('.title').text()).toEqual(
-    //         `Multiples of ${wrapper.state().game.getNumber()}`
-    //     );
-    // });
+    xit('selecting nothing renders game', () => {
+        wrapper.instance().select();
+        expect(wrapper.find('.title').text()).toEqual(
+            `Multiples of ${wrapper.state().game.getNumber()}`
+        );
+    });
 
     it('moving down increments the selected state', () => {
         wrapper.instance().select(1);

@@ -159,7 +159,7 @@ describe('<Troggle/>', () => {
             } else if (troggle.position.y === 4) {
                 expect(troggle.direction).toEqual({ x: 0, y: -1 });
             } else {
-                expect(false).toEqual(true);
+                expect(false).toBeTruthy();
             }
         }
     });

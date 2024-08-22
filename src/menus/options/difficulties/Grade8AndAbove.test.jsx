@@ -17,47 +17,47 @@ describe('grade8AndAbove', () => {
 
     it('should return proper multiples', () => {
         const multiples = Grade8AndAbove.getMultiples();
-        expect(multiples.use).toEqual(true);
+        expect(multiples.use).toBeTruthy();
         expect(multiples.range.min).toEqual(2);
         expect(multiples.range.max).toEqual(20);
-        expect(multiples.other).toEqual(50);
+        expect(multiples.other).toEqual(20);
     });
 
     it('should return proper factors', () => {
         const factors = Grade8AndAbove.getFactors();
-        expect(factors.use).toEqual(true);
+        expect(factors.use).toBeTruthy();
         expect(factors.range.min).toEqual(3);
-        expect(factors.range.max).toEqual(99);
+        expect(factors.range.max).toEqual(200);
         expect(factors.other).toEqual(undefined);
     });
 
     it('should return proper primes', () => {
         const primes = Grade8AndAbove.getPrimes();
-        expect(primes.use).toEqual(true);
+        expect(primes.use).toBeTruthy();
         expect(primes.range.min).toEqual(2);
-        expect(primes.range.max).toEqual(199);
+        expect(primes.range.max).toEqual(200);
         expect(primes.other).toEqual(undefined);
     });
 
     it('should return proper equality', () => {
         const equality = Grade8AndAbove.getEquality();
-        expect(equality.use).toEqual(true);
+        expect(equality.use).toBeTruthy();
         expect(equality.range.min).toEqual(1);
-        expect(equality.range.max).toEqual(50);
+        expect(equality.range.max).toEqual(150);
         expect(equality.other).toEqual(['+', '-', 'x', '÷']);
     });
 
     it('should return proper inequality', () => {
         const inequality = Grade8AndAbove.getInequality();
-        expect(inequality.use).toEqual(true);
+        expect(inequality.use).toBeTruthy();
         expect(inequality.range.min).toEqual(1);
-        expect(inequality.range.max).toEqual(50);
+        expect(inequality.range.max).toEqual(150);
         expect(inequality.other).toEqual(['+', '-', 'x', '÷']);
     });
 
     it('should return proper challenge', () => {
         const challenge = Grade8AndAbove.getChallenge();
-        expect(challenge.use).toEqual(true);
+        expect(challenge.use).toBeTruthy();
         expect(challenge.range).toEqual(undefined);
         expect(challenge.other).toEqual(undefined);
     });

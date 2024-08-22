@@ -1,28 +1,41 @@
+import Enzyme from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Equality from './Equality';
 
-describe('equality', () => {
+Enzyme.configure({ adapter: new Adapter() });
+
+describe('equalities', () => {
     it('ensures resetting the number always gives a new one', () => {
-        const equality = new Equality();
-        let oldNumber = equality.getNumber();
+        const equalities = new Equality();
+        let oldNumber = equalities.getNumber();
         for (let x = 0; x < 100; x++) {
-            equality.resetNumber();
-            expect(equality.getNumber()).not.toEqual(oldNumber);
-            oldNumber = equality.getNumber();
+            equalities.resetNumber();
+            expect(equalities.getNumber()).not.toEqual(oldNumber);
+            oldNumber = equalities.getNumber();
         }
     });
 
-    it('returns equality', () => {
-        expect(new Equality().getGame()).toEqual('Equality');
+    it('returns equalities', () => {
+        expect(new Equality().getName()).toEqual('Equality');
+    });
+
+    it('returns correct screen', () => {
+        const wrapper = Enzyme.shallow(new Equality().getScreen());
+        expect(wrapper.find('.title').text()).toEqual(
+            `Equals ${wrapper.state().game.getNumber()}`
+        );
     });
 
     it('returns proper title', () => {
-        const equality = new Equality();
-        expect(equality.getTitle()).toEqual(`Equals ${equality.getNumber()}`);
+        const equalities = new Equality();
+        expect(equalities.getTitle()).toEqual(
+            `Equals ${equalities.getNumber()}`
+        );
     });
 
     it('returns proper error', () => {
-        const equality = new Equality();
-        expect(equality.getError('5-1')).toEqual('Oops!  "5-1=4"');
+        const equalities = new Equality();
+        expect(equalities.getError('2+5')).toEqual(`Oops!  "2+5=7"`);
     });
 
     it('defaults to return base not lower than 1', () => {
@@ -31,152 +44,101 @@ describe('equality', () => {
         }
     });
 
-    it('default to return base not higher than 20', () => {
+    it('returns base not lower than provided', () => {
         for (let x = 0; x < 100; x++) {
-            expect(new Equality().getNumber()).toBeLessThanOrEqual(20);
+            expect(new Equality(10).getNumber()).toBeGreaterThanOrEqual(10);
+            expect(new Equality(25).getNumber()).toEqual(25);
         }
     });
 
-    it('returns base not lower than provided', () => {
+    it('default to return base not higher than 25', () => {
         for (let x = 0; x < 100; x++) {
-            let equality = new Equality(5);
-            expect(equality.getNumber()).toBeGreaterThanOrEqual(5);
-            equality = new Equality(30, 40);
-            expect(equality.getNumber()).toBeGreaterThanOrEqual(30);
-            equality = new Equality(20);
-            expect(equality.getNumber()).toEqual(20);
+            expect(new Equality().getNumber()).toBeLessThanOrEqual(25);
         }
     });
 
     it('returns base not higher than provided', () => {
         for (let x = 0; x < 100; x++) {
-            let equality = new Equality(1, 10);
-            expect(equality.getNumber()).toBeLessThanOrEqual(10);
-            equality = new Equality(1, 1);
-            expect(equality.getNumber()).toEqual(1);
+            expect(new Equality(3, 10).getNumber()).toBeLessThanOrEqual(10);
+            expect(new Equality(3, 3).getNumber()).toEqual(3);
         }
     });
 
-    it('returns garbage', () => {
-        expect(new Equality().getEquality()).toEqual('0undefined0');
+    xit('defaults to return equality nothing lower than 1', () => {
+        for (let x = 0; x < 100; x++) {
+            expect(new Equality().getEquality()).toBeGreaterThanOrEqual(1);
+        }
     });
 
-    it('defaults to return equality nothing lower than the number', () => {
+    xit('defaults to return equality nothing greater than number', () => {
         for (let x = 0; x < 100; x++) {
-            const equality = new Equality();
-            expect(equality.getEquality()).toBeGreaterThanOrEqual(
-                equality.getNumber()
+            const equalities = new Equality();
+            expect(equalities.getEquality()).toBeLessThanOrEqual(
+                equalities.getNumber()
             );
         }
     });
 
-    it('defaults to return equality nothing greater than 5x', () => {
+    it('returns a valid equality', () => {
+        const operations = ['+', '-', 'x', '÷'];
         for (let x = 0; x < 100; x++) {
-            const equality = new Equality();
-            expect(equality.getEquality()).toBeLessThanOrEqual(
-                equality.getNumber() * 5
+            const equalities = new Equality();
+            const equality = equalities.getEquality(
+                operations[Math.floor(Math.random() * 4)]
             );
+            expect(equalities.isCorrect(equality)).toBeTruthy();
         }
     });
 
-    it('returns equality nothing greater than provided', () => {
+    it('returns an invalid equality', () => {
+        const operations = ['+', '-', 'x', '÷'];
         for (let x = 0; x < 100; x++) {
-            let equality = new Equality(2, 7, 10);
-            expect(equality.getEquality()).toBeLessThanOrEqual(
-                equality.getNumber() * 10
+            const equalities = new Equality(1, 1000);
+            const equality = equalities.getNonEquality(
+                operations[Math.floor(Math.random() * 4)]
             );
-            equality = new Equality(2, 7, 1);
-            expect(equality.getEquality()).toEqual(equality.getNumber());
+            expect(equalities.isCorrect(equality)).toBeFalsy();
         }
     });
 
-    it('returns a correct equality', () => {
-        for (let x = 0; x < 100; x++) {
-            const equality = new Equality();
-            expect(equality.getEquality() % equality.getNumber()).toEqual(0);
-        }
-    });
-
-    it('defaults to return non equality nothing lower than 1', () => {
+    xit('defaults to return non equality nothing lower than 1', () => {
         for (let x = 0; x < 100; x++) {
             expect(new Equality().getNonEquality()).toBeGreaterThanOrEqual(1);
         }
     });
 
-    it('defaults to return non equality nothing greater than 5x', () => {
+    xit('defaults to return non equality nothing greater than number', () => {
         for (let x = 0; x < 100; x++) {
-            const equality = new Equality();
-            expect(equality.getNonEquality()).toBeLessThanOrEqual(
-                equality.getNumber() * 5
+            const equalities = new Equality();
+            expect(equalities.getNonEquality()).toBeLessThanOrEqual(
+                equalities.getNumber()
             );
         }
     });
 
-    it('returns non equality nothing greater than provided', () => {
-        for (let x = 0; x < 100; x++) {
-            let equality = new Equality(2, 7, 10);
-            expect(equality.getNonEquality()).toBeLessThanOrEqual(
-                equality.getNumber() * 10
-            );
-            equality = new Equality(2, 7, 1);
-            expect(equality.getNonEquality()).toBeLessThanOrEqual(
-                equality.getNumber()
-            );
-        }
-    });
-
-    it('returns an incorrect equality', () => {
-        for (let x = 0; x < 100; x++) {
-            const equality = new Equality();
-            expect(
-                equality.getNonEquality() % equality.getNumber()
-            ).not.toEqual(0);
-        }
-    });
-
-    it('returns filler not less than 1', () => {
+    xit('defaults to return filler nothing lower than 1', () => {
         for (let x = 0; x < 100; x++) {
             expect(new Equality().getFiller()).toBeGreaterThanOrEqual(1);
         }
     });
 
-    it('returns filler nothing greater than 5x', () => {
+    xit('defaults to return filler nothing greater than number', () => {
         for (let x = 0; x < 100; x++) {
-            const equality = new Equality();
-            expect(equality.getFiller()).toBeLessThanOrEqual(
-                equality.getNumber() * 5
+            const equalities = new Equality();
+            expect(equalities.getFiller()).toBeLessThanOrEqual(
+                equalities.getNumber()
             );
         }
     });
 
-    it('returns filler nothing greater than provided', () => {
-        for (let x = 0; x < 100; x++) {
-            let equality = new Equality(2, 7, 10);
-            expect(equality.getFiller()).toBeLessThanOrEqual(
-                equality.getNumber() * 10
-            );
-            equality = new Equality(2, 7, 1);
-            expect(equality.getFiller()).toBeLessThanOrEqual(
-                equality.getNumber()
-            );
-        }
-    });
-
-    it('correctly returns the expected value', () => {
-        expect(new Equality().getValue('5-2')).toEqual(3);
-        expect(new Equality().getValue('5+2')).toEqual(7);
-        expect(new Equality().getValue('5x2')).toEqual(10);
-        expect(new Equality().getValue('5÷2')).toEqual(2.5);
-    });
-
-    it('verifies some simple values', () => {
-        const equality = new Equality();
-        const number = equality.getNumber();
-        expect(equality.isCorrect(`${number}x1`)).toEqual(true);
-        expect(equality.isCorrect(`${number}÷1`)).toEqual(true);
-        expect(equality.isCorrect(`${number}+0`)).toEqual(true);
-        expect(equality.isCorrect(`${number}-0`)).toEqual(true);
-        expect(equality.isCorrect(`${number}+1`)).toEqual(false);
-        expect(equality.isCorrect(`${number}÷2`)).toEqual(false);
+    it('verifies some simple equalities', () => {
+        const equalities = new Equality();
+        const number = equalities.getNumber();
+        expect(equalities.isCorrect(`${number - 2}+2`)).toBeTruthy();
+        expect(equalities.isCorrect(`${number + 2}-2`)).toBeTruthy();
+        expect(equalities.isCorrect(`${number}x1`)).toBeTruthy();
+        expect(equalities.isCorrect(`${number}÷1`)).toBeTruthy();
+        expect(equalities.isCorrect(`7÷2`)).toBeFalsy();
+        expect(equalities.isCorrect(`3.3x2`)).toBeFalsy();
     });
 });

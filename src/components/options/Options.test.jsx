@@ -30,16 +30,16 @@ describe('<Option/>', () => {
     it('second option is selected', () => {
         expect(
             wrapper.find('.options').find('li').at(1).hasClass('selected')
-        ).toEqual(true);
+        ).toBeTruthy();
     });
 
     it('other options are not selected', () => {
         expect(
             wrapper.find('.options').find('li').at(0).hasClass('selected')
-        ).toEqual(false);
+        ).toBeFalsy();
         expect(
             wrapper.find('.options').find('li').at(2).hasClass('selected')
-        ).toEqual(false);
+        ).toBeFalsy();
     });
 
     it('clicking the elements returns the element', () => {

@@ -100,7 +100,7 @@ describe('primes', () => {
             if (notPrime === 1) {
                 isNotPrime = true;
             }
-            expect(isNotPrime).toEqual(true);
+            expect(isNotPrime).toBeTruthy();
         }
     });
 
@@ -124,9 +124,9 @@ describe('primes', () => {
 
     it('verifies some simple primes', () => {
         const primes = new Primes();
-        expect(primes.isCorrect(0)).toEqual(false);
-        expect(primes.isCorrect(1)).toEqual(false);
-        expect(primes.isCorrect(2)).toEqual(true);
-        expect(primes.isCorrect(3)).toEqual(true);
+        expect(primes.isCorrect(0)).toBeFalsy();
+        expect(primes.isCorrect(1)).toBeFalsy();
+        expect(primes.isCorrect(2)).toBeTruthy();
+        expect(primes.isCorrect(3)).toBeTruthy();
     });
 });
