@@ -1,17 +1,26 @@
+import React from 'react';
 import { GAME_TYPES } from './games';
+// eslint-disable-next-line import/no-cycle
+import Game from '../components/game/Game';
+// eslint-disable-next-line import/no-cycle
+import Difficulty from '../menus/options/Difficulty';
 
 class Primes {
-    constructor(minNum = 2, maxNum = 7) {
+    constructor(minNum, maxNum) {
+        const primeConfig = Difficulty.getDifficulty(
+            localStorage.getItem('difficulty')
+        ).getPrimes();
+        this.minNum = minNum || primeConfig.range.min;
+        this.maxNum = maxNum || primeConfig.range.max;
+
         const primes = [
             2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
             67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137,
             139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
         ];
-
-        this.primes = primes.filter((x) => x >= minNum && x <= maxNum);
-
-        this.minNum = minNum;
-        this.maxNum = maxNum;
+        this.primes = primes.filter(
+            (x) => x >= this.minNum && x <= this.maxNum
+        );
 
         this.resetNumber();
     }
@@ -21,8 +30,12 @@ class Primes {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getGame() {
+    getName() {
         return GAME_TYPES.PRIMES;
+    }
+
+    getScreen() {
+        return <Game game={this} />;
     }
 
     getNumber() {

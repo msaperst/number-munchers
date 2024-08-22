@@ -1,8 +1,12 @@
 import React from 'react';
-import './Game.css';
+import ReactDOM from 'react-dom';
 import Board from '../board/Board';
-import { addTroggle, moveTroggles } from '../troggle/Troggle';
 import Status from '../status/Status';
+// eslint-disable-next-line import/no-cycle
+import Menu from '../menu/Menu';
+import Quit from '../quit/Quit';
+import { addTroggle, moveTroggles } from '../troggle/Troggle';
+import './Game.css';
 
 const WIDTH = 6;
 const HEIGHT = 5;
@@ -14,6 +18,8 @@ class Game extends React.Component {
         const muncher = { x: 2, y: 2 };
         this.state = {
             game,
+            pause: false,
+            quit: false,
             level: 1,
             score: 0,
             lives: 3,
@@ -29,9 +35,7 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener('keydown', (event) => {
-            this.keyDown(event.code);
-        });
+        document.addEventListener('keydown', this.keyDown);
         this.timer = setInterval(() => {
             this.troggle();
         }, 4000); // TODO - make this go faster based on the level/troggle
@@ -56,8 +60,8 @@ class Game extends React.Component {
     }
 
     troggle() {
-        const { squares, game, notification, level, troggles } = this.state;
-        if (notification === '') {
+        const { squares, game, pause, level, troggles } = this.state;
+        if (!pause) {
             // handle our troggles
             const response = addTroggle(
                 moveTroggles(troggles, WIDTH, HEIGHT),
@@ -86,16 +90,17 @@ class Game extends React.Component {
         }
     }
 
-    keyDown(code) {
-        const { notification, game, muncher } = this.state;
-        if (notification === '') {
-            switch (code) {
+    keyDown(e) {
+        const { pause, quit, game, muncher } = this.state;
+        if (!pause) {
+            switch (e.code) {
                 case 'Space':
                     this.update(this.munch());
                     if (this.checkLevel()) {
                         const { level } = this.state;
                         this.moveMuncher(2 - muncher.x, 2 - muncher.y);
                         this.setState({
+                            pause: true,
                             notification: 'You beat the level!',
                             level: level + 1,
                             troggles: [],
@@ -119,22 +124,49 @@ class Game extends React.Component {
                 case 'ArrowDown':
                     this.moveMuncher(0, 1);
                     break;
+                case 'Escape':
+                    this.setState({ pause: true, quit: true });
+                    break;
+                case 'Enter':
+                    this.setState({ pause: true, status: 'Time out' });
+                    break;
                 default:
                 // do nothing
             }
-        } else if (code === 'Space') {
-            this.setState({ notification: '' });
+        } else if (!quit) {
+            this.keyDownNotQuit(e);
+        } else if (e.code === 'Escape') {
+            this.keyDownEscape();
+        }
+    }
+
+    keyDownNotQuit(e) {
+        const { status, notification } = this.state;
+        if (e.code === 'Escape') {
+            this.setState({ quit: true });
+        } else if (e.code === 'Enter' && notification === '') {
+            this.setState({ pause: false, status: '' });
+        } else if (e.code === 'Space' && status !== 'Time out') {
+            this.setState({ pause: false, notification: '' });
+        }
+    }
+
+    keyDownEscape() {
+        const { status } = this.state;
+        this.setState({ quit: false });
+        if (status !== 'Time out') {
+            this.setState({ pause: false });
         }
     }
 
     clickedSquare(x, y) {
-        const { muncher, notification } = this.state;
-        if (notification !== '') {
+        const { muncher, pause } = this.state;
+        if (pause) {
             return;
         }
         if (x === muncher.x && y === muncher.y) {
             // eat this number
-            this.keyDown('Space');
+            this.keyDown({ code: 'Space' });
         } else {
             // move to the square
             const xc = Math.max(Math.min(x - muncher.x, 1), -1); // move left if lower, right if higher, not at all if same
@@ -187,6 +219,7 @@ class Game extends React.Component {
                 clearInterval(this.timerX);
                 clearInterval(this.timerY);
                 this.setState({
+                    pause: true,
                     notification: `Yikes! You were eaten by a Trogglus ${troggle.troggle}.`,
                     lives,
                     muncher,
@@ -209,6 +242,7 @@ class Game extends React.Component {
                 score: 0,
                 lives: 3,
                 level: 1,
+                pause: true,
                 notification: 'You lost the game!',
                 troggles: [],
                 status: '',
@@ -240,6 +274,7 @@ class Game extends React.Component {
             score += 5;
         } else if (!isValid) {
             this.setState({
+                pause: true,
                 notification: game.getError(value),
             });
             lives--;
@@ -264,6 +299,7 @@ class Game extends React.Component {
         const {
             level,
             game,
+            quit,
             muncher,
             troggles,
             squares,
@@ -278,8 +314,25 @@ class Game extends React.Component {
             munchers.push(<span key={i} className="life" />);
         }
 
+        let quitMenu;
+        if (quit) {
+            quitMenu = (
+                <Quit
+                    no={() => this.keyDown({ code: 'Escape' })}
+                    yes={() =>
+                        // eslint-disable-next-line react/no-render-return-value
+                        ReactDOM.render(
+                            Menu.mainMenu(),
+                            document.getElementById('root')
+                        )
+                    }
+                />
+            );
+        }
+
         return (
             <div className="full">
+                {quitMenu}
                 <div className="info">
                     <div className="level">{`Level: ${level}`}</div>
                     <div className="title">{game.getTitle()}</div>

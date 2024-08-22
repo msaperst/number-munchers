@@ -17,10 +17,10 @@ function Board(props) {
         movement,
     } = props;
     const handlers = useSwipeable({
-        onSwipedUp: () => movement.keyDown('ArrowUp'),
-        onSwipedDown: () => movement.keyDown('ArrowDown'),
-        onSwipedLeft: () => movement.keyDown('ArrowLeft'),
-        onSwipedRight: () => movement.keyDown('ArrowRight'),
+        onSwipedUp: () => movement.keyDown({ code: 'ArrowUp' }),
+        onSwipedDown: () => movement.keyDown({ code: 'ArrowDown' }),
+        onSwipedLeft: () => movement.keyDown({ code: 'ArrowLeft' }),
+        onSwipedRight: () => movement.keyDown({ code: 'ArrowRight' }),
         preventDefaultTouchmoveEvent: true,
     });
     let alert;
@@ -28,7 +28,9 @@ function Board(props) {
         alert = (
             <Notification
                 message={notification}
-                onClick={() => movement.keyDown('Space')}
+                onClick={() => {
+                    movement.keyDown({ code: 'Space' });
+                }}
             />
         );
     }

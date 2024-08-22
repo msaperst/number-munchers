@@ -10,7 +10,46 @@
     height: calc(100% - 16px);
     background: black;
     color: white;
+}
+
+.menu-border {
     border: 8px solid #ff4cf7;
+}
+
+.menu-title {
+    text-align: center;
+    padding: 20px;
+}
+
+.options-border {
+    height: calc(100% - 75px);
+}
+
+.options-border .text {
+    border-top: 4px solid aqua;
+}
+
+.options-border .text:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: -20px;
+    border-top: 4px solid aqua;
+    width: calc(100% - 20px);
+    margin: 10px;
+}
+
+.options-border .text:last-of-type:before {
+    top: -8px;
+}
+
+.opening {
+    background-image: url("./Opening.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: top;
 }
 
 .options {

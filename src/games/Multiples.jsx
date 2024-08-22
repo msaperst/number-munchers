@@ -1,11 +1,19 @@
+import React from 'react';
 import { GAME_TYPES } from './games';
+// eslint-disable-next-line import/no-cycle
+import Game from '../components/game/Game';
+// eslint-disable-next-line import/no-cycle
+import Difficulty from '../menus/options/Difficulty';
 
 class Multiples {
-    constructor(minNum = 2, maxNum = 5, maxMult = 5) {
-        this.minNum = minNum;
-        this.maxNum = maxNum;
+    constructor(minNum, maxNum, maxMult) {
+        const multipleConfig = Difficulty.getDifficulty(
+            localStorage.getItem('difficulty')
+        ).getMultiples();
+        this.minNum = minNum || multipleConfig.range.min;
+        this.maxNum = maxNum || multipleConfig.range.max;
         this.minMult = 1;
-        this.maxMult = maxMult;
+        this.maxMult = maxMult || multipleConfig.other;
 
         this.resetNumber();
     }
@@ -20,8 +28,12 @@ class Multiples {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getGame() {
+    getName() {
         return GAME_TYPES.MULTIPLES;
+    }
+
+    getScreen() {
+        return <Game game={this} />;
     }
 
     getNumber() {
@@ -29,7 +41,7 @@ class Multiples {
     }
 
     getTitle() {
-        return `${this.getGame()} of ${this.number}`;
+        return `${this.getName()} of ${this.number}`;
     }
 
     getMultiple() {

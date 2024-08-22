@@ -1,17 +1,38 @@
 ol {
-    width: 300px;
     margin: auto;
     list-style: none;
     counter-reset: li;
+    position: relative;
+    max-width: calc(100% - 85px);
+}
+
+.w300 {
+    width: 300px;
+}
+
+.w550 {
+    width: 550px;
+}
+
+.tn40 {
+    top: -40px;
+}
+
+.t20 {
+    top: 20px;
+}
+
+.t140 {
+    top: 140px;
 }
 
 li::before {
-    content: counter(li);
+    content: counter(li) ". ";
     color: white;
     display: inline-block;
-    width: 1em;
+    width: 10px;
     margin-left: -2em;
-    margin-right: 1em;
+    margin-right: 3em;
 }
 
 li {

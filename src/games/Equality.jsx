@@ -1,10 +1,18 @@
+import React from "react";
 import { GAME_TYPES } from './games';
+// eslint-disable-next-line import/no-cycle
+import Game from "../components/game/Game";
+// eslint-disable-next-line import/no-cycle
+import Difficulty from '../menus/options/Difficulty';
 
 class Equality {
-    constructor(minNum = 1, maxNum = 20, operations = ['+', '-', 'x', '÷']) {
-        this.minNum = minNum;
-        this.maxNum = maxNum;
-        this.operations = operations;
+    constructor(minNum, maxNum, operations) {
+        const equalityConfig = Difficulty.getDifficulty(
+            localStorage.getItem('difficulty')
+        ).getEquality();
+        this.minNum = minNum || equalityConfig.range.min;
+        this.maxNum = maxNum || equalityConfig.range.max;
+        this.operations = operations || equalityConfig.other;
 
         this.resetNumber();
     }
@@ -19,8 +27,12 @@ class Equality {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getGame() {
+    getName() {
         return GAME_TYPES.EQUALITY;
+    }
+
+    getScreen() {
+        return <Game game={this} />;
     }
 
     getNumber() {
@@ -50,12 +62,13 @@ class Equality {
                 second = Math.floor(Math.random() * 10);
                 first = this.number + second;
                 break;
-            case 'x':
+            case 'x': {
                 // eslint-disable-next-line no-case-declarations
                 const factors = this.getFactors(this.number);
                 second = factors[Math.floor(Math.random() * factors.length)];
                 first = this.number / second;
                 break;
+            }
             case '÷':
                 second = Math.floor(Math.random() * 9) + 1;
                 first = this.number * second;
