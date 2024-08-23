@@ -130,7 +130,6 @@ class Menu extends React.Component {
                         top={top}
                         onClick={(opt) => this.clickedOption(opt)}
                     />
-                    {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus */}
                     <div
                         key="go-back"
                         role="button"
