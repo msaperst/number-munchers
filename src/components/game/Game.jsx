@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from '../board/Board';
 import Status from '../status/Status';
-// eslint-disable-next-line import/no-cycle
 import Menu from '../menu/Menu';
 import Quit from '../quit/Quit';
-import { addTroggle, moveTroggles } from '../troggle/Troggle';
+import {addTroggle, moveTroggles} from '../troggle/Troggle';
 import './Game.css';
 
 const WIDTH = 6;
@@ -14,8 +13,8 @@ const HEIGHT = 5;
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        const { game } = props;
-        const muncher = { x: 2, y: 2 };
+        const {game} = props;
+        const muncher = {x: 2, y: 2};
         this.state = {
             game,
             pause: false,
@@ -60,44 +59,32 @@ class Game extends React.Component {
     }
 
     troggle() {
-        const { squares, game, pause, level, troggles } = this.state;
+        const {squares, game, pause, level, troggles} = this.state;
         if (!pause) {
             // handle our troggles
-            const response = addTroggle(
-                moveTroggles(troggles, WIDTH, HEIGHT),
-                level,
-                WIDTH,
-                HEIGHT
-            );
+            const response = addTroggle(moveTroggles(troggles, WIDTH, HEIGHT), level, WIDTH, HEIGHT,);
             // change the numbers behind any
             for (let i = 0; i < response.troggles.length; i++) {
                 const troggle = response.troggles[i];
-                if (
-                    troggle.position !== undefined &&
-                    squares[troggle.position.y * WIDTH + troggle.position.x] !==
-                        ''
-                ) {
-                    squares[troggle.position.y * WIDTH + troggle.position.x] =
-                        game.getFiller();
+                if (troggle.position !== undefined && squares[troggle.position.y * WIDTH + troggle.position.x] !== '') {
+                    squares[troggle.position.y * WIDTH + troggle.position.x] = game.getFiller();
                 }
             }
             this.setState({
-                troggles: response.troggles,
-                status: response.status,
-                squares,
+                troggles: response.troggles, status: response.status, squares,
             });
             this.troggleMuncherCheck();
         }
     }
 
     keyDown(e) {
-        const { pause, quit, game, muncher } = this.state;
+        const {pause, quit, game, muncher} = this.state;
         if (!pause) {
             switch (e.code) {
                 case 'Space':
                     this.update(this.munch());
                     if (this.checkLevel()) {
-                        const { level } = this.state;
+                        const {level} = this.state;
                         this.moveMuncher(2 - muncher.x, 2 - muncher.y);
                         this.setState({
                             pause: true,
@@ -106,8 +93,7 @@ class Game extends React.Component {
                             troggles: [],
                             status: '',
                             squares: this.setupBoard(game, {
-                                x: 2,
-                                y: 2,
+                                x: 2, y: 2,
                             }),
                         });
                     }
@@ -125,10 +111,10 @@ class Game extends React.Component {
                     this.moveMuncher(0, 1);
                     break;
                 case 'Escape':
-                    this.setState({ pause: true, quit: true });
+                    this.setState({pause: true, quit: true});
                     break;
                 case 'Enter':
-                    this.setState({ pause: true, status: 'Time out' });
+                    this.setState({pause: true, status: 'Time out'});
                     break;
                 default:
                 // do nothing
@@ -141,32 +127,32 @@ class Game extends React.Component {
     }
 
     keyDownNotQuit(e) {
-        const { status, notification } = this.state;
+        const {status, notification} = this.state;
         if (e.code === 'Escape') {
-            this.setState({ quit: true });
+            this.setState({quit: true});
         } else if (e.code === 'Enter' && notification === '') {
-            this.setState({ pause: false, status: '' });
+            this.setState({pause: false, status: ''});
         } else if (e.code === 'Space' && status !== 'Time out') {
-            this.setState({ pause: false, notification: '' });
+            this.setState({pause: false, notification: ''});
         }
     }
 
     keyDownEscape() {
-        const { status } = this.state;
-        this.setState({ quit: false });
+        const {status} = this.state;
+        this.setState({quit: false});
         if (status !== 'Time out') {
-            this.setState({ pause: false });
+            this.setState({pause: false});
         }
     }
 
     clickedSquare(x, y) {
-        const { muncher, pause } = this.state;
+        const {muncher, pause} = this.state;
         if (pause) {
             return;
         }
         if (x === muncher.x && y === muncher.y) {
             // eat this number
-            this.keyDown({ code: 'Space' });
+            this.keyDown({code: 'Space'});
         } else {
             // move to the square
             const xc = Math.max(Math.min(x - muncher.x, 1), -1); // move left if lower, right if higher, not at all if same
@@ -174,7 +160,7 @@ class Game extends React.Component {
             this.timerX = setInterval(() => {
                 // move on the x-axis
                 this.moveMuncher(xc, 0);
-                const { muncher } = this.state;
+                const {muncher} = this.state;
                 if (x === muncher.x) {
                     clearInterval(this.timerX);
                 }
@@ -183,7 +169,7 @@ class Game extends React.Component {
                 // move on the y-axis
                 this.timerY = setInterval(() => {
                     this.moveMuncher(0, yc);
-                    const { muncher } = this.state;
+                    const {muncher} = this.state;
                     if (y === muncher.y) {
                         clearInterval(this.timerY);
                     }
@@ -194,7 +180,7 @@ class Game extends React.Component {
 
     moveMuncher(xc, yc) {
         // TODO - need to figure out how to animate this
-        const { muncher } = this.state;
+        const {muncher} = this.state;
         this.setState({
             muncher: {
                 x: Math.min(Math.max(0, muncher.x + xc), WIDTH - 1),
@@ -205,15 +191,11 @@ class Game extends React.Component {
     }
 
     troggleMuncherCheck() {
-        const { troggles, muncher } = this.state;
-        let { lives } = this.state;
+        const {troggles, muncher} = this.state;
+        let {lives} = this.state;
         for (let t = 0; t < troggles.length; t++) {
             const troggle = troggles[t];
-            if (
-                troggle.position !== undefined &&
-                troggle.position.x === muncher.x &&
-                troggle.position.y === muncher.y
-            ) {
+            if (troggle.position !== undefined && troggle.position.x === muncher.x && troggle.position.y === muncher.y) {
                 lives--;
                 muncher.display = 'none';
                 clearInterval(this.timerX);
@@ -228,17 +210,17 @@ class Game extends React.Component {
                 break;
             } else {
                 muncher.display = '';
-                this.setState({ muncher });
+                this.setState({muncher});
             }
         }
     }
 
     endGame() {
-        const { lives, game } = this.state;
+        const {lives, game} = this.state;
         if (lives === 0) {
             this.setState({
-                squares: this.setupBoard(game, { x: 2, y: 2 }),
-                muncher: { x: 2, y: 2 },
+                squares: this.setupBoard(game, {x: 2, y: 2}),
+                muncher: {x: 2, y: 2},
                 score: 0,
                 lives: 3,
                 level: 1,
@@ -252,39 +234,38 @@ class Game extends React.Component {
 
     munch() {
         // get and setup our square
-        const { squares, muncher, game } = this.state;
+        const {squares, muncher, game} = this.state;
         const value = squares[muncher.y * WIDTH + muncher.x];
         squares[muncher.y * WIDTH + muncher.x] = '';
-        this.setState({ squares });
+        this.setState({squares});
 
         // determine if we ate something good
         let isValid = true;
         if (value !== '') {
             isValid = game.isCorrect(value);
         }
-        return { isValid, value };
+        return {isValid, value};
     }
 
     update(inputs) {
-        const { isValid, value } = inputs;
-        let { score, lives } = this.state;
-        const { game } = this.state;
+        const {isValid, value} = inputs;
+        let {score, lives} = this.state;
+        const {game} = this.state;
 
         if (isValid && value !== '') {
             score += 5;
         } else if (!isValid) {
             this.setState({
-                pause: true,
-                notification: game.getError(value),
+                pause: true, notification: game.getError(value),
             });
             lives--;
         }
-        this.setState({ score, lives });
+        this.setState({score, lives});
         this.endGame();
     }
 
     checkLevel() {
-        const { squares, game } = this.state;
+        const {squares, game} = this.state;
         for (let i = 0; i < squares.length; i++) {
             if (squares[i] !== '') {
                 if (game.isCorrect(squares[i])) {
@@ -297,47 +278,30 @@ class Game extends React.Component {
 
     render() {
         const {
-            level,
-            game,
-            quit,
-            muncher,
-            troggles,
-            squares,
-            score,
-            lives,
-            notification,
-            status,
+            level, game, quit, muncher, troggles, squares, score, lives, notification, status,
         } = this.state;
 
         const munchers = [];
         for (let i = 0; i < lives; i++) {
-            munchers.push(<span key={i} className="life" />);
+            munchers.push(<span key={i} className="life"/>);
         }
 
         let quitMenu;
         if (quit) {
-            quitMenu = (
-                <Quit
-                    no={() => this.keyDown({ code: 'Escape' })}
-                    yes={() =>
-                        // eslint-disable-next-line react/no-render-return-value
-                        ReactDOM.render(
-                            Menu.mainMenu(),
-                            document.getElementById('root')
-                        )
-                    }
-                />
-            );
+            quitMenu = (<Quit
+                    no={() => this.keyDown({code: 'Escape'})}
+                    yes={() => // eslint-disable-next-line react/no-render-return-value
+                        ReactDOM.render(Menu.mainMenu(), document.getElementById('root'),)}
+                />);
         }
 
-        return (
-            <div className="full">
+        return (<div className="full">
                 {quitMenu}
                 <div className="info">
                     <div className="level">{`Level: ${level}`}</div>
                     <div className="title">{game.getTitle()}</div>
                 </div>
-                <Status status={status} />
+                <Status status={status}/>
                 <Board
                     height={HEIGHT}
                     width={WIDTH}
@@ -346,8 +310,7 @@ class Game extends React.Component {
                     squares={squares}
                     notification={notification}
                     movement={{
-                        keyDown: this.keyDown,
-                        click: (x, y) => this.clickedSquare(x, y),
+                        keyDown: this.keyDown, click: (x, y) => this.clickedSquare(x, y),
                     }}
                 />
                 <div className="info">
@@ -357,8 +320,7 @@ class Game extends React.Component {
                     </div>
                     <div className="lives">{munchers}</div>
                 </div>
-            </div>
-        );
+            </div>);
     }
 }
 

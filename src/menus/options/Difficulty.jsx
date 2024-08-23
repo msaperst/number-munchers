@@ -1,8 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
 import React from 'react';
-// eslint-disable-next-line import/no-cycle
 import Menu from '../../components/menu/Menu';
-// eslint-disable-next-line import/no-cycle
 import Option from '../Option';
 
 const difficulties = [

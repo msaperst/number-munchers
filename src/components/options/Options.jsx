@@ -7,7 +7,6 @@ function Options(props) {
         const title = option.getName();
         if (index === props.selected) {
             return (
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                 <li
                     key={title}
                     className="selected"
@@ -19,7 +18,7 @@ function Options(props) {
             );
         }
         return (
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+            // eslint-disable-next-line
             <li
                 key={title}
                 onClick={() => onClick(index)}
