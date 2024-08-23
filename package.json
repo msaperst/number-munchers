@@ -26,9 +26,6 @@
   },
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.15.0",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
     "react": "^17.0.2",
     "react-dom": "17.0.2",
     "react-scripts": "5.0.1",
@@ -59,10 +56,11 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "chromedriver": "^128.0.0",
-    "enzyme": "^3.11.0",
     "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",

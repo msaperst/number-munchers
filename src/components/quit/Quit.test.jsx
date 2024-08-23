@@ -1,42 +1,21 @@
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import Enzyme from 'enzyme';
 import React from 'react';
 import Quit from './Quit';
-
-Enzyme.configure({ adapter: new Adapter() });
+import {render, screen} from "@testing-library/react";
 
 describe('<Quit/>', () => {
-    let wrapper;
-
-    beforeEach(() => {
-        wrapper = Enzyme.mount(<Quit />);
-    });
-
     it('displays options', () => {
-        expect(wrapper.find('.quit').text()).toEqual(
-            'Do you really want to quit?YesNo'
-        );
-        expect(wrapper.find('.quit').find('.quit-button')).toHaveLength(2);
+        render(<Quit />);
+        const quit = screen.getByText('Do you really want to quit?');
+        expect(quit).toBeTruthy();
+        expect(quit.querySelectorAll('.quit-button')).toHaveLength(2);
     });
 
     it('has the second option selected', () => {
-        expect(
-            wrapper
-                .find('.quit')
-                .find('.quit-button')
-                .at(1)
-                .hasClass('quit-selected')
-        ).toBeTruthy();
-    });
-
-    it('has other options not selected', () => {
-        expect(
-            wrapper
-                .find('.quit')
-                .find('.quit-button')
-                .at(0)
-                .hasClass('quit-selected')
-        ).toBeFalsy();
+        render(<Quit/>);
+        const quit = screen.getByText('Do you really want to quit?');
+        const buttons = quit.querySelectorAll('.quit-button');
+        expect(buttons[0].classList).not.toContain('quit-selected');
+        expect(buttons[1].classList).toContain('quit-selected');
     });
 
     it('selects the first element on select 0', () => {

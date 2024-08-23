@@ -1,11 +1,9 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
-import Enzyme from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import {fireEvent, render, screen} from '@testing-library/react';
 import Square from './Square';
-
-Enzyme.configure({ adapter: new Adapter() });
+import Game from "../game/Game";
+import Multiples from "../../games/Multiples";
 
 describe('<Square/>', () => {
     it('empty Square', () => {
@@ -24,12 +22,11 @@ describe('<Square/>', () => {
     });
 
     it('returns the method when clicked', () => {
-        const onClick = (value) => {
-            expect(value).toEqual(1);
-        };
-        const wrapper = Enzyme.mount(
-            <Square cell="0" value="5" onClick={() => onClick(1)} />
+        const stub = jest.fn();
+        const { container } = render(
+            <Square cell="0" value="5" onClick={() => stub(1)} />
         );
-        wrapper.find('div').at(0).simulate('click');
+        fireEvent.click(container.getElementsByClassName('square')[0]);
+        expect(stub).toHaveBeenCalledWith(1);
     });
 });
