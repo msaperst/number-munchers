@@ -67,10 +67,10 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.0",
-    "geckodriver": "^2.0.4",
-    "gh-pages": "^3.2.3",
+    "geckodriver": "^4.4.3",
+    "gh-pages": "^5.0.0",
     "jest-junit": "^13.0.0",
     "prettier": "^3.3.3",
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "^4.23.0"
   }
 }
