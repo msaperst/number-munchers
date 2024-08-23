@@ -68,7 +68,6 @@ describe('difficulty', () => {
     });
 });
 
-// eslint-disable-next-line jest/no-export
 export const optionsMenu = (option) => {
     const wrapper = Enzyme.mount(option.getScreen());
     expect(wrapper.find('.text').at(0).text()).toEqual('Choose an option:');
