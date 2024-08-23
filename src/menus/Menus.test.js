@@ -48,7 +48,6 @@ describe('menus', () => {
         expect(e).toThrow(TypeError);
     });
 
-    // eslint-disable-next-line jest/expect-expect
     it('option returns correct screen', () => {
         optionsMenu(new Option());
     });

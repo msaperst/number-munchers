@@ -59,7 +59,6 @@ class Quit extends React.Component {
             <div className="quit">
                 <br />
                 Do you really want to quit?
-                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                 <span
                     onClick={() => this.select(0)}
                     onKeyPress={() => this.select(0)}
@@ -67,7 +66,7 @@ class Quit extends React.Component {
                 >
                     Yes
                 </span>
-                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                {/* eslint-disable-next-line */}
                 <span
                     onClick={() => this.select(1)}
                     onKeyPress={() => this.select(1)}

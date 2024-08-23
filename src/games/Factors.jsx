@@ -1,8 +1,6 @@
 import React from 'react';
 import { GAME_TYPES } from './games';
-// eslint-disable-next-line import/no-cycle
 import Game from '../components/game/Game';
-// eslint-disable-next-line import/no-cycle
 import Difficulty from '../menus/options/Difficulty';
 
 class Factors {
