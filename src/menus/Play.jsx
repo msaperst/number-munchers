@@ -1,15 +1,9 @@
 import React from 'react';
-// eslint-disable-next-line import/no-cycle
 import Multiples from '../games/Multiples';
-// eslint-disable-next-line import/no-cycle
 import Factors from '../games/Factors';
-// eslint-disable-next-line import/no-cycle
 import Equality from '../games/Equality';
-// eslint-disable-next-line import/no-cycle
 import Primes from '../games/Primes';
-// eslint-disable-next-line import/no-cycle
 import Menu from '../components/menu/Menu';
-// eslint-disable-next-line import/no-cycle
 import Difficulty from './options/Difficulty';
 
 class Play {
